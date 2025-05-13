@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
 import { AnimatePresence } from 'framer-motion'
 
 // Pages
@@ -12,15 +11,17 @@ import Contact from './pages/Contact'
 // Components
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ThemeToggle from './components/ThemeToggle'
 
-// Theme
-import { theme } from './styles/theme'
+// Theme Context Provider
+import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       <div className="app">
         <Navbar />
+        <ThemeToggle />
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<Home />} />

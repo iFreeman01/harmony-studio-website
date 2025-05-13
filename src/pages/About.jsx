@@ -40,7 +40,7 @@ const About = () => {
   return (
     <StyledAbout>
       <PageHeader 
-        title="About Harmony Studio"
+        title="About Casa Koba"
         subtitle="Our story, our team, and our mission"
         backgroundImage="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
       />
@@ -53,7 +53,7 @@ const About = () => {
               <SectionHeader 
                 subtitle="Our Story"
                 title="From Vision to Reality"
-                description="Founded in 2010, Harmony Studio began with a simple mission: to create a space where artists could bring their musical visions to life without compromise."
+                description="Founded in 2010, Casa Koba began with a simple mission: to create a space where artists could bring their musical visions to life without compromise."
                 light
               />
               <motion.div
@@ -63,13 +63,13 @@ const About = () => {
                 viewport={{ once: true }}
               >
                 <p>What started as a small project studio in a basement has grown into one of the most respected recording facilities in the region. Throughout our journey, we've maintained our commitment to sonic excellence, artist comfort, and cutting-edge technology.</p>
-                <p>Today, Harmony Studio houses three world-class recording spaces, a dedicated mixing suite, and a mastering room—all designed by leading acoustic architects and equipped with the finest gear available.</p>
+                <p>Today, Casa Koba houses three world-class recording spaces, a dedicated mixing suite, and a mastering room—all designed by leading acoustic architects and equipped with the finest gear available.</p>
               </motion.div>
             </div>
             <div className="story-image">
               <motion.img 
                 src="https://images.unsplash.com/photo-1547922657-b370d1687eb1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
-                alt="Harmony Studio in 2010"
+                alt="Casa Koba in 2010"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
@@ -86,7 +86,7 @@ const About = () => {
           <SectionHeader 
             subtitle="Our Values"
             title="What Sets Us Apart"
-            description="At Harmony Studio, our approach is guided by core principles that ensure every project receives the care and attention it deserves."
+            description="At Casa Koba, our approach is guided by core principles that ensure every project receives the care and attention it deserves."
             centered
             light
           />
@@ -268,7 +268,7 @@ const About = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2>Ready to Experience the Harmony Difference?</h2>
+            <h2>Ready to Experience the Casa Koba Difference?</h2>
             <p>Contact us today to discuss your project or schedule a studio tour.</p>
             <div className="cta-buttons">
               <Button to="/contact" size="large">Contact Us</Button>

@@ -117,9 +117,9 @@ const Contact = () => {
                 </div>
                 <div className="info-content">
                   <h3>Address</h3>
-                  <p>1234 Music Avenue</p>
-                  <p>Los Angeles, CA 90001</p>
-                  <p>United States</p>
+                  <p>Blvd. 18 Sur 5510</p>
+                  <p>Jardines de San Manuel, 72570</p>
+                  <p>Heroica Puebla de Zaragoza, Pue.</p>
                 </div>
               </div>
               
@@ -131,7 +131,7 @@ const Contact = () => {
                 </div>
                 <div className="info-content">
                   <h3>Phone</h3>
-                  <p><a href="tel:+1234567890">(123) 456-7890</a></p>
+                  <p><a href="tel:+525532792351">(55) 3279-2351</a></p>
                   <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
                   <p>Sat: 10:00 AM - 4:00 PM</p>
                 </div>
@@ -145,33 +145,33 @@ const Contact = () => {
                 </div>
                 <div className="info-content">
                   <h3>Email</h3>
-                  <p><a href="mailto:info@harmonystudio.com">info@harmonystudio.com</a></p>
-                  <p><a href="mailto:bookings@harmonystudio.com">bookings@harmonystudio.com</a></p>
+                  <p><a href="mailto:info@casakoba.com.mx">info@casakoba.com.mx</a></p>
+                  <p><a href="mailto:info@casakoba.com.mx">info@casakoba.com.mx</a></p>
                 </div>
               </div>
               
               <div className="social-links">
                 <h3>Follow Us</h3>
                 <div className="social-icons">
-                  <a href="https://instagram.com" aria-label="Instagram">
+                  <a href="https://www.instagram.com/jhn_freeman/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
                       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
                     </svg>
                   </a>
-                  <a href="https://twitter.com" aria-label="Twitter">
+                  <a href="https://twitter.com" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
                     </svg>
                   </a>
-                  <a href="https://youtube.com" aria-label="YouTube">
+                  <a href="https://www.youtube.com/@Jhn_Freeman" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2c.312-1.732.466-3.49.46-5.25a29 29 0 0 0-.46-5.33z"/>
                       <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
                     </svg>
                   </a>
-                  <a href="https://facebook.com" aria-label="Facebook">
+                  <a href="https://facebook.com" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                     </svg>
@@ -284,7 +284,7 @@ const Contact = () => {
 
       <MapSection>
         <iframe 
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423286.27405770525!2d-118.69192047471653!3d34.02016130391732!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA%2C%20USA!5e0!3m2!1sen!2s!4v1653515134436!5m2!1sen!2s" 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3772.2270984177776!2d-98.20459232387033!3d19.004851687131847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfc72f1efd8467%3A0xea6badc908dc7fb3!2sBlvd.%2018%20Sur%205510%2C%20Jardines%20de%20San%20Manuel%2C%2072570%20Heroica%20Puebla%20de%20Zaragoza%2C%20Pue.!5e0!3m2!1sen!2smx!4v1695515134436!5m2!1sen!2smx" 
           width="100%" 
           height="450" 
           style={{ border: 0 }} 
@@ -325,8 +325,8 @@ const Contact = () => {
                   </svg>
                 </div>
                 <h3>Email Us</h3>
-                <p>bookings@harmonystudio.com</p>
-                <Button variant="secondary" size="small" href="mailto:bookings@harmonystudio.com">Send Email</Button>
+                <p>info@casakoba.com.mx</p>
+                <Button variant="secondary" size="small" href="mailto:info@casakoba.com.mx">Send Email</Button>
               </div>
               
               <div className="booking-option">

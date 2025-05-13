@@ -145,7 +145,7 @@ const Home = () => {
               <SectionHeader 
                 subtitle="About Us"
                 title="Crafting Sound Since 2010"
-                description="Harmony Studio is a premium recording facility designed for artists who demand excellence. Our state-of-the-art equipment and acoustically perfected spaces create the ideal environment for your creative vision."
+                description="Casa Koba is a premium recording facility designed for artists who demand excellence. Our state-of-the-art equipment and acoustically perfected spaces create the ideal environment for your creative vision."
                 light
               />
               <motion.div
@@ -244,7 +244,7 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2>Ready to Create Your Masterpiece?</h2>
-            <p>Book a session at Harmony Studio today and take your music to the next level.</p>
+            <p>Book a session at Casa Koba today and take your music to the next level.</p>
             <Button to="/contact" size="large">Book a Session</Button>
           </motion.div>
         </div>

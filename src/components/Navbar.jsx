@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTheme } from '../context/ThemeContext'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const location = useLocation()
+  const { t } = useTheme()
   
   // Close mobile menu when location changes
   useEffect(() => {
@@ -34,7 +36,7 @@ const Navbar = () => {
       <div className="container nav-container">
         <div className="logo">
           <Link to="/">
-            <h1>Harmony<span>Studio</span></h1>
+            <h1>Casa<span>Koba</span></h1>
           </Link>
         </div>
         
@@ -47,19 +49,19 @@ const Navbar = () => {
         <DesktopMenu>
           <ul>
             <li>
-              <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
+              <Link to="/" className={location.pathname === '/' ? 'active' : ''}>{t('home')}</Link>
             </li>
             <li>
-              <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
+              <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>{t('about')}</Link>
             </li>
             <li>
-              <Link to="/services" className={location.pathname === '/services' ? 'active' : ''}>Services</Link>
+              <Link to="/services" className={location.pathname === '/services' ? 'active' : ''}>{t('services')}</Link>
             </li>
             <li>
-              <Link to="/gallery" className={location.pathname === '/gallery' ? 'active' : ''}>Gallery</Link>
+              <Link to="/gallery" className={location.pathname === '/gallery' ? 'active' : ''}>{t('gallery')}</Link>
             </li>
             <li>
-              <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
+              <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>{t('contact')}</Link>
             </li>
           </ul>
         </DesktopMenu>
@@ -78,35 +80,35 @@ const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
+                  <Link to="/" className={location.pathname === '/' ? 'active' : ''}>{t('home')}</Link>
                 </motion.li>
                 <motion.li 
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
+                  <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>{t('about')}</Link>
                 </motion.li>
                 <motion.li 
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <Link to="/services" className={location.pathname === '/services' ? 'active' : ''}>Services</Link>
+                  <Link to="/services" className={location.pathname === '/services' ? 'active' : ''}>{t('services')}</Link>
                 </motion.li>
                 <motion.li 
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 }}
                 >
-                  <Link to="/gallery" className={location.pathname === '/gallery' ? 'active' : ''}>Gallery</Link>
+                  <Link to="/gallery" className={location.pathname === '/gallery' ? 'active' : ''}>{t('gallery')}</Link>
                 </motion.li>
                 <motion.li 
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 }}
                 >
-                  <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
+                  <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>{t('contact')}</Link>
                 </motion.li>
               </ul>
             </MobileMenu>

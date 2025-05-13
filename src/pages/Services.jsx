@@ -3,6 +3,8 @@ import { motion } from 'framer-motion'
 import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import Button from '../components/Button'
+import { useState } from 'react'
+import { useTheme } from '../context/ThemeContext'
 
 // Services data
 const services = [
@@ -98,6 +100,25 @@ const services = [
   },
   {
     id: 6,
+    title: 'Dolby Atmos',
+    description: 'Immersive audio mixing for Apple Music, Tidal, and other spatial audio platforms.',
+    details: [
+      'Specialized Dolby Atmos certified mixing environment',
+      'Spatial audio mixing for enhanced listener engagement',
+      'Convert stereo recordings to immersive 3D audio',
+      'Optimized for Apple Music spatial audio format',
+      'Full compatibility with all major streaming platforms'
+    ],
+    image: 'https://images.unsplash.com/photo-1558403871-bb6e8113a32e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10.5v3a2.5 2.5 0 005 0v-3a2.5 2.5 0 10-5 0M13.5 10.5v3a2.5 2.5 0 005 0v-3a2.5 2.5 0 10-5 0"/>
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7.5 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM18 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM18 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM7.5 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+      </svg>
+    )
+  },
+  {
+    id: 7,
     title: 'Post-Production',
     description: 'Audio services for film, TV, podcasts, and other media projects.',
     details: [
@@ -116,58 +137,84 @@ const services = [
   }
 ]
 
-// Pricing packages
-const packages = [
-  {
-    id: 1,
-    name: 'Basic',
-    price: 'From $400',
-    description: 'Perfect for solo artists and small projects',
-    features: [
-      '8 hours of studio time',
-      'Recording & basic mixing',
-      'Up to 8 tracks',
-      'Digital delivery',
-      'One revision'
-    ],
-    popular: false
-  },
-  {
-    id: 2,
-    name: 'Professional',
-    price: 'From $1,200',
-    description: 'Comprehensive package for serious artists',
-    features: [
-      '24 hours of studio time',
-      'Recording, mixing & mastering',
-      'Unlimited tracks',
-      'Digital delivery',
-      'Three revisions',
-      'Session musicians available',
-      'Basic promotion package'
-    ],
-    popular: true
-  },
-  {
-    id: 3,
-    name: 'Premium',
-    price: 'Custom',
-    description: 'Full-service production for albums and major projects',
-    features: [
-      'Custom studio time allocation',
-      'Full production services',
-      'Dedicated producer',
-      'Advanced mixing & mastering',
-      'Unlimited revisions',
-      'Premium session musicians',
-      'Comprehensive promotion package',
-      'Vinyl & physical media preparation'
-    ],
-    popular: false
-  }
-]
-
 const Services = () => {
+  // Form state for the contact form
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  })
+  
+  const [formErrors, setFormErrors] = useState({})
+  const [formStatus, setFormStatus] = useState(null)
+  const { isDarkMode, t } = useTheme()
+  
+  // Handle form input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+    
+    // Clear error when user types
+    if (formErrors[name]) {
+      setFormErrors({ ...formErrors, [name]: '' })
+    }
+  }
+  
+  // Validate form
+  const validateForm = () => {
+    const errors = {}
+    
+    if (!formData.name.trim()) {
+      errors.name = 'Name is required'
+    }
+    
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = 'Email is invalid'
+    }
+    
+    if (!formData.subject.trim()) {
+      errors.subject = 'Subject is required'
+    }
+    
+    if (!formData.message.trim()) {
+      errors.message = 'Message is required'
+    }
+    
+    return errors
+  }
+  
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    
+    // Validate form
+    const errors = validateForm()
+    
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors)
+      return
+    }
+    
+    // In a real app, you would send the form data to a server here
+    // For now, we'll just simulate a successful submission
+    setFormStatus('sending')
+    
+    setTimeout(() => {
+      setFormStatus('success')
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      })
+    }, 1500)
+  }
+
   return (
     <StyledServices>
       <PageHeader 
@@ -180,9 +227,9 @@ const Services = () => {
       <ServicesList className="section">
         <div className="container">
           <SectionHeader 
-            subtitle="What We Offer"
-            title="Comprehensive Audio Services"
-            description="From recording and mixing to full-scale music production, we offer everything you need to bring your creative vision to life."
+            subtitle={t('whatWeOffer')}
+            title={t('comprehensiveAudioServices')}
+            description={t('servicesDescription')}
             centered
             light
           />
@@ -230,53 +277,123 @@ const Services = () => {
         </div>
       </ServicesList>
 
-      {/* Pricing */}
-      <PricingSection className="section">
+      {/* Contact Form Section (Replacing Pricing) */}
+      <ContactFormSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
-            subtitle="Pricing"
-            title="Flexible Packages for Every Need"
-            description="We offer several service tiers to accommodate different project sizes and budgets."
+            subtitle={t('getInTouch')}
+            title="Request a Quote"
+            description="Interested in our services? Fill out the form below and we'll contact you with a personalized quote for your project."
             centered
             light
           />
           
-          <div className="pricing-grid">
-            {packages.map((pkg) => (
-              <motion.div 
-                key={pkg.id}
-                className={`pricing-card ${pkg.popular ? 'popular' : ''}`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: pkg.id * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-              >
-                {pkg.popular && <span className="popular-badge">Most Popular</span>}
-                <h3>{pkg.name}</h3>
-                <div className="price">{pkg.price}</div>
-                <p className="pkg-description">{pkg.description}</p>
-                <ul className="features">
-                  {pkg.features.map((feature, idx) => (
-                    <li key={idx}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button to="/contact" fullWidth>Get Started</Button>
-              </motion.div>
-            ))}
-          </div>
-          
-          <div className="custom-pricing">
-            <p>Need a custom solution? Contact us for a tailored quote specific to your project requirements.</p>
-            <Button to="/contact" variant="secondary">Contact for Custom Quote</Button>
+          <div className="form-container">
+            <motion.div 
+              className="contact-form"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              {formStatus === 'success' ? (
+                <div className="success-message">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                  <h4>{t('messageSent')}</h4>
+                  <p>{t('thankYou')}</p>
+                  <Button onClick={() => setFormStatus(null)}>{t('sendAnotherMessage')}</Button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="name">{t('name')}*</label>
+                    <input 
+                      type="text" 
+                      id="name" 
+                      name="name" 
+                      value={formData.name}
+                      onChange={handleChange}
+                      className={formErrors.name ? 'error' : ''}
+                    />
+                    {formErrors.name && <span className="error-message">{formErrors.name}</span>}
+                  </div>
+                  
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="email">{t('email')}*</label>
+                      <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        value={formData.email}
+                        onChange={handleChange}
+                        className={formErrors.email ? 'error' : ''}
+                      />
+                      {formErrors.email && <span className="error-message">{formErrors.email}</span>}
+                    </div>
+                    
+                    <div className="form-group">
+                      <label htmlFor="phone">{t('phone')} ({t('optional')})</label>
+                      <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        value={formData.phone}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label htmlFor="subject">{t('serviceInterestedIn')}*</label>
+                    <select
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      className={formErrors.subject ? 'error' : ''}
+                    >
+                      <option value="">Select a service</option>
+                      {services.map(service => (
+                        <option key={service.id} value={service.title}>{service.title}</option>
+                      ))}
+                      <option value="Other">Other</option>
+                    </select>
+                    {formErrors.subject && <span className="error-message">{formErrors.subject}</span>}
+                  </div>
+                  
+                  <div className="form-group">
+                    <label htmlFor="message">{t('tellAboutProject')}*</label>
+                    <textarea 
+                      id="message" 
+                      name="message" 
+                      rows="5"
+                      value={formData.message}
+                      onChange={handleChange}
+                      className={formErrors.message ? 'error' : ''}
+                      placeholder="Please include details about your project, timeline, and any specific requirements."
+                    ></textarea>
+                    {formErrors.message && <span className="error-message">{formErrors.message}</span>}
+                  </div>
+                  
+                  <div className="form-submit">
+                    <Button 
+                      type="submit" 
+                      disabled={formStatus === 'sending'}
+                      fullWidth
+                    >
+                      {formStatus === 'sending' ? 'Sending...' : t('requestQuote')}
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </motion.div>
           </div>
         </div>
-      </PricingSection>
+      </ContactFormSection>
 
       {/* Process */}
       <ProcessSection className="section">
@@ -483,110 +600,110 @@ const ServiceItem = styled.div`
   }
 `
 
-const PricingSection = styled.section`
-  background-color: #0d0d0d;
+const ContactFormSection = styled.section`
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0d0d0d' : '#eaeaea'};
   
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 2rem;
-    margin-top: 3rem;
-    
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    @media (min-width: 992px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  .form-container {
+    max-width: 800px;
+    margin: 0 auto;
   }
   
-  .pricing-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  .contact-form {
+    background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.8)'};
+    border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'};
     border-radius: 12px;
-    padding: 2.5rem 2rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transition: all 0.3s ease;
+    padding: 2.5rem;
     
-    &:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: ${({ theme }) => theme.colors.primary + '40'};
-    }
-    
-    &.popular {
-      border-color: ${({ theme }) => theme.colors.primary};
-      background: rgba(162, 88, 239, 0.05);
-    }
-    
-    .popular-badge {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: ${({ theme }) => theme.colors.gradient};
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-    
-    h3 {
+    .success-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .price {
-      text-align: center;
-      font-size: 2.5rem;
-      color: ${({ theme }) => theme.colors.primary};
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-    
-    .pkg-description {
-      text-align: center;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .features {
-      margin-bottom: 2rem;
-      flex-grow: 1;
       
-      li {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+      svg {
+        color: ${({ theme }) => theme.colors.primary};
+        margin-bottom: 1.5rem;
+      }
+      
+      h4 {
+        font-size: 1.5rem;
         margin-bottom: 1rem;
-        color: rgba(255, 255, 255, 0.8);
-        
-        svg {
-          color: ${({ theme }) => theme.colors.primary};
-          flex-shrink: 0;
-        }
+      }
+      
+      p {
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 2rem;
       }
     }
-  }
-  
-  .custom-pricing {
-    text-align: center;
-    margin-top: 4rem;
     
-    p {
-      color: rgba(255, 255, 255, 0.7);
+    .form-group {
       margin-bottom: 1.5rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+        color: ${({ theme }) => theme.colors.textPrimary};
+      }
+      
+      input, textarea, select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.9)'};
+        border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
+        border-radius: 4px;
+        color: ${({ theme }) => theme.colors.textPrimary};
+        font-family: inherit;
+        transition: all 0.3s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: ${({ theme }) => theme.colors.primary};
+          background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.07)' : 'rgba(255, 255, 255, 1)'};
+        }
+        
+        &.error {
+          border-color: #f44336;
+        }
+      }
+      
+      select {
+        appearance: none;
+        background-image: ${({ $isDarkMode }) => $isDarkMode 
+          ? `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`
+          : `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`
+        };
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1em;
+        padding-right: 2.5rem;
+      }
+      
+      select option {
+        background-color: ${({ $isDarkMode }) => $isDarkMode ? '#222' : '#fff'};
+        color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : 'black'};
+      }
+      
+      .error-message {
+        color: #f44336;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+        display: block;
+      }
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      
+      @media (min-width: 576px) {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .form-submit {
+      margin-top: 2rem;
     }
   }
 `
