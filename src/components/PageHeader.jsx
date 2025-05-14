@@ -58,9 +58,9 @@ const Header = styled.header`
     background: ${({ theme }) => theme.colors.dark};
     background: linear-gradient(
       0deg,
-      rgba(10, 10, 10, 1) 0%,
-      rgba(10, 10, 10, 0.7) 50%,
-      rgba(10, 10, 10, 0.5) 100%
+      ${({ theme }) => theme.isDarkMode 
+        ? 'rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0.7) 50%, rgba(10, 10, 10, 0.5) 100%' 
+        : 'rgba(245, 245, 247, 1) 0%, rgba(245, 245, 247, 0.7) 50%, rgba(245, 245, 247, 0.5) 100%'}
     );
     z-index: -1;
   }
@@ -71,7 +71,7 @@ const Header = styled.header`
   }
   
   h1 {
-    color: ${({ theme }) => theme.colors.light};
+    color: ${({ theme }) => theme.isDarkMode ? theme.colors.light : theme.colors.dark};
     margin-bottom: 1rem;
     font-size: 3.5rem;
     
@@ -81,7 +81,7 @@ const Header = styled.header`
   }
   
   p {
-    color: rgba(255, 255, 255, 0.8);
+    color: ${({ theme }) => theme.isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(34, 34, 34, 0.8)'};
     font-size: 1.2rem;
     max-width: 600px;
     margin: 0 auto;

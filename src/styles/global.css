@@ -68,6 +68,7 @@ input, select, textarea, button {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 a {
@@ -80,6 +81,7 @@ button {
   outline: none;
   cursor: pointer;
   font-family: inherit;
+  background-color: transparent; /* Ensure button backgrounds are transparent by default */
 }
 
 img {
@@ -99,9 +101,35 @@ ul {
   padding: 0 2rem;
 }
 
+@media (max-width: 1400px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 960px;
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 0 1.5rem;
+    max-width: 540px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 1rem;
   }
 }
 

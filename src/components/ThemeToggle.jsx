@@ -3,32 +3,48 @@ import { motion } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
 
 const ThemeToggle = () => {
-  const { isDarkMode, toggleTheme, language, toggleLanguage } = useTheme()
+  const { isDarkMode, toggleTheme, language, toggleLanguage, t } = useTheme()
+  
+  const handleThemeToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleTheme();
+  }
   
   return (
-    <ToggleContainer>
-      <ThemeButton 
-        onClick={toggleTheme}
-        aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-        title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-      >
-        {isDarkMode ? (
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-        ) : (
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        )}
-      </ThemeButton>
+    <ToggleContainer isDarkMode={isDarkMode}>
+      <ThemeToggleSwitch>
+        <ThemeToggleLabel 
+          onClick={handleThemeToggle}
+          aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          $isDarkMode={isDarkMode}
+        >
+          <span className="mode-label light">{t('light')}</span>
+          <span className="mode-label dark">{t('dark')}</span>
+          <ThemeToggleSlider 
+            $active={isDarkMode} 
+            animate={{
+              left: isDarkMode ? 'calc(100% - 30px)' : '4px',
+              transition: { type: "spring", stiffness: 300, damping: 20 }
+            }}
+            initial={false}
+          >
+            <span className="toggle-icon">
+              {isDarkMode ? '🌙' : '☀️'}
+            </span>
+          </ThemeToggleSlider>
+        </ThemeToggleLabel>
+      </ThemeToggleSwitch>
       
-      <Divider />
+      <Divider isDarkMode={isDarkMode} />
       
       <LanguageToggle 
         onClick={toggleLanguage}
         aria-label={language === 'en' ? "Switch to Spanish" : "Switch to English"}
         title={language === 'en' ? "Switch to Spanish" : "Switch to English"}
+        type="button"
+        isDarkMode={isDarkMode}
       >
         <span className={language === 'en' ? 'active' : ''}>ENG</span>
         <span>|</span>
@@ -44,47 +60,120 @@ const ToggleContainer = styled.div`
   left: 20px;
   display: flex;
   align-items: center;
-  background: ${({ theme }) => theme.colors.dark};
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: ${({ isDarkMode, theme }) => isDarkMode ? theme.colors.dark : 'rgba(255, 255, 255, 0.9)'};
+  border: 1px solid ${({ isDarkMode }) => isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
   border-radius: 50px;
   padding: 6px 12px;
-  z-index: 99;
+  z-index: 101; /* Higher than navbar to ensure visibility */
   box-shadow: ${({ theme }) => theme.shadows.medium};
   backdrop-filter: blur(10px);
+  
+  @media (min-width: 1200px) {
+    left: 40px; /* Move toggle further left on large screens */
+  }
   
   @media (max-width: 768px) {
     top: auto;
     bottom: 20px;
+    left: 20px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 4px 10px;
+    left: 10px;
+    bottom: 10px;
+    transform: scale(0.9);
+    transform-origin: bottom left;
   }
 `
 
-const ThemeButton = styled(motion.button)`
-  background: transparent;
-  border: none;
-  width: 28px;
-  height: 28px;
+const ThemeToggleSwitch = styled.div`
+  position: relative;
+  width: 84px;
+  height: 32px;
+  padding: 0;
+`
+
+const ThemeToggleLabel = styled.label`
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 34px;
+  background: ${({ $isDarkMode, theme }) => 
+    $isDarkMode 
+      ? 'linear-gradient(to right, #192231, #203a43)' 
+      : 'linear-gradient(to right, #f6d365, #fda085)'};
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  .mode-label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    z-index: 2;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  
+  .light {
+    left: 9px;
+    color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.9)'};
+    font-weight: ${({ $isDarkMode }) => $isDarkMode ? '400' : '700'};
+  }
+  
+  .dark {
+    right: 9px;
+    color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.2)'};
+    font-weight: ${({ $isDarkMode }) => $isDarkMode ? '700' : '400'};
+  }
+`
+
+const ThemeToggleSlider = styled(motion.span)`
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #fff;
+  top: 3px;
+  z-index: 3;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.light};
-  padding: 0;
   
-  svg {
-    width: 20px;
-    height: 20px;
+  .toggle-icon {
+    font-size: 12px;
+    line-height: 1;
+    display: flex;
   }
   
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
   }
 `
 
 const Divider = styled.div`
   width: 1px;
   height: 20px;
-  background: rgba(255, 255, 255, 0.2);
+  background: ${({ isDarkMode }) => isDarkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'};
   margin: 0 10px;
+  
+  @media (max-width: 480px) {
+    margin: 0 8px;
+    height: 16px;
+  }
 `
 
 const LanguageToggle = styled.button`
@@ -96,7 +185,7 @@ const LanguageToggle = styled.button`
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.light};
+  color: ${({ isDarkMode, theme }) => isDarkMode ? theme.colors.light : theme.colors.dark};
   padding: 0;
   
   span {
@@ -109,7 +198,11 @@ const LanguageToggle = styled.button`
   }
   
   &:hover span:not(.active) {
-    color: rgba(255, 255, 255, 0.8);
+    color: ${({ isDarkMode }) => isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
   }
 `
 

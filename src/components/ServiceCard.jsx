@@ -1,12 +1,16 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import Button from './Button'
+import { useTheme } from '../context/ThemeContext'
 
 const ServiceCard = ({ icon, title, description, link }) => {
+  const { isDarkMode } = useTheme();
+  
   return (
     <Card 
       whileHover={{ y: -10 }}
       transition={{ duration: 0.3 }}
+      isDarkMode={isDarkMode}
     >
       <IconWrapper>
         {icon}
@@ -31,8 +35,16 @@ const ServiceCard = ({ icon, title, description, link }) => {
 }
 
 const Card = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: ${({ isDarkMode }) => 
+    isDarkMode 
+      ? 'rgba(255, 255, 255, 0.03)' 
+      : 'rgba(255, 255, 255, 0.95)'
+  };
+  border: 1px solid ${({ isDarkMode }) => 
+    isDarkMode 
+      ? 'rgba(255, 255, 255, 0.05)' 
+      : 'rgba(0, 0, 0, 0.05)'
+  };
   backdrop-filter: blur(10px);
   padding: 2rem;
   border-radius: 12px;
@@ -40,19 +52,42 @@ const Card = styled(motion.div)`
   flex-direction: column;
   height: 100%;
   transition: all 0.3s ease;
+  box-shadow: ${({ theme, isDarkMode }) => 
+    isDarkMode 
+      ? 'none' 
+      : theme.shadows.small
+  };
   
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: ${({ isDarkMode }) => 
+      isDarkMode 
+        ? 'rgba(255, 255, 255, 0.06)' 
+        : 'rgba(255, 255, 255, 1)'
+    };
     border-color: ${({ theme }) => theme.colors.primary + '40'};
+    box-shadow: ${({ theme, isDarkMode }) => 
+      isDarkMode 
+        ? 'none' 
+        : theme.shadows.medium
+    };
   }
   
   h3 {
     margin-bottom: 1rem;
     font-size: 1.5rem;
+    color: ${({ theme, isDarkMode }) => 
+      isDarkMode 
+        ? theme.colors.light 
+        : theme.colors.dark
+    };
   }
   
   p {
-    color: rgba(255, 255, 255, 0.7);
+    color: ${({ isDarkMode }) => 
+      isDarkMode 
+        ? 'rgba(255, 255, 255, 0.7)' 
+        : 'rgba(0, 0, 0, 0.7)'
+    };
     line-height: 1.7;
     margin-bottom: 1.5rem;
   }

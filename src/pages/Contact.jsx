@@ -1,11 +1,21 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import DOMPurify from 'dompurify'
+import * as Yup from 'yup'
 import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import Button from '../components/Button'
+import { useTheme } from '../context/ThemeContext'
+
+// Function to generate CSRF token
+const generateCSRFToken = () => {
+  return Math.random().toString(36).substring(2, 15) + 
+         Math.random().toString(36).substring(2, 15);
+}
 
 const Contact = () => {
+  const { isDarkMode } = useTheme();
   // Form state
   const [formData, setFormData] = useState({
     name: '',
@@ -17,11 +27,28 @@ const Contact = () => {
   
   const [formErrors, setFormErrors] = useState({})
   const [formStatus, setFormStatus] = useState(null)
+  const [csrfToken, setCsrfToken] = useState('')
+  
+  // Generate CSRF token on component mount
+  useEffect(() => {
+    setCsrfToken(generateCSRFToken())
+  }, [])
+
+  // Validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    email: Yup.string().email('Email is invalid').required('Email is required'),
+    phone: Yup.string().matches(/^[0-9()-\s+]*$/, 'Phone number is not valid'),
+    subject: Yup.string().required('Subject is required'),
+    message: Yup.string().required('Message is required')
+  })
   
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    // Sanitize input before storing in state
+    const sanitizedValue = DOMPurify.sanitize(value)
+    setFormData({ ...formData, [name]: sanitizedValue })
     
     // Clear error when user types
     if (formErrors[name]) {
@@ -30,43 +57,32 @@ const Contact = () => {
   }
   
   // Validate form
-  const validateForm = () => {
-    const errors = {}
-    
-    if (!formData.name.trim()) {
-      errors.name = 'Name is required'
+  const validateForm = async () => {
+    try {
+      await validationSchema.validate(formData, { abortEarly: false })
+      return {}
+    } catch (err) {
+      const errors = {}
+      err.inner.forEach(error => {
+        errors[error.path] = error.message
+      })
+      return errors
     }
-    
-    if (!formData.email.trim()) {
-      errors.email = 'Email is required'
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Email is invalid'
-    }
-    
-    if (!formData.subject.trim()) {
-      errors.subject = 'Subject is required'
-    }
-    
-    if (!formData.message.trim()) {
-      errors.message = 'Message is required'
-    }
-    
-    return errors
   }
   
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     
     // Validate form
-    const errors = validateForm()
+    const errors = await validateForm()
     
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors)
       return
     }
     
-    // In a real app, you would send the form data to a server here
+    // In a real app, you would send the form data and CSRF token to a server here
     // For now, we'll just simulate a successful submission
     setFormStatus('sending')
     
@@ -79,6 +95,8 @@ const Contact = () => {
         subject: '',
         message: ''
       })
+      // Regenerate CSRF token after successful submission
+      setCsrfToken(generateCSRFToken())
     }, 1500)
   }
   
@@ -90,17 +108,17 @@ const Contact = () => {
         backgroundImage="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
       />
 
-      <ContactSection className="section">
+      <ContactSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
             subtitle="Get In Touch"
             title="Contact Information"
             description="Have a question or want to book a session? Reach out to us using the contact information below or fill out the form."
             centered
-            light
+            light={isDarkMode}
           />
 
-          <ContactGrid>
+          <ContactGrid $isDarkMode={isDarkMode}>
             <motion.div 
               className="contact-info"
               initial={{ opacity: 0, x: -50 }}
@@ -201,6 +219,9 @@ const Contact = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
+                  {/* Hidden CSRF token field */}
+                  <input type="hidden" name="csrf_token" value={csrfToken} />
+                  
                   <div className="form-group">
                     <label htmlFor="name">Name*</label>
                     <input 
@@ -295,7 +316,7 @@ const Contact = () => {
         ></iframe>
       </MapSection>
 
-      <BookingSection className="section">
+      <BookingSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <motion.div 
             className="booking-content"
@@ -352,7 +373,7 @@ const StyledContact = styled.div`
 `
 
 const ContactSection = styled.section`
-  background-color: #0a0a0a;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#f5f5f7'};
 `
 
 const ContactGrid = styled.div`
@@ -393,14 +414,15 @@ const ContactGrid = styled.div`
         h3 {
           margin-bottom: 0.75rem;
           font-size: 1.3rem;
+          color: ${({ theme }) => theme.colors.textPrimary};
         }
         
         p {
-          color: rgba(255, 255, 255, 0.7);
+          color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
           margin-bottom: 0.5rem;
           
           a {
-            color: rgba(255, 255, 255, 0.7);
+            color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
             transition: all 0.3s ease;
             
             &:hover {
@@ -417,6 +439,7 @@ const ContactGrid = styled.div`
       h3 {
         margin-bottom: 1.25rem;
         font-size: 1.3rem;
+        color: ${({ theme }) => theme.colors.textPrimary};
       }
       
       .social-icons {
@@ -430,14 +453,15 @@ const ContactGrid = styled.div`
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          color: white;
+          background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.03)'};
+          border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'};
+          color: ${({ theme }) => theme.colors.textPrimary};
           transition: all 0.3s ease;
           
           &:hover {
             background: ${({ theme }) => theme.colors.gradient};
             transform: translateY(-3px);
+            color: white;
           }
         }
       }
@@ -445,15 +469,17 @@ const ContactGrid = styled.div`
   }
   
   .contact-form {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.9)'};
+    border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'};
     border-radius: 12px;
     padding: 2rem;
+    box-shadow: ${({ theme, $isDarkMode }) => $isDarkMode ? 'none' : theme.shadows.small};
     
     h3 {
       margin-bottom: 2rem;
       font-size: 1.5rem;
       text-align: center;
+      color: ${({ theme }) => theme.colors.textPrimary};
     }
     
     .success-message {
@@ -470,10 +496,11 @@ const ContactGrid = styled.div`
       h4 {
         font-size: 1.5rem;
         margin-bottom: 1rem;
+        color: ${({ theme }) => theme.colors.textPrimary};
       }
       
       p {
-        color: rgba(255, 255, 255, 0.7);
+        color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
         margin-bottom: 2rem;
       }
     }
@@ -485,22 +512,23 @@ const ContactGrid = styled.div`
         display: block;
         margin-bottom: 0.5rem;
         font-size: 0.95rem;
+        color: ${({ theme }) => theme.colors.textPrimary};
       }
       
       input, textarea {
         width: 100%;
         padding: 0.75rem 1rem;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.95)'};
+        border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
         border-radius: 4px;
-        color: white;
+        color: ${({ theme }) => theme.colors.textPrimary};
         font-family: inherit;
         transition: all 0.3s ease;
         
         &:focus {
           outline: none;
           border-color: ${({ theme }) => theme.colors.primary};
-          background: rgba(255, 255, 255, 0.07);
+          background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.07)' : 'rgba(255, 255, 255, 1)'};
         }
         
         &.error {
@@ -542,8 +570,8 @@ const MapSection = styled.section`
 
 const BookingSection = styled.section`
   background: linear-gradient(
-    rgba(10, 10, 10, 0.85), 
-    rgba(10, 10, 10, 0.85)
+    ${({ $isDarkMode }) => $isDarkMode ? 'rgba(10, 10, 10, 0.85)' : 'rgba(245, 245, 247, 0.85)'}, 
+    ${({ $isDarkMode }) => $isDarkMode ? 'rgba(10, 10, 10, 0.85)' : 'rgba(245, 245, 247, 0.85)'}
   ), url('https://images.unsplash.com/photo-1524685794168-52985e79c1f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80');
   background-size: cover;
   background-position: center;
@@ -565,7 +593,7 @@ const BookingSection = styled.section`
     }
     
     p {
-      color: rgba(255, 255, 255, 0.8);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
       font-size: 1.25rem;
       margin-bottom: 3rem;
       max-width: 600px;
@@ -587,19 +615,22 @@ const BookingSection = styled.section`
       }
       
       .booking-option {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.9)'};
+        border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'};
         border-radius: 12px;
         padding: 2.5rem 1.5rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         transition: all 0.3s ease;
+        color: ${({ theme }) => theme.colors.textPrimary};
+        box-shadow: ${({ theme, $isDarkMode }) => $isDarkMode ? 'none' : theme.shadows.small};
         
         &:hover {
           transform: translateY(-10px);
-          background: rgba(255, 255, 255, 0.06);
+          background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 1)'};
           border-color: ${({ theme }) => theme.colors.primary + '40'};
+          box-shadow: ${({ theme, $isDarkMode }) => $isDarkMode ? 'none' : theme.shadows.medium};
         }
         
         .icon-container {
@@ -622,11 +653,13 @@ const BookingSection = styled.section`
         h3 {
           margin-bottom: 0.75rem;
           font-size: 1.4rem;
+          color: ${({ theme }) => theme.colors.textPrimary};
         }
         
         p {
           margin-bottom: 1.5rem;
           font-size: 1rem;
+          color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
         }
       }
     }

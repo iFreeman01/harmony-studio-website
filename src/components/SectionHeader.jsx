@@ -1,9 +1,12 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import { useTheme } from '../context/ThemeContext'
 
 const SectionHeader = ({ subtitle, title, description, centered = false, light = false }) => {
+  const { isDarkMode } = useTheme();
+  
   return (
-    <HeaderWrapper centered={centered} light={light}>
+    <HeaderWrapper centered={centered} light={light} isDarkMode={isDarkMode}>
       <motion.span 
         className="subtitle"
         initial={{ opacity: 0, y: 20 }}
@@ -64,7 +67,10 @@ const HeaderWrapper = styled.div`
   }
   
   h2 {
-    color: ${({ light, theme }) => light ? theme.colors.light : theme.colors.dark};
+    color: ${({ light, theme, isDarkMode }) => {
+      if (light) return theme.colors.light;
+      return isDarkMode ? theme.colors.light : theme.colors.dark;
+    }};
     margin-bottom: 1.5rem;
     font-size: 2.5rem;
     
@@ -76,7 +82,10 @@ const HeaderWrapper = styled.div`
   p {
     max-width: 600px;
     margin: ${({ centered }) => centered ? '0 auto' : '0'};
-    color: ${({ light }) => light ? 'rgba(255, 255, 255, 0.7)' : '#666'};
+    color: ${({ light, isDarkMode }) => {
+      if (light) return 'rgba(255, 255, 255, 0.8)';
+      return isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)';
+    }};
     font-size: 1.1rem;
     line-height: 1.8;
   }

@@ -1,10 +1,18 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import DOMPurify from 'dompurify'
+import * as Yup from 'yup'
 import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import Button from '../components/Button'
-import { useState } from 'react'
 import { useTheme } from '../context/ThemeContext'
+
+// Function to generate CSRF token
+const generateCSRFToken = () => {
+  return Math.random().toString(36).substring(2, 15) + 
+         Math.random().toString(36).substring(2, 15);
+}
 
 // Services data
 const services = [
@@ -149,12 +157,29 @@ const Services = () => {
   
   const [formErrors, setFormErrors] = useState({})
   const [formStatus, setFormStatus] = useState(null)
+  const [csrfToken, setCsrfToken] = useState('')
   const { isDarkMode, t } = useTheme()
+  
+  // Generate CSRF token on component mount
+  useEffect(() => {
+    setCsrfToken(generateCSRFToken())
+  }, [])
+
+  // Validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    email: Yup.string().email('Email is invalid').required('Email is required'),
+    phone: Yup.string().matches(/^[0-9()-\s+]*$/, 'Phone number is not valid'),
+    subject: Yup.string().required('Subject is required'),
+    message: Yup.string().required('Message is required')
+  })
   
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    // Sanitize input before storing in state
+    const sanitizedValue = DOMPurify.sanitize(value)
+    setFormData({ ...formData, [name]: sanitizedValue })
     
     // Clear error when user types
     if (formErrors[name]) {
@@ -163,43 +188,32 @@ const Services = () => {
   }
   
   // Validate form
-  const validateForm = () => {
-    const errors = {}
-    
-    if (!formData.name.trim()) {
-      errors.name = 'Name is required'
+  const validateForm = async () => {
+    try {
+      await validationSchema.validate(formData, { abortEarly: false })
+      return {}
+    } catch (err) {
+      const errors = {}
+      err.inner.forEach(error => {
+        errors[error.path] = error.message
+      })
+      return errors
     }
-    
-    if (!formData.email.trim()) {
-      errors.email = 'Email is required'
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Email is invalid'
-    }
-    
-    if (!formData.subject.trim()) {
-      errors.subject = 'Subject is required'
-    }
-    
-    if (!formData.message.trim()) {
-      errors.message = 'Message is required'
-    }
-    
-    return errors
   }
   
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     
     // Validate form
-    const errors = validateForm()
+    const errors = await validateForm()
     
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors)
       return
     }
     
-    // In a real app, you would send the form data to a server here
+    // In a real app, you would send the form data and CSRF token to a server here
     // For now, we'll just simulate a successful submission
     setFormStatus('sending')
     
@@ -212,6 +226,8 @@ const Services = () => {
         subject: '',
         message: ''
       })
+      // Regenerate CSRF token after successful submission
+      setCsrfToken(generateCSRFToken())
     }, 1500)
   }
 
@@ -219,19 +235,19 @@ const Services = () => {
     <StyledServices>
       <PageHeader 
         title="Our Services"
-        subtitle="Comprehensive audio solutions for artists and creators"
-        backgroundImage="https://images.unsplash.com/photo-1517420879524-86d64ac2f339?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80"
+        subtitle="Professional studio services for every project"
+        backgroundImage="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
       />
 
       {/* Services List */}
-      <ServicesList className="section">
+      <ServicesList className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
             subtitle={t('whatWeOffer')}
             title={t('comprehensiveAudioServices')}
             description={t('servicesDescription')}
             centered
-            light
+            light={isDarkMode}
           />
 
           {services.map((service, index) => (
@@ -285,7 +301,7 @@ const Services = () => {
             title="Request a Quote"
             description="Interested in our services? Fill out the form below and we'll contact you with a personalized quote for your project."
             centered
-            light
+            light={isDarkMode}
           />
           
           <div className="form-container">
@@ -308,6 +324,9 @@ const Services = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
+                  {/* Hidden CSRF token field */}
+                  <input type="hidden" name="csrf_token" value={csrfToken} />
+                  
                   <div className="form-group">
                     <label htmlFor="name">{t('name')}*</label>
                     <input 
@@ -396,82 +415,52 @@ const Services = () => {
       </ContactFormSection>
 
       {/* Process */}
-      <ProcessSection className="section">
+      <ProcessSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
-            subtitle="Our Process"
-            title="How We Work"
-            description="Our streamlined workflow ensures a smooth experience from initial consultation to final delivery."
+            subtitle="How We Work"
+            title="Our Process"
+            description="Our streamlined approach to your project ensures quality results every time."
             centered
-            light
+            light={isDarkMode}
           />
           
           <div className="process-steps">
-            <motion.div 
-              className="step"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
+            <div className="step">
               <div className="step-number">1</div>
-              <h3>Consultation</h3>
-              <p>We start with a detailed discussion of your project goals, requirements, and vision to ensure we're aligned on expectations.</p>
-            </motion.div>
+              <h3>Initial Consultation</h3>
+              <p>We discuss your project goals, vision, and requirements to understand your needs.</p>
+            </div>
             
-            <motion.div 
-              className="step"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
+            <div className="step">
               <div className="step-number">2</div>
               <h3>Planning</h3>
-              <p>We develop a detailed production plan, timeline, and budget tailored to your specific needs and creative direction.</p>
-            </motion.div>
+              <p>We develop a customized plan including timeline, resources, and approach.</p>
+            </div>
             
-            <motion.div 
-              className="step"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              viewport={{ once: true }}
-            >
+            <div className="step">
               <div className="step-number">3</div>
               <h3>Production</h3>
-              <p>Our team executes the plan with meticulous attention to detail, keeping you involved throughout the creative process.</p>
-            </motion.div>
+              <p>Recording, tracking, and capturing the core elements of your project.</p>
+            </div>
             
-            <motion.div 
-              className="step"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
+            <div className="step">
               <div className="step-number">4</div>
-              <h3>Refinement</h3>
-              <p>We gather your feedback and make revisions to ensure the final product perfectly aligns with your vision.</p>
-            </motion.div>
+              <h3>Post-Production</h3>
+              <p>Mixing, mastering, and refining to achieve the perfect sound.</p>
+            </div>
             
-            <motion.div 
-              className="step"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              viewport={{ once: true }}
-            >
+            <div className="step">
               <div className="step-number">5</div>
               <h3>Delivery</h3>
-              <p>We provide your completed project in all requested formats, ready for distribution or the next phase of your creative journey.</p>
-            </motion.div>
+              <p>Final product delivered in your preferred formats with all necessary files.</p>
+            </div>
           </div>
         </div>
       </ProcessSection>
 
       {/* CTA */}
-      <CTASection className="section">
+      <CTASection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <motion.div 
             className="cta-content"
@@ -481,7 +470,7 @@ const Services = () => {
             viewport={{ once: true }}
           >
             <h2>Ready to Start Your Project?</h2>
-            <p>Contact us today to discuss your needs and schedule a studio visit.</p>
+            <p>Let's create something amazing together. Contact us today to discuss your next project.</p>
             <Button to="/contact" size="large">Get in Touch</Button>
           </motion.div>
         </div>
@@ -495,7 +484,7 @@ const StyledServices = styled.div`
 `
 
 const ServicesList = styled.section`
-  background-color: #0a0a0a;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#eaeaea'};
 `
 
 const ServiceItem = styled.div`
@@ -545,7 +534,7 @@ const ServiceItem = styled.div`
     h3 {
       font-size: 2rem;
       margin-bottom: 1rem;
-      color: ${({ theme }) => theme.colors.light};
+      color: ${({ theme }) => theme.colors.textPrimary};
       
       @media (max-width: 768px) {
         font-size: 1.8rem;
@@ -554,7 +543,7 @@ const ServiceItem = styled.div`
     
     .description {
       font-size: 1.1rem;
-      color: rgba(255, 255, 255, 0.8);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
       margin-bottom: 1.5rem;
       line-height: 1.6;
     }
@@ -572,7 +561,7 @@ const ServiceItem = styled.div`
         display: flex;
         align-items: flex-start;
         gap: 0.5rem;
-        color: rgba(255, 255, 255, 0.7);
+        color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
         
         svg {
           margin-top: 4px;
@@ -631,7 +620,7 @@ const ContactFormSection = styled.section`
       }
       
       p {
-        color: rgba(255, 255, 255, 0.7);
+        color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
         margin-bottom: 2rem;
       }
     }
@@ -709,7 +698,7 @@ const ContactFormSection = styled.section`
 `
 
 const ProcessSection = styled.section`
-  background-color: #0a0a0a;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#f5f5f7'};
   
   .process-steps {
     display: grid;
@@ -759,10 +748,11 @@ const ProcessSection = styled.section`
       h3 {
         margin-bottom: 1rem;
         font-size: 1.5rem;
+        color: ${({ theme }) => theme.colors.textPrimary};
       }
       
       p {
-        color: rgba(255, 255, 255, 0.7);
+        color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
         font-size: 0.95rem;
         line-height: 1.6;
       }
@@ -772,8 +762,8 @@ const ProcessSection = styled.section`
 
 const CTASection = styled.section`
   background: linear-gradient(
-    rgba(10, 10, 10, 0.85), 
-    rgba(10, 10, 10, 0.85)
+    ${({ $isDarkMode }) => $isDarkMode ? 'rgba(10, 10, 10, 0.85)' : 'rgba(245, 245, 247, 0.85)'}, 
+    ${({ $isDarkMode }) => $isDarkMode ? 'rgba(10, 10, 10, 0.85)' : 'rgba(245, 245, 247, 0.85)'}
   ), url('https://images.unsplash.com/photo-1574022909844-0bc8ebc40f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
   background-size: cover;
   background-position: center;
@@ -797,7 +787,7 @@ const CTASection = styled.section`
     }
     
     p {
-      color: rgba(255, 255, 255, 0.8);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
       font-size: 1.25rem;
       margin-bottom: 2.5rem;
       
