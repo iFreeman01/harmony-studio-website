@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import Button from '../components/Button'
 import SectionHeader from '../components/SectionHeader'
 import ServiceCard from '../components/ServiceCard'
+import Studio4Img from '../assets/about/Studio_4.webp'
+import { useTheme } from '../context/ThemeContext'
 
 // Placeholder data for services
 const services = [
@@ -66,6 +68,7 @@ const testimonials = [
 
 const Home = () => {
   const videoRef = useRef(null)
+  const { isDarkMode } = useTheme();
   
   // Autoplay video when component mounts
   useEffect(() => {
@@ -79,7 +82,7 @@ const Home = () => {
   return (
     <StyledHome>
       {/* Hero Section */}
-      <HeroSection>
+      <HeroSection $isDarkMode={isDarkMode}>
         <video 
           ref={videoRef}
           autoPlay 
@@ -128,25 +131,24 @@ const Home = () => {
       </HeroSection>
 
       {/* About Section */}
-      <AboutSection className="section">
+      <AboutSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <div className="about-grid">
             <div className="about-image">
-              <motion.img 
-                src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80" 
-                alt="Recording Studio"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-              />
+              <motion.div className="about-image-wrapper" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+                <img 
+                  src={Studio4Img}
+                  alt="Casa Koba Studio"
+                  className="about-img"
+                />
+                <div className="about-img-overlay"></div>
+              </motion.div>
             </div>
             <div className="about-content">
               <SectionHeader 
                 subtitle="About Us"
-                title="Crafting Sound Since 2010"
-                description="Casa Koba is a premium recording facility designed for artists who demand excellence. Our state-of-the-art equipment and acoustically perfected spaces create the ideal environment for your creative vision."
-                light
+                title="A Home for Creativity"
+                description="Casa Koba was born from a love of music and a dream to help artists realize their sound. Our home studio is a creative space where passion and professionalism come together, offering personalized guidance and top-tier sound for every project."
               />
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -165,14 +167,13 @@ const Home = () => {
       </AboutSection>
 
       {/* Services Section */}
-      <ServicesSection className="section">
+      <ServicesSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
             subtitle="Our Services"
             title="Professional Audio Solutions"
             description="From recording and mixing to mastering and production, we offer a comprehensive suite of services to bring your music to life."
             centered
-            light
           />
           <div className="services-grid">
             {services.map((service) => (
@@ -199,14 +200,13 @@ const Home = () => {
       </ServicesSection>
 
       {/* Testimonials Section */}
-      <TestimonialsSection className="section">
+      <TestimonialsSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
             subtitle="Testimonials"
             title="What Our Clients Say"
             description="Don't just take our word for it. Hear from the artists who've created their masterpieces with us."
             centered
-            light
           />
           <div className="testimonials-grid">
             {testimonials.map((testimonial) => (
@@ -234,7 +234,7 @@ const Home = () => {
       </TestimonialsSection>
 
       {/* CTA Section */}
-      <CTASection className="section">
+      <CTASection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <motion.div 
             className="cta-content"
@@ -245,7 +245,7 @@ const Home = () => {
           >
             <h2>Ready to Create Your Masterpiece?</h2>
             <p>Book a session at Casa Koba today and take your music to the next level.</p>
-            <Button to="/contact" size="large">Book a Session</Button>
+            <Button to="/contact" size="large">Contact me</Button>
           </motion.div>
         </div>
       </CTASection>
@@ -263,7 +263,7 @@ const HeroSection = styled.section`
   align-items: center;
   justify-content: center;
   position: relative;
-  color: white;
+  color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
   
   .hero-video {
     position: absolute;
@@ -298,6 +298,7 @@ const HeroSection = styled.section`
     h1 {
       font-size: 4.5rem;
       margin-bottom: 1.5rem;
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
       
       @media (max-width: 768px) {
         font-size: 2.8rem;
@@ -310,6 +311,7 @@ const HeroSection = styled.section`
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
       
       @media (max-width: 768px) {
         font-size: 1.1rem;
@@ -381,7 +383,7 @@ const HeroSection = styled.section`
 `
 
 const AboutSection = styled.section`
-  background-color: #0a0a0a;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#fff'};
   
   .about-grid {
     display: grid;
@@ -423,7 +425,7 @@ const AboutSection = styled.section`
   
   .about-content {
     p {
-      color: rgba(255, 255, 255, 0.7);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
       margin-bottom: 2rem;
       font-size: 1.1rem;
       line-height: 1.8;
@@ -433,10 +435,32 @@ const AboutSection = styled.section`
       margin-top: 2rem;
     }
   }
+
+  .about-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .about-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+  .about-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(162,88,239,0.45) 0%, rgba(108,119,235,0.35) 100%);
+    pointer-events: none;
+  }
 `
 
 const ServicesSection = styled.section`
-  background-color: #0d0d0d;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0d0d0d' : '#f7f7f9'};
   
   .services-grid {
     display: grid;
@@ -457,10 +481,25 @@ const ServicesSection = styled.section`
     margin-top: 4rem;
     text-align: center;
   }
+
+  .section-header {
+    h2, h3, h4, p, span {
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
+    }
+  }
+
+  .service-card {
+    background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.03)' : '#fff'};
+    border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.05)' : '#eee'};
+    color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
+    h3, p {
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.95)' : '#222'};
+    }
+  }
 `
 
 const TestimonialsSection = styled.section`
-  background-color: #0a0a0a;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#f5f5f7'};
   
   .testimonials-grid {
     display: grid;
@@ -474,8 +513,8 @@ const TestimonialsSection = styled.section`
   }
   
   .testimonial-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.03)' : '#fff'};
+    border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.05)' : '#eee'};
     border-radius: 12px;
     padding: 2rem;
     height: 100%;
@@ -490,7 +529,7 @@ const TestimonialsSection = styled.section`
     }
     
     .quote {
-      color: rgba(255, 255, 255, 0.8);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.8)' : '#222'};
       font-size: 1.1rem;
       line-height: 1.7;
       margin-bottom: 2rem;
@@ -499,7 +538,7 @@ const TestimonialsSection = styled.section`
     
     .author-info {
       h4 {
-        color: white;
+        color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
         margin-bottom: 0.25rem;
       }
       
@@ -512,10 +551,9 @@ const TestimonialsSection = styled.section`
 `
 
 const CTASection = styled.section`
-  background: linear-gradient(
-    rgba(10, 10, 10, 0.85), 
-    rgba(10, 10, 10, 0.85)
-  ), url('https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80');
+  background: ${({ $isDarkMode }) => $isDarkMode
+    ? 'linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.85)), url(https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80)'
+    : 'linear-gradient(rgba(255,255,255,0.92), rgba(245,245,247,0.92)), url(https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80)'};
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -538,7 +576,7 @@ const CTASection = styled.section`
     }
     
     p {
-      color: rgba(255, 255, 255, 0.8);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
       font-size: 1.25rem;
       margin-bottom: 2.5rem;
       

@@ -143,7 +143,6 @@ const Gallery = () => {
             title="Visual Tour of Harmony Studio"
             description="Take a virtual tour through our world-class facilities, equipment, and recording sessions."
             centered
-            light
           />
 
           {/* Filter categories */}
@@ -232,6 +231,10 @@ const StyledGallery = styled.div`
 
 const GallerySection = styled.section`
   background-color: #0a0a0a;
+  color: white;
+  h1, h2, h3, h4, h5, h6, p, span, .section-header, .category, .overlay, .gallery-item, .gallery-item * {
+    color: white !important;
+  }
 `
 
 const Categories = styled.div`

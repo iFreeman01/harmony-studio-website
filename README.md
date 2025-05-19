@@ -1,6 +1,6 @@
-# Harmony Studio Website
+# Music Studio Website
 
-A professional, modern, and fully responsive website for a premium music recording studio. This project showcases a visually appealing design with smooth animations and a user-friendly interface.
+A professional, modern, and fully responsive website for a premium music recording studio built with React and Vite. This project showcases a visually appealing design with smooth animations and a user-friendly interface.
 
 ## 🚀 Features
 
@@ -11,7 +11,6 @@ A professional, modern, and fully responsive website for a premium music recordi
 - **Reusable Components**: Well-structured, modular code
 - **Form Validation**: Client-side validation for the contact form
 - **Image Gallery**: Filterable gallery with lightbox functionality
-- **SEO Friendly**: Semantic HTML and proper meta tags
 - **Accessible**: ARIA attributes and keyboard navigation support
 
 ## 🛠️ Technologies Used
@@ -21,15 +20,15 @@ A professional, modern, and fully responsive website for a premium music recordi
 - **React Router**: For seamless page navigation
 - **Styled Components**: CSS-in-JS for component styling
 - **Framer Motion**: Animation library for React
-- **Responsive Design**: Flexbox and CSS Grid
+- **Form Validation**: Using Yup and DOMPurify for secure input handling
 
 ## 📋 Pages
 
-1. **Home**: Hero section with video background and introduction to the studio
-2. **About**: Studio history, team members, values, and facilities
-3. **Services**: Detailed overview of recording, mixing, mastering services
-4. **Gallery**: Filterable photo gallery of the studio spaces and equipment
-5. **Contact**: Contact form and information, map, and booking options
+1. **Home**: Hero section with video background, services overview, and testimonials
+2. **About**: Studio history, team profiles, and facilities information
+3. **Services**: Detailed service descriptions and pricing packages
+4. **Gallery**: Filterable image grid with lightbox functionality
+5. **Contact**: Form with validation and Google Maps integration
 
 ## 🚀 Getting Started
 
@@ -41,26 +40,53 @@ A professional, modern, and fully responsive website for a premium music recordi
 ### Installation
 
 1. Clone the repository
-```bash
-git clone https://github.com/yourusername/harmony-studio-website.git
-cd harmony-studio-website
-```
-
-2. Install dependencies
+2. Install dependencies:
 ```bash
 npm install
-# or
-yarn
 ```
-
-3. Start the development server
+3. Start the development server:
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-4. Open your browser and navigate to `http://localhost:3000`
+## 📤 Sharing Previews
+
+### Local Preview
+To generate and preview a production build locally:
+
+```bash
+# Build the project
+npm run build
+
+# Preview the production build
+npm run preview
+```
+The preview will be available at `http://localhost:4173`
+
+### Public Preview (Temporary)
+To create a temporary public URL for client review:
+
+1. Install ngrok globally (if not already installed):
+```bash
+npm install -g ngrok
+```
+
+2. Start the preview server:
+```bash
+npm run build && npm run preview
+```
+
+3. In a new terminal, create a temporary public URL:
+```bash
+npx ngrok http 4173
+```
+
+The ngrok URL will be displayed in the terminal. Note that this URL expires when the ngrok process stops.
+
+### Security Notes
+- Never commit the `dist/` folder or `.env` files to the repository
+- Before sharing previews, scan the `dist/` folder for any accidental secrets or API keys
+- If using environment variables, ensure they are properly configured in your deployment platform
 
 ## 🏗️ Project Structure
 
@@ -75,7 +101,9 @@ yarn dev
 │   │   ├── Navbar.jsx  # Navigation component
 │   │   ├── PageHeader.jsx    # Page header component
 │   │   ├── SectionHeader.jsx # Section header component
-│   │   └── ServiceCard.jsx   # Service card component
+│   │   ├── ServiceCard.jsx   # Service card component
+│   │   └── ThemeToggle.jsx   # Theme toggle component
+│   ├── context/        # React context providers
 │   ├── pages/          # Page components
 │   │   ├── Home.jsx    # Home page
 │   │   ├── About.jsx   # About page
@@ -83,8 +111,6 @@ yarn dev
 │   │   ├── Gallery.jsx # Gallery page
 │   │   └── Contact.jsx # Contact page
 │   ├── styles/         # Global styles and theme
-│   │   ├── global.css  # Global CSS
-│   │   └── theme.js    # Theme configuration
 │   ├── App.jsx         # Main app component
 │   └── main.jsx        # Entry point
 ├── index.html          # HTML template
@@ -94,11 +120,7 @@ yarn dev
 
 ## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📸 Screenshots
-
-(Add screenshots here when available)
+This project is licensed under the MIT License.
 
 ## 🤝 Acknowledgements
 

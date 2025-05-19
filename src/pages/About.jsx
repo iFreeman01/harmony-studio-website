@@ -3,40 +3,32 @@ import { motion } from 'framer-motion'
 import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import Button from '../components/Button'
+import OurStoryImg from '../assets/about/Our_Story.webp'
+import JohnImg from '../assets/about/John.webp'
+import KobaImg from '../assets/about/Koba.webp'
+import Studio4Img from '../assets/about/Studio_4.webp'
+import { useTheme } from '../context/ThemeContext'
 
 // Team member data
 const teamMembers = [
   {
     id: 1,
-    name: 'David Mitchell',
-    role: 'Studio Director & Head Engineer',
-    bio: 'With over 15 years of experience in the industry, David has worked with Grammy-winning artists and brings unparalleled expertise to every session.',
-    image: 'https://images.unsplash.com/photo-1558222218-b7b54eede3f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+    name: 'John Freeman',
+    role: 'Composer & Musician',
+    bio: 'Composer and musician passionate about drums and music creation, dedicated to helping others fulfill their dreams through production and the love of art.',
+    image: JohnImg
   },
   {
     id: 2,
-    name: 'Sarah Johnson',
-    role: 'Senior Sound Engineer',
-    bio: 'Sarah specializes in vocal production and has a talent for creating intimate, emotionally resonant recordings that capture the artist\'s true essence.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'
-  },
-  {
-    id: 3,
-    name: 'Michael Rodriguez',
-    role: 'Mixing & Mastering Engineer',
-    bio: 'Michael\'s keen ear and technical skills have earned him recognition in the industry, with a specialty in making tracks that translate across all listening platforms.',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
-  },
-  {
-    id: 4,
-    name: 'Elena Torres',
-    role: 'Producer & Composer',
-    bio: 'Elena brings a fresh perspective to every project, with a background in classical composition and a passion for electronic music production.',
-    image: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+    name: 'Koba',
+    role: 'Cute Pet',
+    bio: 'The studio\'s faithful canine companion, cheerful and playful, who inspires with his enthusiasm for every note, even though his greatest passion is eating and sleeping.',
+    image: KobaImg
   }
 ]
 
 const About = () => {
+  const { isDarkMode } = useTheme();
   return (
     <StyledAbout>
       <PageHeader 
@@ -46,15 +38,15 @@ const About = () => {
       />
 
       {/* Story Section */}
-      <StorySection className="section">
+      <StorySection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <div className="story-grid">
             <div className="story-content">
               <SectionHeader 
                 subtitle="Our Story"
                 title="From Vision to Reality"
-                description="Founded in 2010, Casa Koba began with a simple mission: to create a space where artists could bring their musical visions to life without compromise."
-                light
+                description="Born from a deep love for music, Casa Koba is a home studio dedicated to delivering exceptional sound quality in every project."
+                light={isDarkMode}
               />
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -62,14 +54,14 @@ const About = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <p>What started as a small project studio in a basement has grown into one of the most respected recording facilities in the region. Throughout our journey, we've maintained our commitment to sonic excellence, artist comfort, and cutting-edge technology.</p>
-                <p>Today, Casa Koba houses three world-class recording spaces, a dedicated mixing suite, and a mastering room—all designed by leading acoustic architects and equipped with the finest gear available.</p>
+                <p>What began as a simple idea has grown into a creative hub, offering recording, mixing, and personalized guidance to artists. With a passion for nurturing talent, we strive to make every musical vision a reality.</p>
+                <p>Our goal is to become Puebla's premier studio, where creativity meets professionalism in a welcoming, inspiring space. At Casa Koba, we believe great music starts with passion—and we're here to help you share yours with the world.</p>
               </motion.div>
             </div>
             <div className="story-image">
               <motion.img 
-                src="https://images.unsplash.com/photo-1547922657-b370d1687eb1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
-                alt="Casa Koba in 2010"
+                src={OurStoryImg}
+                alt="Casa Koba Studio"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
@@ -81,14 +73,14 @@ const About = () => {
       </StorySection>
 
       {/* Values Section */}
-      <ValuesSection className="section">
+      <ValuesSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
             subtitle="Our Values"
             title="What Sets Us Apart"
             description="At Casa Koba, our approach is guided by core principles that ensure every project receives the care and attention it deserves."
             centered
-            light
+            light={isDarkMode}
           />
           <div className="values-grid">
             <motion.div 
@@ -159,14 +151,14 @@ const About = () => {
       </ValuesSection>
 
       {/* Team Section */}
-      <TeamSection className="section">
+      <TeamSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
             subtitle="Our Team"
             title="Meet the Experts"
             description="Our team of skilled professionals brings diverse experiences and specialized expertise to every project."
             centered
-            light
+            light={isDarkMode}
           />
           <div className="team-grid">
             {teamMembers.map((member) => (
@@ -194,15 +186,15 @@ const About = () => {
       </TeamSection>
 
       {/* Facilities Section */}
-      <FacilitiesSection className="section">
+      <FacilitiesSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <div className="facilities-grid">
             <div className="facilities-content">
               <SectionHeader 
                 subtitle="Our Facilities"
-                title="World-Class Recording Spaces"
-                description="Our studio complex features three distinct recording environments, each designed to complement different musical styles and recording needs."
-                light
+                title="Our Home Studio"
+                description="At Casa Koba, we provide top-tier equipment and services to bring your music to life."
+                light={isDarkMode}
               />
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -212,54 +204,40 @@ const About = () => {
               >
                 <ul>
                   <li>
-                    <strong>Studio A:</strong> Our flagship live room (1,200 sq ft) with variable acoustics, perfect for full bands and orchestral recordings.
+                    <strong>Instrument Recording:</strong> Capture the best tones for guitar, bass, drums, and piano.
                   </li>
                   <li>
-                    <strong>Studio B:</strong> A medium-sized tracking room (800 sq ft) with a warm, intimate sound, ideal for vocal sessions and smaller ensembles.
+                    <strong>Vocal Tracking:</strong> Professional vocal booths for crisp, clear recordings.
                   </li>
                   <li>
-                    <strong>Studio C:</strong> A versatile production suite optimized for electronic music, beat-making, and overdubs.
+                    <strong>Mixing & Mastering:</strong> Precision engineering to polish your sound.
                   </li>
                   <li>
-                    <strong>Mixing Suite:</strong> A precision-tuned control room equipped with industry-standard monitoring and analog summing.
-                  </li>
-                  <li>
-                    <strong>Mastering Room:</strong> Our specialized mastering environment with exceptional acoustics and pristine conversion.
+                    <strong>Dolby Atmos Mixing:</strong> Immersive spatial audio for cutting-edge productions.
                   </li>
                 </ul>
+                <p>Every detail is designed to ensure your project meets the highest standards—because your music deserves nothing less.</p>
                 <div className="facilities-buttons">
                   <Button to="/gallery">View Studio Gallery</Button>
                 </div>
               </motion.div>
             </div>
-            <div className="facilities-images">
-              <motion.div 
-                className="image-grid"
+            <div className="facilities-image">
+              <motion.img 
+                src={Studio4Img}
+                alt="Casa Koba Studio Facilities"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-              >
-                <div className="grid-item">
-                  <img src="https://images.unsplash.com/photo-1598653222000-6b7b7a552625?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Studio A" />
-                </div>
-                <div className="grid-item">
-                  <img src="https://images.unsplash.com/photo-1589903308904-1010c2294adc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Studio B" />
-                </div>
-                <div className="grid-item">
-                  <img src="https://images.unsplash.com/photo-1506780789966-5f2bd63f216a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1175&q=80" alt="Studio C" />
-                </div>
-                <div className="grid-item">
-                  <img src="https://images.unsplash.com/photo-1519419166318-4f5c601b8e6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Mixing Suite" />
-                </div>
-              </motion.div>
+              />
             </div>
           </div>
         </div>
       </FacilitiesSection>
 
       {/* CTA Section */}
-      <CTASection className="section">
+      <CTASection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <motion.div 
             className="cta-content"
@@ -286,7 +264,7 @@ const StyledAbout = styled.div`
 `
 
 const StorySection = styled.section`
-  background-color: #0a0a0a;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#fff'};
   
   .story-grid {
     display: grid;
@@ -301,7 +279,7 @@ const StorySection = styled.section`
   
   .story-content {
     p {
-      color: rgba(255, 255, 255, 0.7);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
       margin-bottom: 1.5rem;
       font-size: 1.1rem;
       line-height: 1.8;
@@ -319,7 +297,7 @@ const StorySection = styled.section`
 `
 
 const ValuesSection = styled.section`
-  background-color: #0d0d0d;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0d0d0d' : '#f7f7f9'};
   
   .values-grid {
     display: grid;
@@ -373,14 +351,14 @@ const ValuesSection = styled.section`
     }
     
     p {
-      color: rgba(255, 255, 255, 0.7);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
       line-height: 1.7;
     }
   }
 `
 
 const TeamSection = styled.section`
-  background-color: #0a0a0a;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#f5f5f7'};
   
   .team-grid {
     display: grid;
@@ -437,7 +415,7 @@ const TeamSection = styled.section`
       }
       
       p {
-        color: rgba(255, 255, 255, 0.7);
+        color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
         font-size: 0.95rem;
         line-height: 1.6;
       }
@@ -446,7 +424,7 @@ const TeamSection = styled.section`
 `
 
 const FacilitiesSection = styled.section`
-  background-color: #0d0d0d;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0d0d0d' : '#f7f7f9'};
   
   .facilities-grid {
     display: grid;
@@ -465,7 +443,7 @@ const FacilitiesSection = styled.section`
       padding-left: 1.5rem;
       
       li {
-        color: rgba(255, 255, 255, 0.7);
+        color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
         margin-bottom: 1rem;
         font-size: 1.05rem;
         line-height: 1.6;
@@ -484,7 +462,7 @@ const FacilitiesSection = styled.section`
         }
         
         strong {
-          color: ${({ theme }) => theme.colors.light};
+          color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
           font-weight: 600;
         }
       }
@@ -495,38 +473,20 @@ const FacilitiesSection = styled.section`
     }
   }
   
-  .facilities-images {
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 1rem;
-      
-      .grid-item {
-        border-radius: 8px;
-        overflow: hidden;
-        height: 200px;
-        
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          transition: all 0.5s ease;
-          
-          &:hover {
-            transform: scale(1.05);
-          }
-        }
-      }
+  .facilities-image {
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: ${({ theme }) => theme.shadows.large};
     }
   }
 `
 
 const CTASection = styled.section`
-  background: linear-gradient(
-    rgba(10, 10, 10, 0.85), 
-    rgba(10, 10, 10, 0.85)
-  ), url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80');
+  background: ${({ $isDarkMode }) => $isDarkMode
+    ? 'linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.85)), url(https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80)'
+    : 'linear-gradient(rgba(255,255,255,0.92), rgba(245,245,247,0.92)), url(https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80)'};
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -539,7 +499,7 @@ const CTASection = styled.section`
     h2 {
       font-size: 3rem;
       margin-bottom: 1.5rem;
-      color: ${({ theme }) => theme.colors.light};
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
       
       @media (max-width: 768px) {
         font-size: 2.2rem;
@@ -547,7 +507,7 @@ const CTASection = styled.section`
     }
     
     p {
-      color: rgba(255, 255, 255, 0.8);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
       font-size: 1.25rem;
       margin-bottom: 2.5rem;
       

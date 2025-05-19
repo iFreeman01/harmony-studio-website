@@ -7,6 +7,7 @@ import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import Button from '../components/Button'
 import { useTheme } from '../context/ThemeContext'
+import { Link } from 'react-router-dom'
 
 // Function to generate CSRF token
 const generateCSRFToken = () => {
@@ -152,7 +153,8 @@ const Services = () => {
     email: '',
     phone: '',
     subject: '',
-    message: ''
+    message: '',
+    privacyConsent: false
   })
   
   const [formErrors, setFormErrors] = useState({})
@@ -171,7 +173,8 @@ const Services = () => {
     email: Yup.string().email('Email is invalid').required('Email is required'),
     phone: Yup.string().matches(/^[0-9()-\s+]*$/, 'Phone number is not valid'),
     subject: Yup.string().required('Subject is required'),
-    message: Yup.string().required('Message is required')
+    message: Yup.string().required('Message is required'),
+    privacyConsent: Yup.boolean().oneOf([true], 'You must accept the Privacy Policy to continue')
   })
   
   // Handle form input changes
@@ -182,6 +185,17 @@ const Services = () => {
     setFormData({ ...formData, [name]: sanitizedValue })
     
     // Clear error when user types
+    if (formErrors[name]) {
+      setFormErrors({ ...formErrors, [name]: '' })
+    }
+  }
+  
+  // Handle checkbox change
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target
+    setFormData({ ...formData, [name]: checked })
+    
+    // Clear error when user checks the box
     if (formErrors[name]) {
       setFormErrors({ ...formErrors, [name]: '' })
     }
@@ -224,7 +238,8 @@ const Services = () => {
         email: '',
         phone: '',
         subject: '',
-        message: ''
+        message: '',
+        privacyConsent: false
       })
       // Regenerate CSRF token after successful submission
       setCsrfToken(generateCSRFToken())
@@ -396,6 +411,19 @@ const Services = () => {
                       placeholder="Please include details about your project, timeline, and any specific requirements."
                     ></textarea>
                     {formErrors.message && <span className="error-message">{formErrors.message}</span>}
+                  </div>
+                  
+                  <div className="form-group privacy-consent">
+                    <label className="checkbox-label">
+                      <input 
+                        type="checkbox" 
+                        name="privacyConsent" 
+                        checked={formData.privacyConsent}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span>He leído y acepto el <Link to="/privacy-policy" target="_blank">Aviso de Privacidad</Link></span>
+                    </label>
+                    {formErrors.privacyConsent && <span className="error-message">{formErrors.privacyConsent}</span>}
                   </div>
                   
                   <div className="form-submit">
@@ -678,6 +706,30 @@ const ContactFormSection = styled.section`
         font-size: 0.85rem;
         margin-top: 0.5rem;
         display: block;
+      }
+      
+      &.privacy-consent {
+        .checkbox-label {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.5rem;
+          cursor: pointer;
+          font-size: 0.9rem;
+          
+          input[type="checkbox"] {
+            width: auto;
+            margin-top: 3px;
+          }
+          
+          a {
+            color: ${({ theme }) => theme.colors.primary};
+            text-decoration: none;
+            
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
       }
     }
     

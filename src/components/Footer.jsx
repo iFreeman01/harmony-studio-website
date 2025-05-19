@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { useTheme } from '../context/ThemeContext'
+import { useState } from 'react'
+import PrivacyModal from './PrivacyModal'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
   const { t } = useTheme()
+  const [privacyModalOpen, setPrivacyModalOpen] = useState(false)
   
   return (
     <StyledFooter>
@@ -77,11 +80,16 @@ const Footer = () => {
         <div className="footer-bottom">
           <p>&copy; {currentYear} Casa Koba. {t('allRightsReserved')}.</p>
           <div className="footer-legal">
-            <Link to="/privacy">{t('privacyPolicy')}</Link>
-            <Link to="/terms">{t('termsOfService')}</Link>
+            <button className="privacy-button" onClick={() => setPrivacyModalOpen(true)}>Aviso de Privacidad</button>
+            <span>|</span>
+            <Link to="/privacy-policy">{t('privacyPolicy')}</Link>
+            <span>|</span>
+            <Link to="/terms-of-service">{t('termsOfService')}</Link>
           </div>
         </div>
       </div>
+      
+      <PrivacyModal isOpen={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)} />
     </StyledFooter>
   )
 }
@@ -214,9 +222,10 @@ const StyledFooter = styled.footer`
     
     .footer-legal {
       display: flex;
-      gap: 1.5rem;
+      gap: 1rem;
+      align-items: center;
       
-      a {
+      a, .privacy-button {
         color: #666;
         font-size: 0.9rem;
         transition: all 0.3s ease;
@@ -224,6 +233,19 @@ const StyledFooter = styled.footer`
         &:hover {
           color: ${({ theme }) => theme.colors.primary};
         }
+      }
+
+      span {
+        color: #444;
+        font-size: 0.9rem;
+      }
+
+      .privacy-button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-family: inherit;
       }
     }
   }
