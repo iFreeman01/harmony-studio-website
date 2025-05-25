@@ -9,7 +9,17 @@ export default defineConfig({
     open: true,
     headers: {
       // Content Security Policy headers
-      "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self';",
+      "Content-Security-Policy": `
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://open.spotify.com https://www.youtube-nocookie.com;
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' https://images.unsplash.com https://open.spotify.com data:;
+        frame-src https://www.google.com https://open.spotify.com https://www.youtube-nocookie.com https://www.youtube.com;
+        connect-src 'self' https://open.spotify.com https://www.youtube-nocookie.com;
+        object-src 'none';
+        base-uri 'self';
+      `.replace(/\s+/g, ' ').trim(),
       // Additional security headers
       "X-Content-Type-Options": "nosniff",
       "X-Frame-Options": "SAMEORIGIN",
@@ -22,5 +32,11 @@ export default defineConfig({
     outDir: 'dist',
     minify: 'terser',
     sourcemap: true
+  },
+  preview: {
+    allowedHosts: [
+      'localhost',
+      'b42a-2806-262-486-8163-d597-a415-f5a-d67d.ngrok-free.app'
+    ]
   }
 }) 

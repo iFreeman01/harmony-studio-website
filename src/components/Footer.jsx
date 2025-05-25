@@ -57,11 +57,11 @@ const Footer = () => {
           <div className="footer-services">
             <h3>{t('services')}</h3>
             <ul>
-              <li><Link to="/services">Recording</Link></li>
-              <li><Link to="/services">Mixing</Link></li>
-              <li><Link to="/services">Mastering</Link></li>
-              <li><Link to="/services">Production</Link></li>
-              <li><Link to="/services">Dolby Atmos</Link></li>
+              <li><Link to="/services#recording">Recording</Link></li>
+              <li><Link to="/services#mixing">Mixing</Link></li>
+              <li><Link to="/services#mastering">Mastering</Link></li>
+              <li><Link to="/services#production">Production</Link></li>
+              <li><Link to="/services#dolby-atmos">Dolby Atmos</Link></li>
             </ul>
           </div>
           

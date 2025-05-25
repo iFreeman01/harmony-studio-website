@@ -1,19 +1,9 @@
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
-import DOMPurify from 'dompurify'
-import * as Yup from 'yup'
 import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import Button from '../components/Button'
 import { useTheme } from '../context/ThemeContext'
-import { Link } from 'react-router-dom'
-
-// Function to generate CSRF token
-const generateCSRFToken = () => {
-  return Math.random().toString(36).substring(2, 15) + 
-         Math.random().toString(36).substring(2, 15);
-}
 
 // Services data
 const services = [
@@ -147,104 +137,7 @@ const services = [
 ]
 
 const Services = () => {
-  // Form state for the contact form
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-    privacyConsent: false
-  })
-  
-  const [formErrors, setFormErrors] = useState({})
-  const [formStatus, setFormStatus] = useState(null)
-  const [csrfToken, setCsrfToken] = useState('')
   const { isDarkMode, t } = useTheme()
-  
-  // Generate CSRF token on component mount
-  useEffect(() => {
-    setCsrfToken(generateCSRFToken())
-  }, [])
-
-  // Validation schema using Yup
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().email('Email is invalid').required('Email is required'),
-    phone: Yup.string().matches(/^[0-9()-\s+]*$/, 'Phone number is not valid'),
-    subject: Yup.string().required('Subject is required'),
-    message: Yup.string().required('Message is required'),
-    privacyConsent: Yup.boolean().oneOf([true], 'You must accept the Privacy Policy to continue')
-  })
-  
-  // Handle form input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    // Sanitize input before storing in state
-    const sanitizedValue = DOMPurify.sanitize(value)
-    setFormData({ ...formData, [name]: sanitizedValue })
-    
-    // Clear error when user types
-    if (formErrors[name]) {
-      setFormErrors({ ...formErrors, [name]: '' })
-    }
-  }
-  
-  // Handle checkbox change
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target
-    setFormData({ ...formData, [name]: checked })
-    
-    // Clear error when user checks the box
-    if (formErrors[name]) {
-      setFormErrors({ ...formErrors, [name]: '' })
-    }
-  }
-  
-  // Validate form
-  const validateForm = async () => {
-    try {
-      await validationSchema.validate(formData, { abortEarly: false })
-      return {}
-    } catch (err) {
-      const errors = {}
-      err.inner.forEach(error => {
-        errors[error.path] = error.message
-      })
-      return errors
-    }
-  }
-  
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    
-    // Validate form
-    const errors = await validateForm()
-    
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors)
-      return
-    }
-    
-    // In a real app, you would send the form data and CSRF token to a server here
-    // For now, we'll just simulate a successful submission
-    setFormStatus('sending')
-    
-    setTimeout(() => {
-      setFormStatus('success')
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
-        privacyConsent: false
-      })
-      // Regenerate CSRF token after successful submission
-      setCsrfToken(generateCSRFToken())
-    }, 1500)
-  }
 
   return (
     <StyledServices>
@@ -265,180 +158,60 @@ const Services = () => {
             light={isDarkMode}
           />
 
-          {services.map((service, index) => (
-            <ServiceItem 
-              key={service.id} 
-              className={index % 2 === 0 ? 'even' : 'odd'}
-            >
-              <motion.div 
-                className="service-content"
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
+          <div className="services-grid">
+            {services.map((service) => (
+              <ServiceItem 
+                key={service.id}
+                id={service.id}
+                className="service-card"
+                $isDarkMode={isDarkMode}
               >
-                <div className="service-icon">
-                  {service.icon}
+                <div className="service-content">
+                  <div className="service-icon">
+                    {service.icon}
+                  </div>
+                  <h3>{service.title}</h3>
+                  <p className="description">{service.description}</p>
+                  <ul className="features">
+                    {service.details.map((detail, idx) => (
+                      <li key={idx}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="9 11 12 14 22 4"></polyline>
+                          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3>{service.title}</h3>
-                <p className="description">{service.description}</p>
-                <ul className="features">
-                  {service.details.map((detail, idx) => (
-                    <li key={idx}>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="9 11 12 14 22 4"></polyline>
-                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                      </svg>
-                      <span>{detail}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-              <motion.div 
-                className="service-image"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <img src={service.image} alt={service.title} />
-              </motion.div>
-            </ServiceItem>
-          ))}
+                <div className="service-image">
+                  <img src={service.image} alt={service.title} />
+                </div>
+              </ServiceItem>
+            ))}
+          </div>
         </div>
       </ServicesList>
 
-      {/* Contact Form Section (Replacing Pricing) */}
+      {/* Quote Request Section */}
       <ContactFormSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
-          <SectionHeader 
-            subtitle={t('getInTouch')}
-            title="Request a Quote"
-            description="Interested in our services? Fill out the form below and we'll contact you with a personalized quote for your project."
-            centered
-            light={isDarkMode}
-          />
-          
-          <div className="form-container">
-            <motion.div 
-              className="contact-form"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+          <motion.div 
+            className="cta-content"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2>Request a Quote</h2>
+            <p>Interested in our services? Get in touch with us to discuss your project and receive a personalized quote.</p>
+            <Button 
+              href="mailto:info@casakoba.com.mx?subject=Quote Request&body=Hello, I'm interested in your services. Please provide me with a quote for my project."
+              size="large"
             >
-              {formStatus === 'success' ? (
-                <div className="success-message">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                  </svg>
-                  <h4>{t('messageSent')}</h4>
-                  <p>{t('thankYou')}</p>
-                  <Button onClick={() => setFormStatus(null)}>{t('sendAnotherMessage')}</Button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  {/* Hidden CSRF token field */}
-                  <input type="hidden" name="csrf_token" value={csrfToken} />
-                  
-                  <div className="form-group">
-                    <label htmlFor="name">{t('name')}*</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      name="name" 
-                      value={formData.name}
-                      onChange={handleChange}
-                      className={formErrors.name ? 'error' : ''}
-                    />
-                    {formErrors.name && <span className="error-message">{formErrors.name}</span>}
-                  </div>
-                  
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="email">{t('email')}*</label>
-                      <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        value={formData.email}
-                        onChange={handleChange}
-                        className={formErrors.email ? 'error' : ''}
-                      />
-                      {formErrors.email && <span className="error-message">{formErrors.email}</span>}
-                    </div>
-                    
-                    <div className="form-group">
-                      <label htmlFor="phone">{t('phone')} ({t('optional')})</label>
-                      <input 
-                        type="tel" 
-                        id="phone" 
-                        name="phone" 
-                        value={formData.phone}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="form-group">
-                    <label htmlFor="subject">{t('serviceInterestedIn')}*</label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className={formErrors.subject ? 'error' : ''}
-                    >
-                      <option value="">Select a service</option>
-                      {services.map(service => (
-                        <option key={service.id} value={service.title}>{service.title}</option>
-                      ))}
-                      <option value="Other">Other</option>
-                    </select>
-                    {formErrors.subject && <span className="error-message">{formErrors.subject}</span>}
-                  </div>
-                  
-                  <div className="form-group">
-                    <label htmlFor="message">{t('tellAboutProject')}*</label>
-                    <textarea 
-                      id="message" 
-                      name="message" 
-                      rows="5"
-                      value={formData.message}
-                      onChange={handleChange}
-                      className={formErrors.message ? 'error' : ''}
-                      placeholder="Please include details about your project, timeline, and any specific requirements."
-                    ></textarea>
-                    {formErrors.message && <span className="error-message">{formErrors.message}</span>}
-                  </div>
-                  
-                  <div className="form-group privacy-consent">
-                    <label className="checkbox-label">
-                      <input 
-                        type="checkbox" 
-                        name="privacyConsent" 
-                        checked={formData.privacyConsent}
-                        onChange={handleCheckboxChange}
-                      />
-                      <span>He leído y acepto el <Link to="/privacy-policy" target="_blank">Aviso de Privacidad</Link></span>
-                    </label>
-                    {formErrors.privacyConsent && <span className="error-message">{formErrors.privacyConsent}</span>}
-                  </div>
-                  
-                  <div className="form-submit">
-                    <Button 
-                      type="submit" 
-                      disabled={formStatus === 'sending'}
-                      fullWidth
-                    >
-                      {formStatus === 'sending' ? 'Sending...' : t('requestQuote')}
-                    </Button>
-                  </div>
-                </form>
-              )}
-            </motion.div>
-          </div>
+              Request Quote via Email
+            </Button>
+          </motion.div>
         </div>
       </ContactFormSection>
 
@@ -499,7 +272,12 @@ const Services = () => {
           >
             <h2>Ready to Start Your Project?</h2>
             <p>Let's create something amazing together. Contact us today to discuss your next project.</p>
-            <Button to="/contact" size="large">Get in Touch</Button>
+            <Button 
+              href="mailto:info@casakoba.com.mx?subject=New Project Inquiry&body=Hello, I'm interested in starting a new project with Casa Koba. I'd love to discuss the details with you."
+              size="large"
+            >
+              Contact Us via Email
+            </Button>
           </motion.div>
         </div>
       </CTASection>
@@ -512,33 +290,33 @@ const StyledServices = styled.div`
 `
 
 const ServicesList = styled.section`
-  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#eaeaea'};
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#f5f5f7'};
+  
+  .services-grid {
+    display: grid;
+    gap: 3rem;
+    margin-top: 3rem;
+  }
 `
 
 const ServiceItem = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
-  margin-bottom: 6rem;
-  align-items: center;
+  gap: 2rem;
+  background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.95)'};
+  border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'};
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
   
   @media (min-width: 992px) {
     grid-template-columns: 1fr 1fr;
-    margin-bottom: 8rem;
-    
-    &.odd {
-      .service-content {
-        order: 2;
-      }
-      
-      .service-image {
-        order: 1;
-      }
-    }
+    align-items: center;
   }
   
-  &:last-child {
-    margin-bottom: 0;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: ${({ theme }) => theme.shadows.medium};
   }
   
   .service-content {
@@ -560,13 +338,9 @@ const ServiceItem = styled.div`
     }
     
     h3 {
-      font-size: 2rem;
+      font-size: 1.8rem;
       margin-bottom: 1rem;
       color: ${({ theme }) => theme.colors.textPrimary};
-      
-      @media (max-width: 768px) {
-        font-size: 1.8rem;
-      }
     }
     
     .description {
@@ -578,12 +352,7 @@ const ServiceItem = styled.div`
     
     .features {
       display: grid;
-      grid-template-columns: repeat(1, 1fr);
       gap: 0.8rem;
-      
-      @media (min-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-      }
       
       li {
         display: flex;
@@ -600,9 +369,8 @@ const ServiceItem = styled.div`
   }
   
   .service-image {
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: ${({ theme }) => theme.shadows.medium};
     
     img {
       width: 100%;
@@ -618,133 +386,27 @@ const ServiceItem = styled.div`
 `
 
 const ContactFormSection = styled.section`
-  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0d0d0d' : '#eaeaea'};
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0d0d0d' : '#f5f5f7'};
+  text-align: center;
   
-  .form-container {
+  .cta-content {
     max-width: 800px;
     margin: 0 auto;
-  }
-  
-  .contact-form {
-    background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.8)'};
-    border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'};
-    border-radius: 12px;
-    padding: 2.5rem;
     
-    .success-message {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: ${({ theme }) => theme.colors.textPrimary};
       
-      svg {
-        color: ${({ theme }) => theme.colors.primary};
-        margin-bottom: 1.5rem;
-      }
-      
-      h4 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-      }
-      
-      p {
-        color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
-        margin-bottom: 2rem;
+      @media (max-width: 768px) {
+        font-size: 2rem;
       }
     }
     
-    .form-group {
-      margin-bottom: 1.5rem;
-      
-      label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-size: 0.95rem;
-        color: ${({ theme }) => theme.colors.textPrimary};
-      }
-      
-      input, textarea, select {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.9)'};
-        border: 1px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
-        border-radius: 4px;
-        color: ${({ theme }) => theme.colors.textPrimary};
-        font-family: inherit;
-        transition: all 0.3s ease;
-        
-        &:focus {
-          outline: none;
-          border-color: ${({ theme }) => theme.colors.primary};
-          background: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.07)' : 'rgba(255, 255, 255, 1)'};
-        }
-        
-        &.error {
-          border-color: #f44336;
-        }
-      }
-      
-      select {
-        appearance: none;
-        background-image: ${({ $isDarkMode }) => $isDarkMode 
-          ? `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`
-          : `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e")`
-        };
-        background-repeat: no-repeat;
-        background-position: right 1rem center;
-        background-size: 1em;
-        padding-right: 2.5rem;
-      }
-      
-      select option {
-        background-color: ${({ $isDarkMode }) => $isDarkMode ? '#222' : '#fff'};
-        color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : 'black'};
-      }
-      
-      .error-message {
-        color: #f44336;
-        font-size: 0.85rem;
-        margin-top: 0.5rem;
-        display: block;
-      }
-      
-      &.privacy-consent {
-        .checkbox-label {
-          display: flex;
-          align-items: flex-start;
-          gap: 0.5rem;
-          cursor: pointer;
-          font-size: 0.9rem;
-          
-          input[type="checkbox"] {
-            width: auto;
-            margin-top: 3px;
-          }
-          
-          a {
-            color: ${({ theme }) => theme.colors.primary};
-            text-decoration: none;
-            
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-        }
-      }
-    }
-    
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      
-      @media (min-width: 576px) {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    
-    .form-submit {
-      margin-top: 2rem;
+    p {
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
     }
   }
 `
