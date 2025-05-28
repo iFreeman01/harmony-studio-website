@@ -7,68 +7,68 @@ import ServiceCard from '../components/ServiceCard'
 import Studio4Img from '../assets/about/Studio_4.webp'
 import { useTheme } from '../context/ThemeContext'
 
-// Placeholder data for services
-const services = [
-  {
-    id: 1,
-    title: 'Recording',
-    description: 'State-of-the-art recording facilities with premium microphones, preamps, and acoustically treated rooms.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-      </svg>
-    ),
-    link: '/services'
-  },
-  {
-    id: 2,
-    title: 'Mixing',
-    description: 'Expert mixing services to blend your tracks into a cohesive, professional-sounding production.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-      </svg>
-    ),
-    link: '/services'
-  },
-  {
-    id: 3,
-    title: 'Mastering',
-    description: 'Professional mastering to optimize your music for streaming platforms, vinyl, and other distribution formats.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-      </svg>
-    ),
-    link: '/services'
-  }
-]
-
-// Testimonial data
-const testimonials = [
-  {
-    id: 1,
-    quote: "Working with Harmony Studio was a game-changer for our album. Their attention to detail and technical expertise brought our music to a whole new level.",
-    author: "Alex Johnson",
-    role: "Lead Vocalist, The Resonants"
-  },
-  {
-    id: 2,
-    quote: "The team at Harmony Studio doesn't just record your music, they elevate it. Their state-of-the-art equipment and experienced engineers create magic.",
-    author: "Samantha Lee",
-    role: "Grammy-nominated Artist"
-  },
-  {
-    id: 3,
-    quote: "I've recorded in studios all over the world, but the vibe and sound quality at Harmony Studio is unmatched. It's become our creative home.",
-    author: "Michael Torres",
-    role: "Producer & Songwriter"
-  }
-]
-
 const Home = () => {
   const videoRef = useRef(null)
-  const { isDarkMode } = useTheme();
+  const { isDarkMode, t } = useTheme();
+  
+  // Placeholder data for services
+  const services = [
+    {
+      id: 1,
+      title: t('recordingTitle'),
+      description: t('recordingDescription'),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+        </svg>
+      ),
+      link: '/services'
+    },
+    {
+      id: 2,
+      title: t('mixingTitle'),
+      description: t('mixingDescription'),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+        </svg>
+      ),
+      link: '/services'
+    },
+    {
+      id: 3,
+      title: t('masteringTitle'),
+      description: t('masteringDescription'),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+        </svg>
+      ),
+      link: '/services'
+    }
+  ]
+
+  // Testimonial data
+  const testimonials = [
+    {
+      id: 1,
+      quote: t('testimonial1'),
+      author: t('testimonial1Author'),
+      role: t('testimonial1Role')
+    },
+    {
+      id: 2,
+      quote: t('testimonial2'),
+      author: t('testimonial2Author'),
+      role: t('testimonial2Role')
+    },
+    {
+      id: 3,
+      quote: t('testimonial3'),
+      author: t('testimonial3Author'),
+      role: t('testimonial3Role')
+    }
+  ]
   
   // Autoplay video when component mounts
   useEffect(() => {
@@ -101,14 +101,14 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            Where Music Comes to Life
+            {t('heroTitle')}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Premium music recording studio with state-of-the-art equipment and exceptional sound engineers.
+            {t('heroSubtitle')}
           </motion.p>
           <motion.div 
             className="hero-buttons"
@@ -116,8 +116,8 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Button to="/services" size="large">Our Services</Button>
-            <Button to="/contact" variant="secondary" size="large">Book a Session</Button>
+            <Button to="/services" size="large">{t('ourServices')}</Button>
+            <Button to="/contact" variant="secondary" size="large">{t('bookSession')}</Button>
           </motion.div>
         </div>
         <div className="scroll-indicator">
@@ -125,7 +125,7 @@ const Home = () => {
             <div className="wheel"></div>
           </div>
           <div>
-            <span className="scroll-text">Scroll Down</span>
+            <span className="scroll-text">{t('scrollDown')}</span>
           </div>
         </div>
       </HeroSection>
@@ -146,9 +146,9 @@ const Home = () => {
             </div>
             <div className="about-content">
               <SectionHeader 
-                subtitle="About Us"
-                title="A Home for Creativity"
-                description="Casa Koba was born from a love of music and a dream to help artists realize their sound. Our home studio is a creative space where passion and professionalism come together, offering personalized guidance and top-tier sound for every project."
+                subtitle={t('aboutUsSubtitle')}
+                title={t('aboutUsTitle')}
+                description={t('aboutUsDescription')}
               />
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -156,9 +156,9 @@ const Home = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <p>Located in the heart of the city, we've helped hundreds of artists bring their musical visions to life. From emerging talents to established stars, our team of experienced engineers and producers are dedicated to achieving the perfect sound for every project.</p>
+                <p>{t('aboutUsContent')}</p>
                 <div className="about-buttons">
-                  <Button to="/about">Learn More</Button>
+                  <Button to="/about">{t('learnMore')}</Button>
                 </div>
               </motion.div>
             </div>
@@ -170,9 +170,9 @@ const Home = () => {
       <ServicesSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
-            subtitle="Our Services"
-            title="Professional Audio Solutions"
-            description="From recording and mixing to mastering and production, we offer a comprehensive suite of services to bring your music to life."
+            subtitle={t('servicesSubtitle')}
+            title={t('servicesTitle')}
+            description={t('servicesDescription')}
             centered
           />
           <div className="services-grid">
@@ -194,7 +194,7 @@ const Home = () => {
             ))}
           </div>
           <div className="services-action">
-            <Button to="/services" variant="secondary">View All Services</Button>
+            <Button to="/services" variant="secondary">{t('viewAllServices')}</Button>
           </div>
         </div>
       </ServicesSection>
@@ -203,9 +203,9 @@ const Home = () => {
       <TestimonialsSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
-            subtitle="Testimonials"
-            title="What Our Clients Say"
-            description="Don't just take our word for it. Hear from the artists who've created their masterpieces with us."
+            subtitle={t('testimonialsSubtitle')}
+            title={t('testimonialsTitle')}
+            description={t('testimonialsDescription')}
             centered
           />
           <div className="testimonials-grid">
@@ -243,9 +243,9 @@ const Home = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2>Ready to Create Your Masterpiece?</h2>
-            <p>Book a session at Casa Koba today and take your music to the next level.</p>
-            <Button to="/contact" size="large">Contact me</Button>
+            <h2>{t('ctaTitle')}</h2>
+            <p>{t('ctaDescription')}</p>
+            <Button to="/contact" size="large">{t('contactMe')}</Button>
           </motion.div>
         </div>
       </CTASection>
@@ -345,14 +345,14 @@ const HeroSection = styled.section`
     .mouse {
       width: 26px;
       height: 42px;
-      border: 2px solid rgba(255, 255, 255, 0.7);
+      border: 2px solid ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
       border-radius: 20px;
       position: relative;
       
       .wheel {
         width: 4px;
         height: 8px;
-        background-color: white;
+        background-color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : 'black'};
         border-radius: 2px;
         position: absolute;
         top: 8px;
@@ -363,7 +363,7 @@ const HeroSection = styled.section`
     }
     
     .scroll-text {
-      color: rgba(255, 255, 255, 0.7);
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)'};
       font-size: 0.8rem;
       letter-spacing: 1px;
       text-transform: uppercase;

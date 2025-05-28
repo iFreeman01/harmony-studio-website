@@ -6,6 +6,8 @@ const darkColors = {
   gray: '#333333',
   lightGray: '#888888',
   background: '#0a0a0a',
+  cardBackground: 'rgba(255, 255, 255, 0.03)',
+  border: 'rgba(255, 255, 255, 0.05)',
   textPrimary: '#ffffff',
   textSecondary: 'rgba(255, 255, 255, 0.7)',
   gradient: 'linear-gradient(90deg, #a258ef 0%, #6c77eb 100%)'
@@ -19,6 +21,8 @@ const lightColors = {
   gray: '#555555',
   lightGray: '#888888',
   background: '#f5f5f7', // Light background with slight purple tint
+  cardBackground: 'rgba(255, 255, 255, 0.95)',
+  border: 'rgba(0, 0, 0, 0.05)',
   textPrimary: '#222222',
   textSecondary: '#555555',
   gradient: 'linear-gradient(90deg, #7a32cb 0%, #4953d6 100%)'

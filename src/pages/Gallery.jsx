@@ -1,32 +1,85 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import PageHeader from '../components/PageHeader';
 import ImageModal from '../components/ImageModal';
+// Import studio images
+import Studio1Img from '../assets/about/Studio_1.webp';
+import Studio2Img from '../assets/about/Studio_2.webp';
+import Studio3Img from '../assets/about/Studio_3.webp';
+import Studio4Img from '../assets/about/Studio_4.webp';
 
 const Gallery = () => {
-  const { isDarkMode } = useTheme();
+  const { isDarkMode, t } = useTheme();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('all');
 
-  // Studio gallery images
-  const studioImages = [
+  // Gallery images organized by categories
+  const galleryImages = [
     {
-      src: '/src/assets/about/Studio_1.webp',
-      alt: 'Recording Studio Equipment'
+      id: 1,
+      src: Studio1Img,
+      alt: t('recordingStudioEquipment'),
+      category: 'homeStudio'
     },
     {
-      src: '/src/assets/about/Studio_2.webp',
-      alt: 'Mixing Console'
+      id: 2,
+      src: Studio2Img,
+      alt: t('mixingConsole'),
+      category: 'equipment'
     },
     {
-      src: '/src/assets/about/Studio_3.webp',
-      alt: 'Studio Control Room'
+      id: 3,
+      src: Studio3Img,
+      alt: t('studioControlRoom'),
+      category: 'homeStudio'
     },
     {
-      src: '/src/assets/about/Studio_4.webp',
-      alt: 'Live Recording Session'
+      id: 4,
+      src: Studio4Img,
+      alt: t('liveRecordingSession'),
+      category: 'sessions'
+    },
+    // Add more placeholder images for demonstration
+    {
+      id: 5,
+      src: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Professional microphone setup",
+      category: 'equipment'
+    },
+    {
+      id: 6,
+      src: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Recording session in progress",
+      category: 'sessions'
+    },
+    {
+      id: 7,
+      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Studio acoustic panels",
+      category: 'homeStudio'
+    },
+    {
+      id: 8,
+      src: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Audio interface and equipment",
+      category: 'equipment'
     }
   ];
+
+  // Filter categories
+  const filterCategories = [
+    { key: 'all', label: t('all') },
+    { key: 'homeStudio', label: t('homeStudio') },
+    { key: 'sessions', label: t('sessions') },
+    { key: 'equipment', label: t('equipment') }
+  ];
+
+  // Filter images based on active filter
+  const filteredImages = activeFilter === 'all' 
+    ? galleryImages 
+    : galleryImages.filter(img => img.category === activeFilter);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -36,47 +89,119 @@ const Gallery = () => {
     setSelectedImage(null);
   };
 
+  const handleFilterChange = (filter) => {
+    setActiveFilter(filter);
+  };
+
   return (
     <StyledGallery>
       <PageHeader 
-        title="Audio Samples & Studio Gallery"
-        subtitle="Listen to our work and explore our studio spaces"
+        title={t('galleryPageTitle')}
+        subtitle={t('galleryPageSubtitle')}
         backgroundImage="https://images.unsplash.com/photo-1577375729152-4c8b5fcda381?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80"
       />
 
       <GallerySection $isDarkMode={isDarkMode}>
         <div className="container">
+          {/* Audio Samples Section */}
           <AudioSamplesContainer>
-            <h2>Listen to Our Samples</h2>
-            <iframe 
-              style={{ borderRadius: '12px' }}
-              src="https://open.spotify.com/embed/playlist/0A05cjkA86rZIsIwgS69zG?utm_source=generator"
-              width="100%"
-              height="352"
-              frameBorder="0"
-              allowFullScreen=""
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-            />
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              {t('listenToSamples')}
+            </motion.h2>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <iframe 
+                style={{ borderRadius: '12px' }}
+                src="https://open.spotify.com/embed/playlist/0A05cjkA86rZIsIwgS69zG?utm_source=generator"
+                width="100%"
+                height="352"
+                frameBorder="0"
+                allowFullScreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              />
+            </motion.div>
           </AudioSamplesContainer>
 
-          <div>
-            <h2>Studio Gallery</h2>
-            <GalleryGrid>
-              {studioImages.map((img, index) => (
-                <GalleryImage
-                  key={index}
-                  src={img.src}
-                  alt={img.alt}
-                  onClick={() => handleImageClick(img)}
-                />
-              ))}
-            </GalleryGrid>
-          </div>
+          {/* Studio Gallery Section */}
+          <StudioGalleryContainer>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              {t('studioGallery')}
+            </motion.h2>
 
+            {/* Filter Buttons */}
+            <FilterContainer>
+              <FilterLabel>{t('filterBy')}:</FilterLabel>
+              <FilterButtons>
+                {filterCategories.map((category) => (
+                  <FilterButton
+                    key={category.key}
+                    $active={activeFilter === category.key}
+                    $isDarkMode={isDarkMode}
+                    onClick={() => handleFilterChange(category.key)}
+                  >
+                    {category.label}
+                  </FilterButton>
+                ))}
+              </FilterButtons>
+            </FilterContainer>
+
+            {/* Gallery Grid */}
+            <GalleryGrid>
+              <AnimatePresence mode="wait">
+                {filteredImages.map((img) => (
+                  <motion.div
+                    key={img.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.3 }}
+                    whileHover={{ y: -5 }}
+                  >
+                    <GalleryImage
+                      src={img.src}
+                      alt={img.alt}
+                      onClick={() => handleImageClick(img)}
+                      loading="lazy"
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </GalleryGrid>
+          </StudioGalleryContainer>
+
+          {/* Video Section */}
           <VideoSection>
-            <h2>Check my latest video</h2>
-            <div className="video-container">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              {t('checkLatestVideo')}
+            </motion.h2>
+            <motion.div 
+              className="video-container"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
               <iframe 
                 width="100%" 
                 height="100%" 
@@ -87,7 +212,7 @@ const Gallery = () => {
                 referrerPolicy="strict-origin-when-cross-origin" 
                 allowFullScreen
               />
-            </div>
+            </motion.div>
           </VideoSection>
         </div>
       </GallerySection>
@@ -133,6 +258,63 @@ const AudioSamplesContainer = styled.div`
   }
 `;
 
+const StudioGalleryContainer = styled.div`
+  margin-bottom: 4rem;
+`;
+
+const FilterContainer = styled.div`
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+`;
+
+const FilterLabel = styled.span`
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: ${({ theme }) => theme.colors.textPrimary};
+`;
+
+const FilterButtons = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+const FilterButton = styled.button`
+  padding: 0.75rem 1.5rem;
+  border: 2px solid ${({ theme }) => theme.colors.primary};
+  border-radius: 25px;
+  background-color: ${({ $active, theme }) => 
+    $active ? theme.colors.primary : 'transparent'};
+  color: ${({ $active, theme }) => 
+    $active ? '#ffffff' : theme.colors.primary};
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: ${({ theme }) => theme.shadows.medium};
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+`;
+
 const GalleryGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -149,12 +331,14 @@ const GalleryImage = styled.img`
   width: 100%;
   height: 300px;
   object-fit: cover;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
+  border-radius: 12px;
+  transition: all 0.3s ease;
   cursor: pointer;
+  box-shadow: ${({ theme }) => theme.shadows.small};
 
   &:hover {
     transform: scale(1.02);
+    box-shadow: ${({ theme }) => theme.shadows.medium};
   }
 `;
 
@@ -189,4 +373,4 @@ const VideoSection = styled.div`
   }
 `;
 
-export default Gallery; 
+export default Gallery;

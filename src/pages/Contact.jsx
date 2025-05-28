@@ -11,7 +11,7 @@ const WHATSAPP_PARTS = {
 }
 
 const Contact = () => {
-  const { isDarkMode } = useTheme();
+  const { isDarkMode, t } = useTheme();
 
   // Construct WhatsApp URL safely
   const getWhatsAppUrl = () => {
@@ -37,8 +37,8 @@ const Contact = () => {
   return (
     <StyledContact>
       <PageHeader 
-        title="Contact Us"
-        subtitle="Get in touch with us through your preferred method"
+        title={t('contactPageTitle')}
+        subtitle={t('contactPageSubtitle')}
         backgroundImage="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
       />
 
@@ -58,14 +58,14 @@ const Contact = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2>Email Us</h2>
-              <p>Have a detailed question? Email us directly, and we'll respond within 24 hours.</p>
+              <h2>{t('emailUs')}</h2>
+              <p>{t('emailUsDescription')}</p>
               <a 
                 href={getEmailUrl()}
                 className="contact-button email-button"
                 aria-label="Send us an email"
               >
-                Send Email
+                {t('sendEmail')}
               </a>
             </motion.div>
 
@@ -83,7 +83,7 @@ const Contact = () => {
                 </svg>
               </div>
               <h2>WhatsApp</h2>
-              <p>Need quick assistance? Chat with us on WhatsApp for real-time support!</p>
+              <p>{t('whatsappDescription')}</p>
               <a 
                 href={getWhatsAppUrl()}
                 className="contact-button whatsapp-button"
@@ -91,7 +91,7 @@ const Contact = () => {
                 rel="noopener noreferrer"
                 aria-label="Chat with us on WhatsApp"
               >
-                Chat on WhatsApp
+                {t('chatOnWhatsApp')}
               </a>
             </motion.div>
           </ContactMethods>

@@ -9,31 +9,32 @@ import KobaImg from '../assets/about/Koba.webp'
 import Studio4Img from '../assets/about/Studio_4.webp'
 import { useTheme } from '../context/ThemeContext'
 
-// Team member data
-const teamMembers = [
-  {
-    id: 1,
-    name: 'John Freeman',
-    role: 'Composer & Musician',
-    bio: 'Composer and musician passionate about drums and music creation, dedicated to helping others fulfill their dreams through production and the love of art.',
-    image: JohnImg
-  },
-  {
-    id: 2,
-    name: 'Koba',
-    role: 'Cute Pet',
-    bio: 'The studio\'s faithful canine companion, cheerful and playful, who inspires with his enthusiasm for every note, even though his greatest passion is eating and sleeping.',
-    image: KobaImg
-  }
-]
-
 const About = () => {
-  const { isDarkMode } = useTheme();
+  const { isDarkMode, t } = useTheme();
+  
+  // Team member data
+  const teamMembers = [
+    {
+      id: 1,
+      name: t('johnFreeman'),
+      role: t('johnRole'),
+      bio: t('johnBio'),
+      image: JohnImg
+    },
+    {
+      id: 2,
+      name: t('koba'),
+      role: t('kobaRole'),
+      bio: t('kobaBio'),
+      image: KobaImg
+    }
+  ]
+  
   return (
     <StyledAbout>
       <PageHeader 
-        title="About Casa Koba"
-        subtitle="Our story, our team, and our mission"
+        title={t('aboutPageTitle')}
+        subtitle={t('aboutPageSubtitle')}
         backgroundImage="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
       />
 
@@ -43,9 +44,9 @@ const About = () => {
           <div className="story-grid">
             <div className="story-content">
               <SectionHeader 
-                subtitle="Our Story"
-                title="From Vision to Reality"
-                description="Born from a deep love for music, Casa Koba is a home studio dedicated to delivering exceptional sound quality in every project."
+                subtitle={t('storySubtitle')}
+                title={t('storyTitle')}
+                description={t('storyDescription')}
                 light={isDarkMode}
               />
               <motion.div
@@ -54,8 +55,8 @@ const About = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <p>What began as a simple idea has grown into a creative hub, offering recording, mixing, and personalized guidance to artists. With a passion for nurturing talent, we strive to make every musical vision a reality.</p>
-                <p>Our goal is to become Puebla's premier studio, where creativity meets professionalism in a welcoming, inspiring space. At Casa Koba, we believe great music starts with passion—and we're here to help you share yours with the world.</p>
+                <p>{t('storyContent1')}</p>
+                <p>{t('storyContent2')}</p>
               </motion.div>
             </div>
             <div className="story-image">
@@ -76,9 +77,9 @@ const About = () => {
       <ValuesSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
-            subtitle="Our Values"
-            title="What Sets Us Apart"
-            description="At Casa Koba, our approach is guided by core principles that ensure every project receives the care and attention it deserves."
+            subtitle={t('valuesSubtitle')}
+            title={t('valuesTitle')}
+            description={t('valuesDescription')}
             centered
             light={isDarkMode}
           />
@@ -95,8 +96,8 @@ const About = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
               </div>
-              <h3>Technical Excellence</h3>
-              <p>We constantly invest in the finest equipment and maintain rigorous technical standards to ensure your recordings sound impeccable.</p>
+              <h3>{t('technicalExcellenceTitle')}</h3>
+              <p>{t('technicalExcellenceDescription')}</p>
             </motion.div>
             
             <motion.div 
@@ -111,8 +112,8 @@ const About = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3>Creative Comfort</h3>
-              <p>We've designed our spaces to inspire creativity and provide a comfortable, relaxed environment where artists can do their best work.</p>
+              <h3>{t('creativeComfortTitle')}</h3>
+              <p>{t('creativeComfortDescription')}</p>
             </motion.div>
             
             <motion.div 
@@ -127,8 +128,8 @@ const About = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-              <h3>Collaborative Approach</h3>
-              <p>We believe in being partners in your creative process, offering guidance when needed while respecting your artistic vision.</p>
+              <h3>{t('collaborativeApproachTitle')}</h3>
+              <p>{t('collaborativeApproachDescription')}</p>
             </motion.div>
             
             <motion.div 
@@ -143,8 +144,8 @@ const About = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3>Innovative Spirit</h3>
-              <p>We're not afraid to push boundaries and explore new techniques, always staying at the forefront of recording technology and practices.</p>
+              <h3>{t('innovativeSpiritTitle')}</h3>
+              <p>{t('innovativeSpiritDescription')}</p>
             </motion.div>
           </div>
         </div>
@@ -154,9 +155,9 @@ const About = () => {
       <TeamSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
-            subtitle="Our Team"
-            title="Meet the Experts"
-            description="Our team of skilled professionals brings diverse experiences and specialized expertise to every project."
+            subtitle={t('teamSubtitle')}
+            title={t('teamTitle')}
+            description={t('teamDescription')}
             centered
             light={isDarkMode}
           />
@@ -191,9 +192,9 @@ const About = () => {
           <div className="facilities-grid">
             <div className="facilities-content">
               <SectionHeader 
-                subtitle="Our Facilities"
-                title="Our Home Studio"
-                description="At Casa Koba, we provide top-tier equipment and services to bring your music to life."
+                subtitle={t('facilitiesSubtitle')}
+                title={t('facilitiesTitle')}
+                description={t('facilitiesDescription')}
                 light={isDarkMode}
               />
               <motion.div
@@ -202,23 +203,58 @@ const About = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <ul>
-                  <li>
-                    <strong>Instrument Recording:</strong> Capture the best tones for guitar, bass, drums, and piano.
-                  </li>
-                  <li>
-                    <strong>Vocal Tracking:</strong> Professional vocal booths for crisp, clear recordings.
-                  </li>
-                  <li>
-                    <strong>Mixing & Mastering:</strong> Precision engineering to polish your sound.
-                  </li>
-                  <li>
-                    <strong>Dolby Atmos Mixing:</strong> Immersive spatial audio for cutting-edge productions.
-                  </li>
-                </ul>
-                <p>Every detail is designed to ensure your project meets the highest standards—because your music deserves nothing less.</p>
+                <p>{t('facilitiesContent1')}</p>
+                <p>{t('facilitiesContent2')}</p>
+                
+                <div className="facilities-list">
+                  <div className="facility-item">
+                    <div className="facility-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>{t('recordingEquipment')}:</strong> {t('recordingEquipmentDesc')}
+                    </div>
+                  </div>
+                  
+                  <div className="facility-item">
+                    <div className="facility-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>{t('acousticTreatment')}:</strong> {t('acousticTreatmentDesc')}
+                    </div>
+                  </div>
+                  
+                  <div className="facility-item">
+                    <div className="facility-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>{t('mixingMastering')}:</strong> {t('mixingMasteringDesc')}
+                    </div>
+                  </div>
+                  
+                  <div className="facility-item">
+                    <div className="facility-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <strong>{t('comfortableEnvironment')}:</strong> {t('comfortableEnvironmentDesc')}
+                    </div>
+                  </div>
+                </div>
+                
                 <div className="facilities-buttons">
-                  <Button to="/gallery">View Studio Gallery</Button>
+                  <Button to="/services">{t('ourServices')}</Button>
+                  <Button to="/contact" variant="secondary">{t('getInTouch')}</Button>
                 </div>
               </motion.div>
             </div>
@@ -246,11 +282,11 @@ const About = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2>Ready to Experience the Casa Koba Difference?</h2>
-            <p>Contact us today to discuss your project or schedule a studio tour.</p>
+            <h2>{t('readyToStartProject')}</h2>
+            <p>{t('getInTouch')}</p>
             <div className="cta-buttons">
-              <Button to="/contact" size="large">Contact Us</Button>
-              <Button to="/services" variant="secondary" size="large">Explore Services</Button>
+              <Button to="/contact" size="large">{t('contactMe')}</Button>
+              <Button to="/services" variant="secondary" size="large">{t('ourServices')}</Button>
             </div>
           </motion.div>
         </div>
@@ -438,42 +474,79 @@ const FacilitiesSection = styled.section`
   }
   
   .facilities-content {
-    ul {
+    p {
+      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    
+    .facilities-list {
       margin: 2rem 0;
-      padding-left: 1.5rem;
       
-      li {
-        color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
-        margin-bottom: 1rem;
-        font-size: 1.05rem;
-        line-height: 1.6;
-        position: relative;
-        list-style-type: none;
+      .facility-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 8px;
+        transition: all 0.3s ease;
         
-        &::before {
-          content: '';
-          position: absolute;
-          left: -1.5rem;
-          top: 0.5rem;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: ${({ theme }) => theme.colors.gradient};
+        &:hover {
+          background: rgba(255, 255, 255, 0.05);
+          transform: translateX(5px);
         }
         
-        strong {
-          color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
-          font-weight: 600;
+        .facility-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: ${({ theme }) => theme.colors.gradient};
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          
+          svg {
+            width: 20px;
+            height: 20px;
+            color: white;
+          }
+        }
+        
+        div:last-child {
+          color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
+          font-size: 1.05rem;
+          line-height: 1.6;
+          
+          strong {
+            color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
+            font-weight: 600;
+          }
         }
       }
     }
     
     .facilities-buttons {
       margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      
+      @media (max-width: 576px) {
+        flex-direction: column;
+      }
     }
   }
   
   .facilities-image {
+    order: 2;
+    
+    @media (min-width: 992px) {
+      order: 0;
+    }
+    
     img {
       width: 100%;
       height: auto;
