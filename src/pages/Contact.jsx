@@ -4,31 +4,15 @@ import { motion } from 'framer-motion'
 import PageHeader from '../components/PageHeader'
 import { useTheme } from '../context/ThemeContext'
 
-// Obfuscate WhatsApp number for security
-const WHATSAPP_PARTS = {
-  countryAndArea: '522',
-  mainNumber: '721847759'
-}
-
 const Contact = () => {
   const { isDarkMode, t } = useTheme();
 
-  // Construct WhatsApp URL safely
-  const getWhatsAppUrl = () => {
-    const fullNumber = WHATSAPP_PARTS.countryAndArea + WHATSAPP_PARTS.mainNumber;
-    const message = encodeURIComponent("Hello Casa Koba, I'd like to inquire about your services.");
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const baseUrl = isMobile ? 'https://wa.me/' : 'https://web.whatsapp.com/send?phone=';
-    
-    return `${baseUrl}${fullNumber}${isMobile ? '?text=' : '&text='}${message}`;
-  };
-
   // Construct email URL safely
   const getEmailUrl = () => {
-    const email = 'info@casakoba.com.mx';
-    const subject = encodeURIComponent('Inquiry about Casa Koba Services');
+    const email = 'info@freemanstudio.com';
+    const subject = encodeURIComponent('Inquiry about Freeman Studio Services');
     const body = encodeURIComponent(
-      'Hello Casa Koba,\n\nI would like to inquire about your services. Please provide me with more information about...'
+      'Hello Freeman Studio,\n\nI would like to inquire about your services. Please provide me with more information about...'
     );
     
     return `mailto:${email}?subject=${subject}&body=${body}`;
@@ -69,30 +53,24 @@ const Contact = () => {
               </a>
             </motion.div>
 
-            {/* WhatsApp Contact Method */}
+            {/* Location Data Box */}
             <motion.div 
-              className="contact-method whatsapp"
+              className="contact-method location"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <div className="method-icon whatsapp-icon">
+              <div className="method-icon location-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
-              <h2>WhatsApp</h2>
-              <p>{t('whatsappDescription')}</p>
-              <a 
-                href={getWhatsAppUrl()}
-                className="contact-button whatsapp-button"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Chat with us on WhatsApp"
-              >
-                {t('chatOnWhatsApp')}
-              </a>
+              <h2>Ubicación</h2>
+              <div className="location-address">
+                <p>Blvd. 18 Sur 5510, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.</p>
+              </div>
             </motion.div>
           </ContactMethods>
         </div>
@@ -163,8 +141,8 @@ const ContactMethods = styled.div`
       justify-content: center;
       margin: 0 auto 1.5rem;
 
-      &.whatsapp-icon {
-        background: #25D366;
+      &.location-icon {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
       }
 
       svg {
@@ -186,6 +164,19 @@ const ContactMethods = styled.div`
       line-height: 1.6;
     }
 
+    .location-address {
+      margin-bottom: 0;
+      
+      p {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: ${({ theme }) => theme.colors.textPrimary};
+        margin-bottom: 0;
+        line-height: 1.5;
+        text-align: center;
+      }
+    }
+
     .contact-button {
       display: inline-block;
       padding: 1rem 2rem;
@@ -201,16 +192,6 @@ const ContactMethods = styled.div`
         &:hover {
           transform: translateY(-2px);
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-      }
-
-      &.whatsapp-button {
-        background: #25D366;
-        color: white;
-
-        &:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
         }
       }
     }

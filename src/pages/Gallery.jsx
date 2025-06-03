@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import PageHeader from '../components/PageHeader';
-import ImageModal from '../components/ImageModal';
 // Import studio images
 import Studio1Img from '../assets/about/Studio_1.webp';
 import Studio2Img from '../assets/about/Studio_2.webp';
@@ -13,9 +12,12 @@ import Studio4Img from '../assets/about/Studio_4.webp';
 const Gallery = () => {
   const { isDarkMode, t } = useTheme();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeFilter, setActiveFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(0);
+  const imagesPerPage = 9;
 
-  // Gallery images organized by categories
+  // Gallery images organized by categories - expanded for demonstration
   const galleryImages = [
     {
       id: 1,
@@ -65,6 +67,66 @@ const Gallery = () => {
       src: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
       alt: "Audio interface and equipment",
       category: 'equipment'
+    },
+    {
+      id: 9,
+      src: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Mixing board close-up",
+      category: 'equipment'
+    },
+    {
+      id: 10,
+      src: "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Vocal recording session",
+      category: 'sessions'
+    },
+    {
+      id: 11,
+      src: "https://images.unsplash.com/photo-1558403871-bb6e8113a32e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Studio monitors",
+      category: 'homeStudio'
+    },
+    {
+      id: 12,
+      src: "https://images.unsplash.com/photo-1569696483293-9d1a3f6d4079?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Mastering equipment",
+      category: 'equipment'
+    },
+    {
+      id: 13,
+      src: "https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Guitar recording",
+      category: 'sessions'
+    },
+    {
+      id: 14,
+      src: "https://images.unsplash.com/photo-1578022761797-b8636ac1773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Studio atmosphere",
+      category: 'homeStudio'
+    },
+    {
+      id: 15,
+      src: "https://images.unsplash.com/photo-1574022909844-0bc8ebc40f10?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Professional headphones",
+      category: 'equipment'
+    },
+    {
+      id: 16,
+      src: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Band recording session",
+      category: 'sessions'
+    },
+    {
+      id: 17,
+      src: "https://images.unsplash.com/photo-1577375729152-4c8b5fcda381?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Studio control room",
+      category: 'homeStudio'
+    },
+    {
+      id: 18,
+      src: "https://images.unsplash.com/photo-1619983081593-e2ba5b543168?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      alt: "Audio production setup",
+      category: 'equipment'
     }
   ];
 
@@ -81,8 +143,24 @@ const Gallery = () => {
     ? galleryImages 
     : galleryImages.filter(img => img.category === activeFilter);
 
-  const handleImageClick = (image) => {
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredImages.length / imagesPerPage);
+
+  // Get current page images
+  const currentImages = filteredImages.slice(
+    currentPage * imagesPerPage,
+    (currentPage + 1) * imagesPerPage
+  );
+
+  // Reset to first page when filter changes
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [activeFilter]);
+
+  const handleImageClick = (image, index) => {
+    const globalIndex = currentPage * imagesPerPage + index;
     setSelectedImage(image);
+    setSelectedImageIndex(globalIndex);
   };
 
   const handleCloseModal = () => {
@@ -91,6 +169,38 @@ const Gallery = () => {
 
   const handleFilterChange = (filter) => {
     setActiveFilter(filter);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage(prev => Math.max(0, prev - 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage(prev => Math.min(totalPages - 1, prev + 1));
+  };
+
+  const handlePrevImage = () => {
+    const newIndex = selectedImageIndex > 0 ? selectedImageIndex - 1 : filteredImages.length - 1;
+    setSelectedImageIndex(newIndex);
+    setSelectedImage(filteredImages[newIndex]);
+    
+    // Check if we need to change page
+    const newPage = Math.floor(newIndex / imagesPerPage);
+    if (newPage !== currentPage) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const handleNextImage = () => {
+    const newIndex = selectedImageIndex < filteredImages.length - 1 ? selectedImageIndex + 1 : 0;
+    setSelectedImageIndex(newIndex);
+    setSelectedImage(filteredImages[newIndex]);
+    
+    // Check if we need to change page
+    const newPage = Math.floor(newIndex / imagesPerPage);
+    if (newPage !== currentPage) {
+      setCurrentPage(newPage);
+    }
   };
 
   return (
@@ -163,9 +273,9 @@ const Gallery = () => {
             {/* Gallery Grid */}
             <GalleryGrid>
               <AnimatePresence mode="wait">
-                {filteredImages.map((img) => (
+                {currentImages.map((img, index) => (
                   <motion.div
-                    key={img.id}
+                    key={`${img.id}-${currentPage}`}
                     layout
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -176,13 +286,42 @@ const Gallery = () => {
                     <GalleryImage
                       src={img.src}
                       alt={img.alt}
-                      onClick={() => handleImageClick(img)}
+                      onClick={() => handleImageClick(img, index)}
                       loading="lazy"
                     />
                   </motion.div>
                 ))}
               </AnimatePresence>
             </GalleryGrid>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <PaginationContainer>
+                <PaginationButton 
+                  onClick={handlePrevPage} 
+                  disabled={currentPage === 0}
+                  $isDarkMode={isDarkMode}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points="15,18 9,12 15,6"></polyline>
+                  </svg>
+                </PaginationButton>
+                
+                <PageInfo $isDarkMode={isDarkMode}>
+                  {currentPage + 1} / {totalPages}
+                </PageInfo>
+                
+                <PaginationButton 
+                  onClick={handleNextPage} 
+                  disabled={currentPage === totalPages - 1}
+                  $isDarkMode={isDarkMode}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points="9,18 15,12 9,6"></polyline>
+                  </svg>
+                </PaginationButton>
+              </PaginationContainer>
+            )}
           </StudioGalleryContainer>
 
           {/* Video Section */}
@@ -202,14 +341,11 @@ const Gallery = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src="https://www.youtube-nocookie.com/embed/5S4yLWRp6wo?si=WOC1A0GLuZHMIU-s" 
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerPolicy="strict-origin-when-cross-origin" 
+              <iframe
+                src="https://www.youtube.com/embed/4_khQYlheNY"
+                title="Freeman Studio Latest Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             </motion.div>
@@ -217,11 +353,55 @@ const Gallery = () => {
         </div>
       </GallerySection>
 
-      <ImageModal 
-        isOpen={selectedImage !== null}
-        onClose={handleCloseModal}
-        image={selectedImage}
-      />
+      {/* Enhanced Image Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <ImageModal
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={handleCloseModal}
+            $isDarkMode={isDarkMode}
+          >
+            <ModalContent onClick={(e) => e.stopPropagation()}>
+              <CloseButton onClick={handleCloseModal} $isDarkMode={isDarkMode}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </CloseButton>
+              
+              <NavigationButton 
+                className="prev" 
+                onClick={handlePrevImage}
+                $isDarkMode={isDarkMode}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="15,18 9,12 15,6"></polyline>
+                </svg>
+              </NavigationButton>
+              
+              <ModalImage src={selectedImage.src} alt={selectedImage.alt} />
+              
+              <NavigationButton 
+                className="next" 
+                onClick={handleNextImage}
+                $isDarkMode={isDarkMode}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="9,18 15,12 9,6"></polyline>
+                </svg>
+              </NavigationButton>
+              
+              <ImageInfo $isDarkMode={isDarkMode}>
+                <h3>{selectedImage.alt}</h3>
+                <p>{selectedImageIndex + 1} / {filteredImages.length}</p>
+              </ImageInfo>
+            </ModalContent>
+          </ImageModal>
+        )}
+      </AnimatePresence>
     </StyledGallery>
   );
 };
@@ -369,6 +549,199 @@ const VideoSection = styled.div`
       width: 100%;
       height: 100%;
       border: none;
+    }
+  }
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+`;
+
+const PaginationButton = styled.button`
+  padding: 0.75rem 1rem;
+  border: 2px solid ${({ theme }) => theme.colors.primary};
+  border-radius: 25px;
+  background-color: ${({ disabled, theme }) => 
+    disabled ? 'rgba(128, 128, 128, 0.3)' : 'transparent'};
+  color: ${({ disabled, theme }) => 
+    disabled ? 'rgba(128, 128, 128, 0.6)' : theme.colors.primary};
+  cursor: ${({ disabled }) => disabled ? 'not-allowed' : 'pointer'};
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover:not(:disabled) {
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: ${({ theme }) => theme.shadows.medium};
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+`;
+
+const PageInfo = styled.span`
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: ${({ theme }) => theme.colors.textPrimary};
+  min-width: 60px;
+  text-align: center;
+`;
+
+const ImageModal = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`;
+
+const ModalContent = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+const NavigationButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 1rem;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.prev {
+    left: 1rem;
+  }
+
+  &.next {
+    right: 1rem;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+    color: ${({ theme }) => theme.colors.primary};
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+    padding: 0.75rem;
+    
+    &.prev {
+      left: 0.5rem;
+    }
+
+    &.next {
+      right: 0.5rem;
+    }
+  }
+`;
+
+const ModalImage = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+`;
+
+const ImageInfo = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  
+  h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem 1.5rem;
+    
+    h3 {
+      font-size: 1rem;
+    }
+    
+    p {
+      font-size: 0.8rem;
     }
   }
 `;

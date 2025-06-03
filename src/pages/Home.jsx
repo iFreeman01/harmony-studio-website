@@ -1,17 +1,15 @@
-import { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import Button from '../components/Button'
 import SectionHeader from '../components/SectionHeader'
 import ServiceCard from '../components/ServiceCard'
-import Studio4Img from '../assets/about/Studio_4.webp'
 import { useTheme } from '../context/ThemeContext'
+import homeBackgroundVideo from '../assets/home/home_background_2.mp4'
 
 const Home = () => {
-  const videoRef = useRef(null)
   const { isDarkMode, t } = useTheme();
   
-  // Placeholder data for services
+  // Placeholder data for services - updated to only include the 4 required services
   const services = [
     {
       id: 1,
@@ -22,7 +20,7 @@ const Home = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
         </svg>
       ),
-      link: '/services'
+      link: '/service/recording'
     },
     {
       id: 2,
@@ -33,10 +31,22 @@ const Home = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
         </svg>
       ),
-      link: '/services'
+      link: '/service/mixing'
     },
     {
       id: 3,
+      title: t('dolbyAtmos'),
+      description: t('dolbyAtmosServiceDesc'),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10.5v3a2.5 2.5 0 005 0v-3a2.5 2.5 0 10-5 0M13.5 10.5v3a2.5 2.5 0 005 0v-3a2.5 2.5 0 10-5 0"/>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7.5 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM18 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM18 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM7.5 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
+        </svg>
+      ),
+      link: '/service/dolby-atmos'
+    },
+    {
+      id: 4,
       title: t('masteringTitle'),
       description: t('masteringDescription'),
       icon: (
@@ -44,7 +54,7 @@ const Home = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
         </svg>
       ),
-      link: '/services'
+      link: '/service/mastering'
     }
   ]
 
@@ -54,44 +64,37 @@ const Home = () => {
       id: 1,
       quote: t('testimonial1'),
       author: t('testimonial1Author'),
-      role: t('testimonial1Role')
+      role: t('testimonial1Role'),
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80'
     },
     {
       id: 2,
       quote: t('testimonial2'),
       author: t('testimonial2Author'),
-      role: t('testimonial2Role')
+      role: t('testimonial2Role'),
+      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80'
     },
     {
       id: 3,
       quote: t('testimonial3'),
       author: t('testimonial3Author'),
-      role: t('testimonial3Role')
+      role: t('testimonial3Role'),
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80'
     }
   ]
-  
-  // Autoplay video when component mounts
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(error => {
-        console.log("Video autoplay was prevented:", error)
-      })
-    }
-  }, [])
   
   return (
     <StyledHome>
       {/* Hero Section */}
       <HeroSection $isDarkMode={isDarkMode}>
-        <video 
-          ref={videoRef}
-          autoPlay 
-          muted 
-          loop 
-          playsInline
+        <video
           className="hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
         >
-          <source src="https://player.vimeo.com/external/370331493.hd.mp4?s=ce49c8c6d8e28a89298ffb4c53a2e842df6d344e&profile_id=175" type="video/mp4" />
+          <source src={homeBackgroundVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="hero-overlay"></div>
@@ -117,7 +120,7 @@ const Home = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
           >
             <Button to="/services" size="large">{t('ourServices')}</Button>
-            <Button to="/contact" variant="secondary" size="large">{t('bookSession')}</Button>
+            <Button to="/gallery" variant="secondary" size="large">{t('viewGallery')}</Button>
           </motion.div>
         </div>
         <div className="scroll-indicator">
@@ -129,42 +132,6 @@ const Home = () => {
           </div>
         </div>
       </HeroSection>
-
-      {/* About Section */}
-      <AboutSection className="section" $isDarkMode={isDarkMode}>
-        <div className="container">
-          <div className="about-grid">
-            <div className="about-image">
-              <motion.div className="about-image-wrapper" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-                <img 
-                  src={Studio4Img}
-                  alt="Casa Koba Studio"
-                  className="about-img"
-                />
-                <div className="about-img-overlay"></div>
-              </motion.div>
-            </div>
-            <div className="about-content">
-              <SectionHeader 
-                subtitle={t('aboutUsSubtitle')}
-                title={t('aboutUsTitle')}
-                description={t('aboutUsDescription')}
-              />
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <p>{t('aboutUsContent')}</p>
-                <div className="about-buttons">
-                  <Button to="/about">{t('learnMore')}</Button>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </AboutSection>
 
       {/* Services Section */}
       <ServicesSection className="section" $isDarkMode={isDarkMode}>
@@ -218,10 +185,7 @@ const Home = () => {
                 transition={{ duration: 0.5, delay: testimonial.id * 0.1 }}
                 viewport={{ once: true }}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="quote-icon">
-                  <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
-                  <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" />
-                </svg>
+                <img src={testimonial.image} alt={testimonial.author} className="testimonial-image" />
                 <p className="quote">{testimonial.quote}</p>
                 <div className="author-info">
                   <h4>{testimonial.author}</h4>
@@ -382,83 +346,6 @@ const HeroSection = styled.section`
   }
 `
 
-const AboutSection = styled.section`
-  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#fff'};
-  
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-    align-items: center;
-    
-    @media (min-width: 992px) {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-  
-  .about-image {
-    position: relative;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: -20px;
-      left: -20px;
-      width: 100%;
-      height: 100%;
-      border: 2px solid ${({ theme }) => theme.colors.primary};
-      z-index: 1;
-      
-      @media (max-width: 768px) {
-        display: none;
-      }
-    }
-    
-    img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      position: relative;
-      z-index: 2;
-    }
-  }
-  
-  .about-content {
-    p {
-      color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
-      margin-bottom: 2rem;
-      font-size: 1.1rem;
-      line-height: 1.8;
-    }
-    
-    .about-buttons {
-      margin-top: 2rem;
-    }
-  }
-
-  .about-image-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  .about-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
-  }
-  .about-img-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(162,88,239,0.45) 0%, rgba(108,119,235,0.35) 100%);
-    pointer-events: none;
-  }
-`
-
 const ServicesSection = styled.section`
   background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0d0d0d' : '#f7f7f9'};
   
@@ -520,12 +407,18 @@ const TestimonialsSection = styled.section`
     height: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     position: relative;
     
-    .quote-icon {
-      color: ${({ theme }) => theme.colors.primary};
-      opacity: 0.3;
+    .testimonial-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
       margin-bottom: 1.5rem;
+      border: 4px solid ${({ theme }) => theme.colors.primary};
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
     
     .quote {
@@ -534,17 +427,22 @@ const TestimonialsSection = styled.section`
       line-height: 1.7;
       margin-bottom: 2rem;
       flex: 1;
+      font-style: italic;
     }
     
     .author-info {
+      text-align: center;
+      
       h4 {
         color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
         margin-bottom: 0.25rem;
+        font-size: 1.1rem;
       }
       
       p {
         color: ${({ theme }) => theme.colors.primary};
         font-size: 0.9rem;
+        margin: 0;
       }
     }
   }

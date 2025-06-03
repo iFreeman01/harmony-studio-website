@@ -56,7 +56,7 @@ const ThemeToggle = () => {
 
 const ToggleContainer = styled.div`
   position: fixed;
-  top: 20px;
+  top: 15px; /* Slightly higher than before, but still in navbar area */
   left: 20px;
   display: flex;
   align-items: center;
@@ -68,22 +68,37 @@ const ToggleContainer = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.medium};
   backdrop-filter: blur(10px);
   
+  /* Desktop positioning - keep on left side as requested, within navbar area */
   @media (min-width: 1200px) {
-    left: 40px; /* Move toggle further left on large screens */
+    left: 30px;
+    top: 20px; /* Slightly higher in navbar area */
   }
   
+  @media (max-width: 1199px) and (min-width: 769px) {
+    left: 25px;
+    top: 18px; /* Slightly higher in navbar area */
+  }
+  
+  /* Mobile positioning - move to bottom to avoid navbar overlap */
   @media (max-width: 768px) {
     top: auto;
-    bottom: 20px;
+    bottom: 25px;
     left: 20px;
   }
   
   @media (max-width: 480px) {
     padding: 4px 10px;
-    left: 10px;
-    bottom: 10px;
+    left: 15px;
+    bottom: 20px;
     transform: scale(0.9);
     transform-origin: bottom left;
+  }
+  
+  /* Ensure it doesn't interfere with mobile menu */
+  @media (max-width: 768px) {
+    &:hover {
+      z-index: 102;
+    }
   }
 `
 
@@ -92,6 +107,11 @@ const ThemeToggleSwitch = styled.div`
   width: 84px;
   height: 32px;
   padding: 0;
+  
+  @media (max-width: 480px) {
+    width: 76px;
+    height: 28px;
+  }
 `
 
 const ThemeToggleLabel = styled.label`
@@ -119,18 +139,30 @@ const ThemeToggleLabel = styled.label`
     text-transform: uppercase;
     letter-spacing: 0.5px;
     white-space: nowrap;
+    
+    @media (max-width: 480px) {
+      font-size: 9px;
+    }
   }
   
   .light {
     left: 9px;
     color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.9)'};
     font-weight: ${({ $isDarkMode }) => $isDarkMode ? '400' : '700'};
+    
+    @media (max-width: 480px) {
+      left: 7px;
+    }
   }
   
   .dark {
     right: 9px;
     color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.2)'};
     font-weight: ${({ $isDarkMode }) => $isDarkMode ? '700' : '400'};
+    
+    @media (max-width: 480px) {
+      right: 7px;
+    }
   }
 `
 
@@ -147,10 +179,20 @@ const ThemeToggleSlider = styled(motion.span)`
   align-items: center;
   justify-content: center;
   
+  @media (max-width: 480px) {
+    width: 22px;
+    height: 22px;
+    top: 3px;
+  }
+  
   .toggle-icon {
     font-size: 12px;
     line-height: 1;
     display: flex;
+    
+    @media (max-width: 480px) {
+      font-size: 10px;
+    }
   }
   
   &:before {
@@ -188,6 +230,11 @@ const LanguageToggle = styled.button`
   color: ${({ isDarkMode, theme }) => isDarkMode ? theme.colors.light : theme.colors.dark};
   padding: 0;
   
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+    gap: 4px;
+  }
+  
   span {
     transition: all 0.3s ease;
     
@@ -199,10 +246,6 @@ const LanguageToggle = styled.button`
   
   &:hover span:not(.active) {
     color: ${({ isDarkMode }) => isDarkMode ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)'};
-  }
-  
-  @media (max-width: 480px) {
-    font-size: 0.7rem;
   }
 `
 

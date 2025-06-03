@@ -12,6 +12,7 @@ const translations = {
     home: 'Home',
     about: 'About',
     services: 'Services',
+    sessionDrums: 'Session Drums',
     gallery: 'Gallery',
     contact: 'Contact',
     navigation: 'Navigation',
@@ -24,6 +25,7 @@ const translations = {
     allRightsReserved: 'All rights reserved',
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
+    footerDescription: 'Premium music recording studio with state-of-the-art equipment and exceptional sound engineers.',
     
     // Home page
     heroTitle: 'Where Music Comes to Life',
@@ -36,11 +38,12 @@ const translations = {
     clientTestimonials: 'Client Testimonials',
     readyToStart: 'Ready to Start Your Project?',
     scrollDown: 'Scroll Down',
+    viewGallery: 'View Gallery',
     
     // About section (Home page)
     aboutUsSubtitle: 'About Us',
     aboutUsTitle: 'A Home for Creativity',
-    aboutUsDescription: 'Casa Koba was born from a love of music and a dream to help artists realize their sound. Our home studio is a creative space where passion and professionalism come together, offering personalized guidance and top-tier sound for every project.',
+    aboutUsDescription: 'Freeman Studio was born from a love of music and a dream to help artists realize their sound. Our home studio is a creative space where passion and professionalism come together, offering personalized guidance and top-tier sound for every project.',
     aboutUsContent: 'Located in the heart of the city, we\'ve helped hundreds of artists bring their musical visions to life. From emerging talents to established stars, our team of experienced engineers and producers are dedicated to achieving the perfect sound for every project.',
     
     // Services section (Home page)
@@ -63,19 +66,19 @@ const translations = {
     testimonialsDescription: 'Don\'t just take our word for it. Hear from the artists who\'ve created their masterpieces with us.',
     
     // Testimonial content
-    testimonial1: 'Working with Casa Koba was a game-changer for our album. Their attention to detail and technical expertise brought our music to a whole new level.',
+    testimonial1: 'Working with Freeman Studio was a game-changer for our album. Their attention to detail and technical expertise brought our music to a whole new level.',
     testimonial1Author: 'Alex Johnson',
     testimonial1Role: 'Lead Vocalist, The Resonants',
-    testimonial2: 'The team at Casa Koba doesn\'t just record your music, they elevate it. Their state-of-the-art equipment and experienced engineers create magic.',
+    testimonial2: 'The team at Freeman Studio doesn\'t just record your music, they elevate it. Their state-of-the-art equipment and experienced engineers create magic.',
     testimonial2Author: 'Samantha Lee',
     testimonial2Role: 'Artist',
-    testimonial3: 'I\'ve recorded in studios all over the world, but the vibe and sound quality at Casa Koba is unmatched. It\'s become our creative home.',
+    testimonial3: 'I\'ve recorded in studios all over the world, but the vibe and sound quality at Freeman Studio is unmatched. It\'s become our creative home.',
     testimonial3Author: 'Michael Torres',
     testimonial3Role: 'Producer & Songwriter',
     
     // CTA section
     ctaTitle: 'Ready to Create Your Masterpiece?',
-    ctaDescription: 'Book a session at Casa Koba today and take your music to the next level.',
+    ctaDescription: 'Book a session at Freeman Studio today and take your music to the next level.',
     contactMe: 'Contact me',
     
     // About page
@@ -85,20 +88,20 @@ const translations = {
     ourFacilities: 'Our Facilities',
     
     // About page content
-    aboutPageTitle: 'About Casa Koba',
+    aboutPageTitle: 'About Freeman Studio',
     aboutPageSubtitle: 'Our story, our team, and our mission',
     
     // Story section
     storySubtitle: 'Our Story',
     storyTitle: 'From Vision to Reality',
-    storyDescription: 'Born from a deep love for music, Casa Koba is a home studio dedicated to delivering exceptional sound quality in every project.',
+    storyDescription: 'Born from a deep love for music, Freeman Studio is a home studio dedicated to delivering exceptional sound quality in every project.',
     storyContent1: 'What began as a simple idea has grown into a creative hub, offering recording, mixing, and personalized guidance to artists. With a passion for nurturing talent, we strive to make every musical vision a reality.',
-    storyContent2: 'Our goal is to become Puebla\'s premier studio, where creativity meets professionalism in a welcoming, inspiring space. At Casa Koba, we believe great music starts with passion—and we\'re here to help you share yours with the world.',
+    storyContent2: 'Our goal is to become the premier studio, where creativity meets professionalism in a welcoming, inspiring space. At Freeman Studio, we believe great music starts with passion—and we\'re here to help you share yours with the world.',
     
     // Values section
     valuesSubtitle: 'Our Values',
     valuesTitle: 'What Sets Us Apart',
-    valuesDescription: 'At Casa Koba, our approach is guided by core principles that ensure every project receives the care and attention it deserves.',
+    valuesDescription: 'At Freeman Studio, our approach is guided by core principles that ensure every project receives the care and attention it deserves.',
     
     // Value cards
     technicalExcellenceTitle: 'Technical Excellence',
@@ -114,6 +117,8 @@ const translations = {
     teamSubtitle: 'Our Team',
     teamTitle: 'Meet the Experts',
     teamDescription: 'Our team of skilled professionals brings diverse experiences and specialized expertise to every project.',
+    teamTitleSingular: 'Meet the Expert',
+    teamDescriptionSingular: 'Our skilled professional brings diverse experience and specialized expertise to every project.',
     
     // Team members
     johnFreeman: 'John Freeman',
@@ -126,7 +131,7 @@ const translations = {
     // Facilities section
     facilitiesSubtitle: 'Our Facilities',
     facilitiesTitle: 'Our Home Studio',
-    facilitiesDescription: 'At Casa Koba, we provide top-tier equipment and services to bring your music to life.',
+    facilitiesDescription: 'At Freeman Studio, we provide top-tier equipment and services to bring your music to life.',
     facilitiesContent1: 'Our studio features professional-grade equipment including industry-standard microphones, high-quality preamps, and acoustically treated recording spaces designed to capture the perfect sound.',
     facilitiesContent2: 'From intimate vocal recordings to full band sessions, our flexible setup accommodates projects of all sizes while maintaining the highest audio quality standards.',
     
@@ -252,12 +257,26 @@ const translations = {
     servicesPageSubtitle: 'Professional studio services for every project',
     galleryPageTitle: 'Gallery',
     galleryPageSubtitle: 'Take a look inside our studio',
+    
+    // Session Drums content
+    sessionDrums: 'Session Drums',
+    sessionDrumsSubtitle: 'Servicios profesionales de batería para tus proyectos musicales',
+    sessionDrumsAboutTitle: 'Dando Vida a Tu Música',
+    sessionDrumsAboutDesc: 'Con años de experiencia en grabación en estudio y presentaciones en vivo, proporciono servicios profesionales de batería que elevan tu música al siguiente nivel.',
+    sessionDrumsServicesTitle: 'Servicios de Batería',
+    sessionDrumsServicesDesc: 'Soluciones integrales de batería para todas tus necesidades musicales',
+    sessionDrumsGenresTitle: 'Géneros y Especialidades',
+    sessionDrumsGenresDesc: 'Experiencia en una amplia gama de estilos y géneros musicales',
+    sessionDrumsCTATitle: '¿Listo para Agregar Batería Profesional a Tu Proyecto?',
+    sessionDrumsCTADesc: 'Hablemos de tu visión musical y creemos las pistas de batería perfectas para tus canciones.',
+    professionalDrummer: 'Baterista Profesional',
   },
   es: {
     // Navigation
     home: 'Inicio',
     about: 'Nosotros',
     services: 'Servicios',
+    sessionDrums: 'Sesión de Batería',
     gallery: 'Galería',
     contact: 'Contacto',
     navigation: 'Navegación',
@@ -270,10 +289,11 @@ const translations = {
     allRightsReserved: 'Todos los derechos reservados',
     privacyPolicy: 'Política de Privacidad',
     termsOfService: 'Términos de Servicio',
+    footerDescription: 'Estudio de grabación musical premium con equipamiento de última generación e ingenieros de sonido excepcionales.',
     
     // Home page
     heroTitle: 'Donde la Música Cobra Vida',
-    heroSubtitle: 'Estudio de grabación musical premium con equipamiento de última generación y ingenieros de sonido excepcionales.',
+    heroSubtitle: 'Estudio de grabación musical premium con equipamiento de última generación e ingenieros de sonido excepcionales.',
     ourServices: 'Nuestros Servicios',
     bookSession: 'Reservar Sesión',
     learnMore: 'Saber Más',
@@ -282,11 +302,12 @@ const translations = {
     clientTestimonials: 'Testimonios de Clientes',
     readyToStart: '¿Listo para comenzar tu proyecto?',
     scrollDown: 'Desplázate Hacia Abajo',
+    viewGallery: 'Ver Galería',
     
     // About section (Home page)
     aboutUsSubtitle: 'Sobre Nosotros',
     aboutUsTitle: 'Un Hogar para la Creatividad',
-    aboutUsDescription: 'Casa Koba nació del amor por la música y el sueño de ayudar a los artistas a realizar su sonido. Nuestro estudio casero es un espacio creativo donde la pasión y el profesionalismo se unen, ofreciendo orientación personalizada y sonido de primer nivel para cada proyecto.',
+    aboutUsDescription: 'Freeman Studio nació del amor por la música y el sueño de ayudar a los artistas a realizar su sonido. Nuestro estudio casero es un espacio creativo donde la pasión y el profesionalismo se unen, ofreciendo orientación personalizada y sonido de primer nivel para cada proyecto.',
     aboutUsContent: 'Ubicados en el corazón de la ciudad, hemos ayudado a cientos de artistas a dar vida a sus visiones musicales. Desde talentos emergentes hasta estrellas establecidas, nuestro equipo de ingenieros y productores experimentados se dedica a lograr el sonido perfecto para cada proyecto.',
     
     // Services section (Home page)
@@ -309,19 +330,19 @@ const translations = {
     testimonialsDescription: 'No solo tomes nuestra palabra. Escucha a los artistas que han creado sus obras maestras con nosotros.',
     
     // Testimonial content
-    testimonial1: 'Trabajar con Casa Koba fue un cambio radical para nuestro álbum. Su atención al detalle y experiencia técnica llevó nuestra música a un nivel completamente nuevo.',
+    testimonial1: 'Trabajar con Freeman Studio fue un cambio radical para nuestro álbum. Su atención al detalle y experiencia técnica llevó nuestra música a un nivel completamente nuevo.',
     testimonial1Author: 'Alex Johnson',
     testimonial1Role: 'Vocalista Principal',
-    testimonial2: 'El equipo de Casa Koba no solo graba tu música, la eleva. Su equipamiento de última generación e ingenieros experimentados crean magia.',
+    testimonial2: 'El equipo de Freeman Studio no solo graba tu música, la eleva. Su equipamiento de última generación e ingenieros experimentados crean magia.',
     testimonial2Author: 'Samantha Lee',
     testimonial2Role: 'Artista en Crecimiento',
-    testimonial3: 'He grabado en estudios de todo el mundo, pero el ambiente y la calidad de sonido en Casa Koba es incomparable. Se ha convertido en nuestro hogar creativo.',
+    testimonial3: 'He grabado en estudios de todo el mundo, pero el ambiente y la calidad de sonido en Freeman Studio es incomparable. Se ha convertido en nuestro hogar creativo.',
     testimonial3Author: 'Michael Torres',
     testimonial3Role: 'Productor y Compositor',
     
     // CTA section
     ctaTitle: '¿Listo para Crear tu Obra Maestra?',
-    ctaDescription: 'Reserva una sesión en Casa Koba hoy y lleva tu música al siguiente nivel.',
+    ctaDescription: 'Reserva una sesión en Freeman Studio hoy y lleva tu música al siguiente nivel.',
     contactMe: 'Contáctame',
     
     // About page
@@ -337,14 +358,14 @@ const translations = {
     // Story section
     storySubtitle: 'Nuestra Historia',
     storyTitle: 'De la Visión a la Realidad',
-    storyDescription: 'Nacido de un profundo amor por la música, Casa Koba es un estudio casero dedicado a entregar una calidad de sonido excepcional en cada proyecto.',
+    storyDescription: 'Nacido de un profundo amor por la música, Freeman Studio es un estudio casero dedicado a entregar una calidad de sonido excepcional en cada proyecto.',
     storyContent1: 'Lo que comenzó como una simple idea se ha convertido en un centro creativo, ofreciendo grabación, mezcla y orientación personalizada a artistas. Con una pasión por fomentar el talento, nos esforzamos por hacer realidad cada visión musical.',
-    storyContent2: 'Nuestro objetivo es convertirnos en el estudio líder de Puebla, donde la creatividad se encuentra con la profesionalidad en un espacio acogedor e inspirador. En Casa Koba, creemos que buena música comienza con pasión—y estamos aquí para ayudarte a compartirla con el mundo.',
+    storyContent2: 'Nuestro objetivo es convertirnos en el estudio líder de Puebla, donde la creatividad se encuentra con la profesionalidad en un espacio acogedor e inspirador. En Freeman Studio, creemos que buena música comienza con pasión—y estamos aquí para ayudarte a compartirla con el mundo.',
     
     // Values section
     valuesSubtitle: 'Nuestros Valores',
     valuesTitle: '¿Qué Nos Diferencia?',
-    valuesDescription: 'En Casa Koba, nuestro enfoque está guiado por principios centrales que garantizan que cada proyecto reciba el cuidado y la atención que se merece.',
+    valuesDescription: 'En Freeman Studio, nuestro enfoque está guiado por principios centrales que garantizan que cada proyecto reciba el cuidado y la atención que se merece.',
     
     // Value cards
     technicalExcellenceTitle: 'Excelencia Técnica',
@@ -360,6 +381,8 @@ const translations = {
     teamSubtitle: 'Nuestro Equipo',
     teamTitle: 'Conoce a los Expertos',
     teamDescription: 'Nuestro equipo de profesionales con experiencia diversa aporta conocimientos especializados para cada proyecto.',
+    teamTitleSingular: 'Conoce al Experto',
+    teamDescriptionSingular: 'Nuestro profesional con experiencia diversa aporta conocimientos especializados para cada proyecto.',
     
     // Team members
     johnFreeman: 'John Freeman',
@@ -372,7 +395,7 @@ const translations = {
     // Facilities section
     facilitiesSubtitle: 'Nuestras Instalaciones',
     facilitiesTitle: 'Nuestro Estudio Casero',
-    facilitiesDescription: 'En Casa Koba, proporcionamos equipo de última generación y servicios para dar vida a tu música.',
+    facilitiesDescription: 'En Freeman Studio, proporcionamos equipo de última generación y servicios para dar vida a tu música.',
     facilitiesContent1: 'Nuestro estudio cuenta con equipo profesional de última generación, incluyendo micrófonos de estándar de la industria, preamplificadores de alta calidad y espacios de grabación acústicamente tratados diseñados para capturar el sonido perfecto.',
     facilitiesContent2: 'Desde grabaciones vocales íntimas hasta sesiones de banda, nuestro montaje flexible se adapta a proyectos de todos los tamaños mientras se mantiene el más alto estándar de calidad de audio.',
     
@@ -498,6 +521,19 @@ const translations = {
     servicesPageSubtitle: 'Servicios profesionales de estudio para cada proyecto',
     galleryPageTitle: 'Galería',
     galleryPageSubtitle: 'Echa un vistazo dentro de nuestro estudio',
+    
+    // Session Drums content
+    sessionDrums: 'Session Drums',
+    sessionDrumsSubtitle: 'Servicios profesionales de batería para tus proyectos musicales',
+    sessionDrumsAboutTitle: 'Dando Vida a Tu Música',
+    sessionDrumsAboutDesc: 'Con años de experiencia en grabación en estudio y presentaciones en vivo, proporciono servicios profesionales de batería que elevan tu música al siguiente nivel.',
+    sessionDrumsServicesTitle: 'Servicios de Batería',
+    sessionDrumsServicesDesc: 'Soluciones integrales de batería para todas tus necesidades musicales',
+    sessionDrumsGenresTitle: 'Géneros y Especialidades',
+    sessionDrumsGenresDesc: 'Experiencia en una amplia gama de estilos y géneros musicales',
+    sessionDrumsCTATitle: '¿Listo para Agregar Batería Profesional a Tu Proyecto?',
+    sessionDrumsCTADesc: 'Hablemos de tu visión musical y creemos las pistas de batería perfectas para tus canciones.',
+    professionalDrummer: 'Baterista Profesional',
   }
 }
 
@@ -515,10 +551,10 @@ export function ThemeProvider({ children }) {
   
   const getSavedLanguage = () => {
     try {
-      return localStorage.getItem('language') || 'en';
+      return localStorage.getItem('language') || 'es';
     } catch (e) {
       console.error("Error accessing localStorage:", e);
-      return 'en';
+      return 'es';
     }
   };
   

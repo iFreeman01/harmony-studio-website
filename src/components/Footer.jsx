@@ -12,10 +12,10 @@ const Footer = () => {
   return (
     <StyledFooter>
       <div className="container">
-        <div className="footer-grid">
+        <div className="footer-content">
           <div className="footer-info">
-            <h2>Casa<span>Koba</span></h2>
-            <p>Premium music recording studio with state-of-the-art equipment and exceptional sound engineers.</p>
+            <h2>Freeman<span>Studio</span></h2>
+            <p>{t('footerDescription')}</p>
             <div className="social-icons">
               <a href="https://www.instagram.com/jhn_freeman/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -42,43 +42,10 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          
-          <div className="footer-nav">
-            <h3>{t('navigation')}</h3>
-            <ul>
-              <li><Link to="/">{t('home')}</Link></li>
-              <li><Link to="/about">{t('about')}</Link></li>
-              <li><Link to="/services">{t('services')}</Link></li>
-              <li><Link to="/gallery">{t('gallery')}</Link></li>
-              <li><Link to="/contact">{t('contact')}</Link></li>
-            </ul>
-          </div>
-          
-          <div className="footer-services">
-            <h3>{t('services')}</h3>
-            <ul>
-              <li><Link to="/services#recording">Recording</Link></li>
-              <li><Link to="/services#mixing">Mixing</Link></li>
-              <li><Link to="/services#mastering">Mastering</Link></li>
-              <li><Link to="/services#production">Production</Link></li>
-              <li><Link to="/services#dolby-atmos">Dolby Atmos</Link></li>
-            </ul>
-          </div>
-          
-          <div className="footer-contact">
-            <h3>{t('contact')}</h3>
-            <address>
-              <p>Blvd. 18 Sur 5510</p>
-              <p>Jardines de San Manuel, 72570</p>
-              <p>Heroica Puebla de Zaragoza, Pue.</p>
-              <p><a href="tel:+525532792351">(55) 3279-2351</a></p>
-              <p><a href="mailto:info@casakoba.com.mx">info@casakoba.com.mx</a></p>
-            </address>
-          </div>
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; {currentYear} Casa Koba. {t('allRightsReserved')}.</p>
+          <p>&copy; {currentYear} Freeman Studio. {t('allRightsReserved')}.</p>
           <div className="footer-legal">
             <button className="privacy-button" onClick={() => setPrivacyModalOpen(true)}>Aviso de Privacidad</button>
             <span>|</span>
@@ -101,50 +68,39 @@ const StyledFooter = styled.footer`
   margin-top: auto;
   border-top: 1px solid #222;
   
-  .footer-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 2rem;
+  .footer-content {
+    display: flex;
+    justify-content: center;
     margin-bottom: 3rem;
-    
-    @media (min-width: 576px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    @media (min-width: 992px) {
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-    }
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    background: ${({ theme }) => theme.colors.gradient};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    
-    span {
-      font-weight: 300;
-    }
-  }
-  
-  h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-    color: ${({ theme }) => theme.colors.light};
   }
   
   .footer-info {
+    text-align: center;
+    max-width: 500px;
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      background: ${({ theme }) => theme.colors.gradient};
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      
+      span {
+        font-weight: 300;
+      }
+    }
+    
     p {
       color: #888;
-      max-width: 300px;
       margin-bottom: 1.5rem;
+      line-height: 1.6;
     }
   }
   
   .social-icons {
     display: flex;
     gap: 1rem;
+    justify-content: center;
     
     a {
       display: flex;
@@ -164,39 +120,6 @@ const StyledFooter = styled.footer`
     }
   }
   
-  ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    
-    li a {
-      color: #888;
-      transition: all 0.3s ease;
-      
-      &:hover {
-        color: ${({ theme }) => theme.colors.primary};
-        padding-left: 5px;
-      }
-    }
-  }
-  
-  address {
-    font-style: normal;
-    color: #888;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    
-    a {
-      color: #888;
-      transition: all 0.3s ease;
-      
-      &:hover {
-        color: ${({ theme }) => theme.colors.primary};
-      }
-    }
-  }
-  
   .footer-bottom {
     display: flex;
     flex-direction: column;
@@ -204,20 +127,18 @@ const StyledFooter = styled.footer`
     text-align: center;
     padding-top: 2rem;
     border-top: 1px solid #222;
+    gap: 1rem;
     
     @media (min-width: 768px) {
       flex-direction: row;
       justify-content: space-between;
       text-align: left;
+      gap: 0;
     }
     
     p {
       color: #666;
-      margin-bottom: 1rem;
-      
-      @media (min-width: 768px) {
-        margin-bottom: 0;
-      }
+      margin: 0;
     }
     
     .footer-legal {

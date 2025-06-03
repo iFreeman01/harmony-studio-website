@@ -56,14 +56,14 @@ const PrivacyModal = ({ isOpen, onClose }) => {
             
             <ModalHeader>
               <h2>Aviso de Privacidad</h2>
-              <p className="subtitle">Resumen del Aviso de Privacidad de Casa Koba</p>
+              <p className="subtitle">Resumen del Aviso de Privacidad de Freeman Studio</p>
             </ModalHeader>
             
             <ModalBody>
               <section>
                 <h3>Identidad y Domicilio del Responsable</h3>
                 <p>
-                  <strong>Casa Koba</strong>, con domicilio en Blvd. 18 Sur 5510, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.,
+                  <strong>Freeman Studio</strong>, con domicilio en Blvd. 18 Sur 5510, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue.,
                   es responsable del tratamiento de sus datos personales.
                   <br />
                   Contacto: <a href="mailto:info@casakoba.com.mx">info@casakoba.com.mx</a>

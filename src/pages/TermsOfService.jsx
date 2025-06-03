@@ -23,26 +23,33 @@ const TermsOfService = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <h2>Casa Koba Terms of Service</h2>
+            <h2>Freeman Studio Terms of Service</h2>
             <p className="last-updated">Last Updated: {new Date().toLocaleDateString()}</p>
 
             <div className="terms-content">
               <section>
-                <h3>1. Introduction</h3>
+                <h3>1. Acceptance of Terms</h3>
                 <p>
-                  These Terms of Service ("Terms") govern your use of the Casa Koba website and studio services 
-                  (collectively, "Services"). By accessing or using our Services, you agree to be bound by these Terms. 
-                  If you do not agree to these Terms, please do not use our Services.
+                  These Terms of Service ("Terms") govern your use of the Freeman Studio website and studio services
+                  operated by Freeman Studio ("us", "we", or "our"). By accessing or using our service, you agree to be bound by these Terms.
                 </p>
               </section>
 
               <section>
-                <h3>2. Use of Services</h3>
+                <h3>2. Description of Service</h3>
                 <p>
-                  Casa Koba provides professional recording studio services, including but not limited to recording, mixing, 
+                  Freeman Studio provides professional recording studio services, including but not limited to recording, mixing,
+                  mastering, and music production services. We also provide information about our services through our website.
+                </p>
+              </section>
+
+              <section>
+                <h3>3. Use of Services</h3>
+                <p>
+                  Freeman Studio provides professional recording studio services, including but not limited to recording, mixing, 
                   mastering, music production, vocal production, Dolby Atmos mixing, and post-production services.
                 </p>
-                <h4>2.1 Acceptable Use</h4>
+                <h4>3.1 Acceptable Use</h4>
                 <p>
                   When using our Services, you agree to:
                 </p>
@@ -52,7 +59,7 @@ const TermsOfService = () => {
                   <li>Respect our studio equipment and facilities</li>
                   <li>Follow all studio guidelines and safety procedures</li>
                 </ul>
-                <h4>2.2 Prohibited Activities</h4>
+                <h4>3.2 Prohibited Activities</h4>
                 <p>
                   You may not:
                 </p>
@@ -66,7 +73,7 @@ const TermsOfService = () => {
               </section>
 
               <section>
-                <h3>3. Booking and Payment</h3>
+                <h3>4. Booking and Payment</h3>
                 <p>
                   Sessions must be booked in advance, either through our website's contact form or by direct communication 
                   with our staff. Specific payment terms, cancellation policies, and refund conditions will be provided upon booking 
@@ -75,12 +82,12 @@ const TermsOfService = () => {
               </section>
 
               <section>
-                <h3>4. Intellectual Property</h3>
-                <h4>4.1 Our Content</h4>
+                <h3>5. Intellectual Property</h3>
+                <h4>5.1 Our Content</h4>
                 <p>
-                  All content on the Casa Koba website, including text, graphics, logos, images, audio clips, and software, is the property of Casa Koba or its content suppliers and is protected by copyright laws. The compilation of all content on this site is the exclusive property of Casa Koba.
+                  All content on the Freeman Studio website, including text, graphics, logos, images, audio clips, and software, is the property of Freeman Studio or its content suppliers and is protected by copyright laws. The compilation of all content on this site is the exclusive property of Freeman Studio.
                 </p>
-                <h4>4.2 Your Content</h4>
+                <h4>5.2 Your Content</h4>
                 <p>
                   You retain all rights to your original music and recordings created using our studio services. However, by using our services, you grant us permission to:
                 </p>
@@ -94,37 +101,33 @@ const TermsOfService = () => {
               </section>
 
               <section>
-                <h3>5. Limitation of Liability</h3>
+                <h3>6. Disclaimer of Warranties</h3>
                 <p>
-                  Casa Koba is not responsible for:
+                  Freeman Studio is not responsible for:
                 </p>
                 <ul>
-                  <li>Damage, loss, or misuse of studio equipment caused by client negligence</li>
-                  <li>Personal belongings left at the studio</li>
-                  <li>Technical failures beyond our control</li>
-                  <li>Loss of data or recordings due to technology failures (we maintain backup procedures, but cannot guarantee 100% recovery in all situations)</li>
+                  <li>Technical issues beyond our control</li>
+                  <li>Loss or damage to personal equipment brought to the studio</li>
+                  <li>Delays caused by equipment failure or other unforeseen circumstances</li>
                 </ul>
+              </section>
+
+              <section>
+                <h3>7. Limitation of Liability</h3>
                 <p>
-                  In no event shall Casa Koba be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.
+                  In no event shall Freeman Studio be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.
                 </p>
               </section>
 
               <section>
-                <h3>6. Indemnification</h3>
+                <h3>8. Indemnification</h3>
                 <p>
-                  You agree to indemnify, defend, and hold harmless Casa Koba, its officers, directors, employees, agents, and suppliers from and against all losses, expenses, damages, and costs, including reasonable attorneys' fees, resulting from any violation of these Terms or any activity related to your use of our Services.
+                  You agree to indemnify, defend, and hold harmless Freeman Studio, its officers, directors, employees, agents, and suppliers from and against all losses, expenses, damages, and costs, including reasonable attorneys' fees, resulting from any violation of these Terms.
                 </p>
               </section>
 
               <section>
-                <h3>7. Changes to Terms</h3>
-                <p>
-                  We reserve the right to modify these Terms at any time without prior notice. Changes will be effective immediately upon posting on our website. Your continued use of our Services after any changes to the Terms constitutes your acceptance of the new Terms.
-                </p>
-              </section>
-
-              <section>
-                <h3>8. Governing Law</h3>
+                <h3>9. Changes to Terms</h3>
                 <p>
                   These Terms shall be governed by and construed in accordance with the laws of Mexico, without regard to its conflict of law provisions. Any dispute arising under these Terms shall be resolved exclusively in the courts of Puebla, Mexico.
                 </p>

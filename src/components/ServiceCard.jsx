@@ -4,7 +4,7 @@ import Button from './Button'
 import { useTheme } from '../context/ThemeContext'
 
 const ServiceCard = ({ icon, title, description, link }) => {
-  const { isDarkMode } = useTheme();
+  const { isDarkMode, t } = useTheme();
   
   return (
     <Card 
@@ -26,7 +26,7 @@ const ServiceCard = ({ icon, title, description, link }) => {
             variant="secondary" 
             size="small"
           >
-            Learn More
+            {t('learnMore')}
           </Button>
         </ButtonWrapper>
       )}

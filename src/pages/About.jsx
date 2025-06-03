@@ -5,30 +5,20 @@ import SectionHeader from '../components/SectionHeader'
 import Button from '../components/Button'
 import OurStoryImg from '../assets/about/Our_Story.webp'
 import JohnImg from '../assets/about/John.webp'
-import KobaImg from '../assets/about/Koba.webp'
 import Studio4Img from '../assets/about/Studio_4.webp'
 import { useTheme } from '../context/ThemeContext'
 
 const About = () => {
   const { isDarkMode, t } = useTheme();
   
-  // Team member data
-  const teamMembers = [
-    {
-      id: 1,
-      name: t('johnFreeman'),
-      role: t('johnRole'),
-      bio: t('johnBio'),
-      image: JohnImg
-    },
-    {
-      id: 2,
-      name: t('koba'),
-      role: t('kobaRole'),
-      bio: t('kobaBio'),
-      image: KobaImg
-    }
-  ]
+  // Team member data - only John Freeman now
+  const teamMember = {
+    id: 1,
+    name: t('johnFreeman'),
+    role: t('johnRole'),
+    bio: t('johnBio'),
+    image: JohnImg
+  }
   
   return (
     <StyledAbout>
@@ -62,7 +52,7 @@ const About = () => {
             <div className="story-image">
               <motion.img 
                 src={OurStoryImg}
-                alt="Casa Koba Studio"
+                alt="Freeman Studio"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
@@ -151,37 +141,33 @@ const About = () => {
         </div>
       </ValuesSection>
 
-      {/* Team Section */}
+      {/* Team Section - Now featuring only John Freeman */}
       <TeamSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
             subtitle={t('teamSubtitle')}
-            title={t('teamTitle')}
-            description={t('teamDescription')}
+            title={t('teamTitleSingular')}
+            description={t('teamDescriptionSingular')}
             centered
             light={isDarkMode}
           />
-          <div className="team-grid">
-            {teamMembers.map((member) => (
-              <motion.div 
-                key={member.id}
-                className="team-card"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: member.id * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -10 }}
-              >
-                <div className="member-image">
-                  <img src={member.image} alt={member.name} />
-                </div>
-                <div className="member-info">
-                  <h3>{member.name}</h3>
-                  <h4>{member.role}</h4>
-                  <p>{member.bio}</p>
-                </div>
-              </motion.div>
-            ))}
+          <div className="team-showcase">
+            <motion.div 
+              className="expert-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <div className="expert-image">
+                <img src={teamMember.image} alt={teamMember.name} />
+              </div>
+              <div className="expert-info">
+                <h3>{teamMember.name}</h3>
+                <h4>{teamMember.role}</h4>
+                <p>{teamMember.bio}</p>
+              </div>
+            </motion.div>
           </div>
         </div>
       </TeamSection>
@@ -251,17 +237,12 @@ const About = () => {
                     </div>
                   </div>
                 </div>
-                
-                <div className="facilities-buttons">
-                  <Button to="/services">{t('ourServices')}</Button>
-                  <Button to="/contact" variant="secondary">{t('getInTouch')}</Button>
-                </div>
               </motion.div>
             </div>
             <div className="facilities-image">
               <motion.img 
                 src={Studio4Img}
-                alt="Casa Koba Studio Facilities"
+                alt="Freeman Studio"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
@@ -396,36 +377,45 @@ const ValuesSection = styled.section`
 const TeamSection = styled.section`
   background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#f5f5f7'};
   
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 2rem;
+  .team-showcase {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 3rem;
-    
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    @media (min-width: 1200px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
-  .team-card {
+  .expert-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    height: 100%;
+    width: 100%;
     transition: all 0.3s ease;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: 300px 1fr;
+      max-height: 400px;
+    }
     
     &:hover {
       border-color: ${({ theme }) => theme.colors.primary + '40'};
+      transform: translateY(-5px);
+      box-shadow: ${({ theme }) => theme.shadows.large};
     }
     
-    .member-image {
+    .expert-image {
       height: 300px;
       overflow: hidden;
+      
+      @media (min-width: 768px) {
+        height: 100%;
+      }
       
       img {
         width: 100%;
@@ -435,25 +425,38 @@ const TeamSection = styled.section`
       }
     }
     
-    .member-info {
-      padding: 1.5rem;
+    .expert-info {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+      @media (min-width: 768px) {
+        padding: 2.5rem;
+      }
       
       h3 {
-        margin-bottom: 0.25rem;
-        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 2rem;
+        color: ${({ $isDarkMode }) => $isDarkMode ? 'white' : '#222'};
+        
+        @media (max-width: 768px) {
+          font-size: 1.75rem;
+        }
       }
       
       h4 {
         color: ${({ theme }) => theme.colors.primary};
-        font-size: 1rem;
-        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
         font-weight: 500;
       }
       
       p {
         color: ${({ $isDarkMode }) => $isDarkMode ? 'rgba(255,255,255,0.85)' : 'rgba(20,20,20,0.85)'};
-        font-size: 0.95rem;
-        line-height: 1.6;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin: 0;
       }
     }
   }
@@ -526,16 +529,6 @@ const FacilitiesSection = styled.section`
             font-weight: 600;
           }
         }
-      }
-    }
-    
-    .facilities-buttons {
-      margin-top: 2rem;
-      display: flex;
-      gap: 1rem;
-      
-      @media (max-width: 576px) {
-        flex-direction: column;
       }
     }
   }

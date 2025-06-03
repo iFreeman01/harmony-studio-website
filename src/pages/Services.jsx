@@ -8,6 +8,13 @@ import { useTheme } from '../context/ThemeContext'
 const Services = () => {
   const { isDarkMode, t } = useTheme()
 
+  // Helper function to generate anchor IDs
+  const getServiceAnchor = (title) => {
+    return title.toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]/g, '')
+  }
+
   // Services data with translations
   const services = [
     {
@@ -48,60 +55,6 @@ const Services = () => {
     },
     {
       id: 3,
-      title: t('mastering'),
-      description: t('masteringServiceDesc'),
-      details: [
-        t('masteringDetail1'),
-        t('masteringDetail2'),
-        t('masteringDetail3'),
-        t('masteringDetail4'),
-        t('masteringDetail5')
-      ],
-      image: 'https://images.unsplash.com/photo-1569696483293-9d1a3f6d4079?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-        </svg>
-      )
-    },
-    {
-      id: 4,
-      title: t('production'),
-      description: t('productionServiceDesc'),
-      details: [
-        t('productionDetail1'),
-        t('productionDetail2'),
-        t('productionDetail3'),
-        t('productionDetail4'),
-        t('productionDetail5')
-      ],
-      image: 'https://images.unsplash.com/photo-1619983081593-e2ba5b543168?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-        </svg>
-      )
-    },
-    {
-      id: 5,
-      title: t('vocalProduction'),
-      description: t('vocalProductionServiceDesc'),
-      details: [
-        t('vocalDetail1'),
-        t('vocalDetail2'),
-        t('vocalDetail3'),
-        t('vocalDetail4'),
-        t('vocalDetail5')
-      ],
-      image: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m5.657-8.485a1 1 0 00-1.414 0l-2.829 2.829a1 1 0 000 1.414l2.829 2.829a1 1 0 001.414 0 1 1 0 000-1.414L9.414 12l2.243-2.243a1 1 0 000-1.414L12 9z" />
-        </svg>
-      )
-    },
-    {
-      id: 6,
       title: t('dolbyAtmos'),
       description: t('dolbyAtmosServiceDesc'),
       details: [
@@ -120,20 +73,20 @@ const Services = () => {
       )
     },
     {
-      id: 7,
-      title: t('postProduction'),
-      description: t('postProductionServiceDesc'),
+      id: 4,
+      title: t('mastering'),
+      description: t('masteringServiceDesc'),
       details: [
-        t('postDetail1'),
-        t('postDetail2'),
-        t('postDetail3'),
-        t('postDetail4'),
-        t('postDetail5')
+        t('masteringDetail1'),
+        t('masteringDetail2'),
+        t('masteringDetail3'),
+        t('masteringDetail4'),
+        t('masteringDetail5')
       ],
-      image: 'https://images.unsplash.com/photo-1578022761797-b8636ac1773c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80',
+      image: 'https://images.unsplash.com/photo-1569696483293-9d1a3f6d4079?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
         </svg>
       )
     }
@@ -159,10 +112,10 @@ const Services = () => {
           />
 
           <div className="services-grid">
-            {services.map((service) => (
+            {services.map((service, index) => (
               <ServiceItem 
                 key={service.id}
-                id={service.id}
+                id={getServiceAnchor(service.title)}
                 className="service-card"
                 $isDarkMode={isDarkMode}
               >

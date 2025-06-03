@@ -42,14 +42,14 @@ const PrivacyPolicy = () => {
 
             {language === 'en' ? (
               <>
-                <h2>Casa Koba Privacy Notice</h2>
+                <h2>Freeman Studio Privacy Notice</h2>
                 <p className="last-updated">Last Updated: {new Date().toLocaleDateString()}</p>
 
                 <div className="policy-content">
                   <section>
                     <h3>1. Introduction</h3>
                     <p>
-                      At Casa Koba, we value your privacy and are committed to protecting your personal data. 
+                      At Freeman Studio, we value your privacy and are committed to protecting your personal data. 
                       This Privacy Notice explains how we collect, use, and safeguard your information when you visit our website or 
                       interact with our services. By using our website, you agree to the collection and use of information in 
                       accordance with this policy.
@@ -139,7 +139,7 @@ const PrivacyPolicy = () => {
                       <li>Request deletion of your personal information</li>
                     </ul>
                     <p>
-                      Casa Koba does not sell personal information to third parties.
+                      Freeman Studio does not sell personal information to third parties.
                     </p>
                   </section>
 
@@ -165,14 +165,14 @@ const PrivacyPolicy = () => {
               </>
             ) : (
               <>
-                <h2>Aviso de Privacidad de Casa Koba</h2>
+                <h2>Aviso de Privacidad de Freeman Studio</h2>
                 <p className="last-updated">Última Actualización: {new Date().toLocaleDateString()}</p>
 
                 <div className="policy-content">
                   <section>
                     <h3>1. Identidad y Domicilio del Responsable</h3>
                     <p>
-                      <strong>Casa Koba</strong>, con domicilio en Blvd. 18 Sur 5510, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue., 
+                      <strong>Freeman Studio</strong>, con domicilio en Blvd. 18 Sur 5510, Jardines de San Manuel, 72570 Heroica Puebla de Zaragoza, Pue., 
                       es responsable del tratamiento de sus datos personales.
                     </p>
                     <p>
