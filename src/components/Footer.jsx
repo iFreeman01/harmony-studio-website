@@ -48,10 +48,11 @@ const Footer = () => {
           <p>&copy; {currentYear} Freeman Studio. {t('allRightsReserved')}.</p>
           <div className="footer-legal">
             <button className="privacy-button" onClick={() => setPrivacyModalOpen(true)}>Aviso de Privacidad</button>
-            <span>|</span>
+            {/* Temporarily hidden links */}
+            {/* <span>|</span>
             <Link to="/privacy-policy">{t('privacyPolicy')}</Link>
             <span>|</span>
-            <Link to="/terms-of-service">{t('termsOfService')}</Link>
+            <Link to="/terms-of-service">{t('termsOfService')}</Link> */}
           </div>
         </div>
       </div>

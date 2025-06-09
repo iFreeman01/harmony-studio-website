@@ -4,9 +4,15 @@ import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import Button from '../components/Button'
 import { useTheme } from '../context/ThemeContext'
+import { useEffect } from 'react'
 
 const SessionDrummer = () => {
   const { isDarkMode, t } = useTheme()
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <StyledSessionDrummer>
@@ -27,28 +33,19 @@ const SessionDrummer = () => {
                 description={t('sessionDrumsAboutDesc')}
                 light={isDarkMode}
               />
-              <motion.div
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <p>
-                  As a passionate drummer and musician, I specialize in creating the perfect rhythmic foundation for your songs. 
-                  Whether you need powerful rock beats, subtle jazz grooves, or intricate progressive patterns, I bring creativity, 
-                  precision, and professionalism to every project.
-                </p>
-                <p>
-                  My approach combines technical skill with musical sensitivity, ensuring that every drum part serves the song 
-                  and enhances the overall musical experience. I work closely with artists to understand their vision and 
-                  deliver drum tracks that exceed expectations.
-                </p>
-              </motion.div>
+                {t('sessionDrummerDescription')}
+              </motion.p>
             </div>
             <div className="about-image">
               <motion.img 
-                src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
-                alt="Session Drummer"
+                src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                alt={t('sessionDrums')}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}

@@ -7,6 +7,11 @@ import { useTheme } from '../context/ThemeContext'
 const Contact = () => {
   const { isDarkMode, t } = useTheme();
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Construct email URL safely
   const getEmailUrl = () => {
     const email = 'info@freemanstudio.com';

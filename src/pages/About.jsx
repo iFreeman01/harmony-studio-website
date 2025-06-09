@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import PageHeader from '../components/PageHeader'
@@ -10,6 +11,11 @@ import { useTheme } from '../context/ThemeContext'
 
 const About = () => {
   const { isDarkMode, t } = useTheme();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
   // Team member data - only John Freeman now
   const teamMember = {

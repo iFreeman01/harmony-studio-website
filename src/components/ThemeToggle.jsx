@@ -56,31 +56,26 @@ const ThemeToggle = () => {
 
 const ToggleContainer = styled.div`
   position: fixed;
-  top: 15px; /* Slightly higher than before, but still in navbar area */
+  top: 20px;
   left: 20px;
   display: flex;
   align-items: center;
-  background: ${({ isDarkMode, theme }) => isDarkMode ? theme.colors.dark : 'rgba(255, 255, 255, 0.9)'};
+  background: ${({ isDarkMode, theme }) => isDarkMode ? 'rgba(20, 20, 20, 0.95)' : 'rgba(255, 255, 255, 0.95)'};
   border: 1px solid ${({ isDarkMode }) => isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
   border-radius: 50px;
   padding: 6px 12px;
-  z-index: 101; /* Higher than navbar to ensure visibility */
+  z-index: 1001;
   box-shadow: ${({ theme }) => theme.shadows.medium};
   backdrop-filter: blur(10px);
   
-  /* Desktop positioning - keep on left side as requested, within navbar area */
+  /* Fluid positioning - ensure no overlap with logo */
   @media (min-width: 1200px) {
-    left: 30px;
-    top: 20px; /* Slightly higher in navbar area */
+    left: clamp(20px, 1.5vw, 35px);
+    top: 22px;
   }
   
-  @media (max-width: 1199px) and (min-width: 769px) {
-    left: 25px;
-    top: 18px; /* Slightly higher in navbar area */
-  }
-  
-  /* Mobile positioning - move to bottom to avoid navbar overlap */
-  @media (max-width: 768px) {
+  /* Mobile positioning */
+  @media (max-width: 1199px) {
     top: auto;
     bottom: 25px;
     left: 20px;
@@ -92,13 +87,6 @@ const ToggleContainer = styled.div`
     bottom: 20px;
     transform: scale(0.9);
     transform-origin: bottom left;
-  }
-  
-  /* Ensure it doesn't interfere with mobile menu */
-  @media (max-width: 768px) {
-    &:hover {
-      z-index: 102;
-    }
   }
 `
 

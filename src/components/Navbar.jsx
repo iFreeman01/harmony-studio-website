@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
@@ -10,14 +10,15 @@ const Navbar = () => {
   const [showServicesDropdown, setShowServicesDropdown] = useState(false)
   const [showMobileServicesDropdown, setShowMobileServicesDropdown] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
   const { t, isDarkMode } = useTheme()
   
-  // Services list for dropdown - updated to only include the 4 required services
+  // Services list for dropdown - restored to include Dolby Atmos
   const services = [
     { key: 'recording', label: t('recording'), path: '/service/recording' },
     { key: 'mixing', label: t('mixing'), path: '/service/mixing' },
-    { key: 'dolbyAtmos', label: t('dolbyAtmos'), path: '/service/dolby-atmos' },
-    { key: 'mastering', label: t('mastering'), path: '/service/mastering' }
+    { key: 'mastering', label: t('mastering'), path: '/service/mastering' },
+    { key: 'dolbyAtmos', label: 'Dolby Atmos', path: '/service/dolby-atmos' }
   ]
   
   // Close mobile menu when location changes
@@ -51,9 +52,19 @@ const Navbar = () => {
   
   const handleServiceClick = (path) => {
     // Navigate to individual service page
-    window.location.href = path
+    navigate(path)
     setShowServicesDropdown(false)
     setShowMobileServicesDropdown(false)
+  }
+
+  const handleHomeNavigation = () => {
+    if (location.pathname === '/') {
+      // If already on home page, scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      // Navigate to home page
+      navigate('/')
+    }
   }
 
   const toggleMobileServicesDropdown = () => {
@@ -64,9 +75,9 @@ const Navbar = () => {
     <StyledNav scrolled={scrolled} isDarkMode={isDarkMode}>
       <div className="container nav-container">
         <div className="logo">
-          <Link to="/">
+          <button onClick={handleHomeNavigation}>
             <h1>Freeman<span>Studio</span></h1>
-          </Link>
+          </button>
         </div>
         
         <Hamburger onClick={toggleMenu} isOpen={isOpen} isDarkMode={isDarkMode}>
@@ -78,7 +89,7 @@ const Navbar = () => {
         <DesktopMenu isDarkMode={isDarkMode}>
           <ul>
             <li>
-              <Link to="/" className={location.pathname === '/' ? 'active' : ''}>{t('home')}</Link>
+              <button onClick={handleHomeNavigation} className={location.pathname === '/' ? 'active' : ''}>{t('home')}</button>
             </li>
             <li>
               <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>{t('about')}</Link>
@@ -156,7 +167,7 @@ const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 }}
                   >
-                    <Link to="/" className={location.pathname === '/' ? 'active' : ''}>{t('home')}</Link>
+                    <button onClick={handleHomeNavigation} className={location.pathname === '/' ? 'active' : ''}>{t('home')}</button>
                   </motion.li>
                   <motion.li 
                     initial={{ opacity: 0, x: 20 }}
@@ -248,68 +259,69 @@ const StyledNav = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  z-index: 100;
-  padding: 1rem 0;
-  transition: all 0.3s ease;
-  background: ${({ scrolled, isDarkMode }) => 
-    isDarkMode 
-      ? 'rgba(10, 10, 10, 0.95)' 
-      : 'rgba(245, 245, 247, 0.95)'};
+  right: 0;
+  z-index: 1000;
+  background-color: ${({ isDarkMode }) => 
+    isDarkMode ? 'rgba(10, 10, 10, 0.95)' : 'rgba(255, 255, 255, 0.95)'
+  };
   backdrop-filter: blur(10px);
-  box-shadow: ${({ scrolled, isDarkMode }) => 
-    scrolled 
-      ? isDarkMode 
-        ? '0 4px 30px rgba(0, 0, 0, 0.1)' 
-        : '0 4px 30px rgba(0, 0, 0, 0.05)'
-      : 'none'};
-
+  transition: all 0.3s ease;
+  border-bottom: ${({ isDarkMode }) => 
+    isDarkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)'
+  };
+  
   .nav-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem 0;
     position: relative;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding-left: clamp(1rem, 3vw, 3rem);
+    padding-right: clamp(1rem, 3vw, 3rem);
     
     @media (max-width: 768px) {
-      padding: 0 1rem;
+      padding: 0.75rem 1rem;
     }
   }
-
+  
   .logo {
     z-index: 15;
     position: relative;
     flex-shrink: 0;
     
-    /* Adjust spacing to accommodate theme toggle without affecting menu spacing */
+    /* Smooth scaling approach - ensure space for theme toggle */
     @media (min-width: 1200px) {
-      margin-left: 120px; /* Reduced from 140px for better spacing */
+      margin-left: clamp(160px, 15vw, 220px);
     }
     
-    @media (max-width: 1199px) and (min-width: 769px) {
-      margin-left: 100px; /* Reduced from 120px for better spacing */
+    @media (max-width: 1199px) {
+      margin-left: 0;
     }
     
-    @media (max-width: 768px) {
-      margin-left: 0; /* No extra margin on mobile since theme toggle moves to bottom */
-    }
-    
-    h1 {
-      font-size: 1.8rem;
-      margin: 0;
-      background: ${({ theme }) => theme.colors.gradient};
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      white-space: nowrap;
+    button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
       
-      @media (max-width: 480px) {
-        font-size: 1.5rem;
-      }
-      
-      span {
-        font-weight: 300;
+      h1 {
+        font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+        font-weight: 700;
+        background: ${({ theme }) => theme.colors.gradient};
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0;
+        white-space: nowrap;
+        
+        span {
+          font-weight: 300;
+        }
+        
+        @media (max-width: 768px) {
+          font-size: 1.3rem;
+        }
       }
     }
   }
@@ -318,15 +330,15 @@ const StyledNav = styled.nav`
 const DesktopMenu = styled.div`
   display: none;
   
-  @media (min-width: 769px) {
+  @media (min-width: 1200px) {
     display: flex;
     flex: 1;
     justify-content: flex-end;
-    margin-left: 2rem; /* Add margin to create space between logo and menu */
+    margin-left: clamp(1rem, 3vw, 3rem);
     
     ul {
       display: flex;
-      gap: clamp(1.5rem, 3vw, 2.5rem); /* Increased gap for better spacing */
+      gap: clamp(0.5rem, 1.5vw, 1.8rem);
       align-items: center;
       
       li {
@@ -336,7 +348,7 @@ const DesktopMenu = styled.div`
           position: relative;
         }
         
-        a {
+        a, button {
           position: relative;
           padding: 0.5rem 0;
           font-weight: 500;
@@ -346,6 +358,12 @@ const DesktopMenu = styled.div`
           display: flex;
           align-items: center;
           gap: 0.25rem;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-family: inherit;
+          font-size: inherit;
+          text-decoration: none;
           
           &:hover, &.active {
             color: ${({ theme }) => theme.colors.primary};
@@ -378,10 +396,10 @@ const Hamburger = styled.div`
   width: 30px;
   height: 21px;
   cursor: pointer;
-  z-index: 1001; /* Higher than mobile menu to ensure it's clickable */
+  z-index: 1001;
   flex-shrink: 0;
   
-  @media (min-width: 769px) {
+  @media (min-width: 1200px) {
     display: none;
   }
   
@@ -411,22 +429,21 @@ const MobileMenu = styled(motion.div)`
   position: fixed;
   top: 0;
   right: 0;
-  width: 85%; /* Optimized width */
-  max-width: 350px; /* Increased max width for better content fit */
-  height: 100vh; /* Full viewport height */
+  width: 85%;
+  max-width: 350px;
+  height: 100vh;
   background: ${({ isDarkMode, theme }) => isDarkMode ? theme.colors.dark : theme.colors.light};
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-  z-index: 1000; /* Increased z-index to ensure it's above everything */
+  z-index: 1000;
   display: flex;
   flex-direction: column;
   
-  @media (min-width: 769px) {
+  @media (min-width: 1200px) {
     display: none;
   }
   
-  /* Ensure proper display on very small screens */
   @media (max-width: 480px) {
-    width: 90%; /* Increase width on very small screens */
+    width: 90%;
     max-width: 320px;
   }
   
@@ -434,13 +451,12 @@ const MobileMenu = styled(motion.div)`
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center the menu items vertically */
-    gap: 1.5rem; /* Increased gap for better spacing */
-    padding: 2rem 1.5rem; /* Consistent padding */
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
     margin: 0;
     list-style: none;
     
-    /* Adjust for smaller screens */
     @media (max-width: 480px) {
       padding: 2rem 1rem;
       gap: 1.2rem;
@@ -466,21 +482,26 @@ const MobileMenu = styled(motion.div)`
           
           a {
             flex: 1;
-            pointer-events: none; /* Prevent navigation when clicking on services */
+            pointer-events: none;
           }
         }
       }
       
-      a {
+      a, button {
         display: block;
-        font-size: 1.1rem; /* Slightly larger font for better readability */
+        font-size: 1.1rem;
         font-weight: 500;
         color: ${({ isDarkMode, theme }) => isDarkMode ? theme.colors.light : theme.colors.dark};
         transition: all 0.3s ease;
-        padding: 0.75rem 0; /* Better touch targets */
+        padding: 0.75rem 0;
         text-decoration: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        width: 100%;
+        text-align: left;
         
-        /* Responsive font sizes */
         @media (max-width: 480px) {
           font-size: 1rem;
           padding: 0.6rem 0;
@@ -588,31 +609,37 @@ const DropdownArrow = styled.span`
 `
 
 const BookSessionButton = styled.button`
-  background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
+  background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%) !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  white-space: nowrap !important;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.3) !important;
+  display: inline-block !important;
+  width: auto !important;
+  text-align: center !important;
   
   &:hover {
-    background: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+    background: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4) !important;
+    color: white !important;
   }
   
   &:active {
-    transform: translateY(0);
+    transform: translateY(0) !important;
   }
   
   @media (max-width: 768px) {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    margin-top: 0.5rem;
+    width: 100% !important;
+    padding: 0.75rem 1rem !important;
+    margin-top: 0.5rem !important;
+    display: block !important;
   }
 `
 
@@ -625,7 +652,7 @@ const MobileMenuBackdrop = styled(motion.div)`
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
   
-  @media (min-width: 769px) {
+  @media (min-width: 1200px) {
     display: none;
   }
 `

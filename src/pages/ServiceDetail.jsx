@@ -5,12 +5,18 @@ import PageHeader from '../components/PageHeader'
 import SectionHeader from '../components/SectionHeader'
 import Button from '../components/Button'
 import { useTheme } from '../context/ThemeContext'
+import { useEffect } from 'react'
 
 const ServiceDetail = () => {
   const { service } = useParams()
   const { isDarkMode, t } = useTheme()
 
-  // Service data mapping
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  // Service data with translations
   const serviceData = {
     'recording': {
       title: t('recording'),
@@ -46,24 +52,6 @@ const ServiceDetail = () => {
         </svg>
       )
     },
-    'dolby-atmos': {
-      title: t('dolbyAtmos'),
-      description: t('dolbyAtmosServiceDesc'),
-      details: [
-        t('dolbyDetail1'),
-        t('dolbyDetail2'),
-        t('dolbyDetail3'),
-        t('dolbyDetail4'),
-        t('dolbyDetail5')
-      ],
-      image: 'https://images.unsplash.com/photo-1558403871-bb6e8113a32e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10.5v3a2.5 2.5 0 005 0v-3a2.5 2.5 0 10-5 0M13.5 10.5v3a2.5 2.5 0 005 0v-3a2.5 2.5 0 10-5 0"/>
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7.5 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM18 8a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM18 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM7.5 21a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/>
-        </svg>
-      )
-    },
     'mastering': {
       title: t('mastering'),
       description: t('masteringServiceDesc'),
@@ -80,6 +68,23 @@ const ServiceDetail = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
         </svg>
       )
+    },
+    'dolby-atmos': {
+      title: 'Dolby Atmos',
+      description: t('dolbyAtmosServiceDesc'),
+      details: [
+        t('dolbyDetail1'),
+        t('dolbyDetail2'),
+        t('dolbyDetail3'),
+        t('dolbyDetail4'),
+        t('dolbyDetail5')
+      ],
+      image: 'https://images.unsplash.com/photo-1558403871-bb6e8113a32e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M9.464 15.536a5 5 0 010-7.072M6.636 5.636a9 9 0 000 12.728" />
+        </svg>
+      )
     }
   }
 
@@ -93,34 +98,30 @@ const ServiceDetail = () => {
     <StyledServiceDetail>
       <PageHeader 
         title={currentService.title}
-        subtitle={`Professional ${currentService.title} Services`}
+        subtitle={t('professionalServiceSubtitle').replace('{service}', currentService.title)}
         backgroundImage={currentService.image}
       />
 
-      {/* Service Detail Section */}
-      <ServiceDetailSection className="section" $isDarkMode={isDarkMode}>
+      <ServiceSection className="section" $isDarkMode={isDarkMode}>
         <div className="container">
-          <div className="service-detail-grid">
+          <div className="service-grid">
             <div className="service-content">
-              <div className="service-icon">
-                {currentService.icon}
-              </div>
               <SectionHeader 
-                subtitle="Professional Service"
+                subtitle={t('professionalService')}
                 title={currentService.title}
                 description={currentService.description}
                 light={isDarkMode}
               />
+              
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <h3>What's Included:</h3>
-                <ul className="features">
-                  {currentService.details.map((detail, idx) => (
-                    <li key={idx}>
+                <ul className="service-features">
+                  {currentService.details.map((detail, index) => (
+                    <li key={index}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="9 11 12 14 22 4"></polyline>
                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
@@ -129,16 +130,23 @@ const ServiceDetail = () => {
                     </li>
                   ))}
                 </ul>
-                
-                <div className="service-buttons">
-                  <Button to="/contact" size="large">{t('contactMe')}</Button>
-                  <Button to="/services" variant="secondary" size="large">View All Services</Button>
-                </div>
+              </motion.div>
+
+              <motion.div 
+                className="service-actions"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <Button to="/contact" size="large">{t('contactMe')}</Button>
+                <Button to="/services" variant="secondary" size="large">{t('viewAllServices')}</Button>
               </motion.div>
             </div>
+
             <div className="service-image">
               <motion.img 
-                src={currentService.image}
+                src={currentService.image} 
                 alt={currentService.title}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -148,7 +156,7 @@ const ServiceDetail = () => {
             </div>
           </div>
         </div>
-      </ServiceDetailSection>
+      </ServiceSection>
 
       {/* CTA Section */}
       <CTASection className="section" $isDarkMode={isDarkMode}>
@@ -160,8 +168,8 @@ const ServiceDetail = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2>Ready to Get Started?</h2>
-            <p>Contact us today to discuss your {currentService.title.toLowerCase()} project and get a custom quote.</p>
+            <h2>{t('readyToStartProject')}</h2>
+            <p>{t('contactUsToday').replace('{service}', currentService.title.toLowerCase())}</p>
             <Button to="/contact" size="large">{t('contactMe')}</Button>
           </motion.div>
         </div>
@@ -174,10 +182,10 @@ const StyledServiceDetail = styled.div`
   overflow: hidden;
 `
 
-const ServiceDetailSection = styled.section`
+const ServiceSection = styled.section`
   background-color: ${({ $isDarkMode }) => $isDarkMode ? '#0a0a0a' : '#f5f5f7'};
   
-  .service-detail-grid {
+  .service-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -212,7 +220,7 @@ const ServiceDetailSection = styled.section`
       color: ${({ theme }) => theme.colors.textPrimary};
     }
     
-    .features {
+    .service-features {
       display: grid;
       gap: 1rem;
       margin-bottom: 2rem;
@@ -233,7 +241,7 @@ const ServiceDetailSection = styled.section`
       }
     }
     
-    .service-buttons {
+    .service-actions {
       margin-top: 2rem;
       display: flex;
       gap: 1rem;

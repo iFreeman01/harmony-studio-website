@@ -17,116 +17,79 @@ const Gallery = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const imagesPerPage = 9;
 
-  // Gallery images organized by categories - expanded for demonstration
+  // Gallery images data with translations
   const galleryImages = [
     {
       id: 1,
-      src: Studio1Img,
+      src: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
       alt: t('recordingStudioEquipment'),
-      category: 'homeStudio'
+      category: 'equipment'
     },
     {
       id: 2,
-      src: Studio2Img,
+      src: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      alt: t('liveRecordingSession'),
+      category: 'sessions'
+    },
+    {
+      id: 3,
+      src: 'https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
       alt: t('mixingConsole'),
       category: 'equipment'
     },
     {
-      id: 3,
-      src: Studio3Img,
+      id: 4,
+      src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      alt: t('professionalMicrophoneSetup'),
+      category: 'equipment'
+    },
+    {
+      id: 5,
+      src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      alt: t('recordingSessionInProgress'),
+      category: 'sessions'
+    },
+    {
+      id: 6,
+      src: 'https://images.unsplash.com/photo-1569696483293-9d1a3f6d4079?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
       alt: t('studioControlRoom'),
       category: 'homeStudio'
     },
     {
-      id: 4,
-      src: Studio4Img,
-      alt: t('liveRecordingSession'),
-      category: 'sessions'
-    },
-    // Add more placeholder images for demonstration
-    {
-      id: 5,
-      src: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Professional microphone setup",
-      category: 'equipment'
-    },
-    {
-      id: 6,
-      src: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Recording session in progress",
-      category: 'sessions'
-    },
-    {
       id: 7,
-      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Studio acoustic panels",
-      category: 'homeStudio'
+      src: 'https://images.unsplash.com/photo-1558403871-bb6e8113a32e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      alt: t('recordingStudioEquipment'),
+      category: 'equipment'
     },
     {
       id: 8,
-      src: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Audio interface and equipment",
-      category: 'equipment'
+      src: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      alt: t('vocalRecordingSession'),
+      category: 'sessions'
     },
     {
       id: 9,
-      src: "https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Mixing board close-up",
-      category: 'equipment'
+      src: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      alt: t('studioControlRoom'),
+      category: 'homeStudio'
     },
     {
       id: 10,
-      src: "https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Vocal recording session",
-      category: 'sessions'
+      src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      alt: t('recordingStudioEquipment'),
+      category: 'equipment'
     },
     {
       id: 11,
-      src: "https://images.unsplash.com/photo-1558403871-bb6e8113a32e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Studio monitors",
-      category: 'homeStudio'
+      src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      alt: t('professionalHeadphones'),
+      category: 'equipment'
     },
     {
       id: 12,
-      src: "https://images.unsplash.com/photo-1569696483293-9d1a3f6d4079?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Mastering equipment",
-      category: 'equipment'
-    },
-    {
-      id: 13,
-      src: "https://images.unsplash.com/photo-1619983081563-430f63602796?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Guitar recording",
+      src: 'https://images.unsplash.com/photo-1564186763535-ebb21ef5277f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+      alt: t('bandRecordingSession'),
       category: 'sessions'
-    },
-    {
-      id: 14,
-      src: "https://images.unsplash.com/photo-1578022761797-b8636ac1773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Studio atmosphere",
-      category: 'homeStudio'
-    },
-    {
-      id: 15,
-      src: "https://images.unsplash.com/photo-1574022909844-0bc8ebc40f10?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Professional headphones",
-      category: 'equipment'
-    },
-    {
-      id: 16,
-      src: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Band recording session",
-      category: 'sessions'
-    },
-    {
-      id: 17,
-      src: "https://images.unsplash.com/photo-1577375729152-4c8b5fcda381?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Studio control room",
-      category: 'homeStudio'
-    },
-    {
-      id: 18,
-      src: "https://images.unsplash.com/photo-1619983081593-e2ba5b543168?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      alt: "Audio production setup",
-      category: 'equipment'
     }
   ];
 
@@ -151,6 +114,11 @@ const Gallery = () => {
     currentPage * imagesPerPage,
     (currentPage + 1) * imagesPerPage
   );
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Reset to first page when filter changes
   useEffect(() => {
@@ -201,6 +169,11 @@ const Gallery = () => {
     if (newPage !== currentPage) {
       setCurrentPage(newPage);
     }
+  };
+
+  // Generate CSRF token
+  const generateCSRFToken = () => {
+    return crypto.randomUUID();
   };
 
   return (
@@ -745,5 +718,27 @@ const ImageInfo = styled.div`
     }
   }
 `;
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+  
+  componentDidCatch(error, errorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+  
+  render() {
+    if (this.state.hasError) {
+      return <h1>Something went wrong.</h1>;
+    }
+    return this.props.children;
+  }
+}
 
 export default Gallery;

@@ -162,62 +162,62 @@ const translations = {
     getInTouch: 'Get in Touch',
     
     // Service descriptions
-    recordingServiceDesc: 'Captura tu sonido con precisión y claridad en nuestros estudios acústicamente optimizados.',
-    mixingServiceDesc: 'Transforma tus pistas en bruto en una producción pulida y cohesiva con nuestros servicios expertos de mezcla.',
-    masteringServiceDesc: 'El toque final que asegura que tu música suene mejor en cualquier plataforma o formato.',
-    productionServiceDesc: 'Producción musical de servicio completo desde el concepto hasta el master final.',
-    vocalProductionServiceDesc: 'Grabación y producción vocal especializada para hacer brillar tus voces.',
-    dolbyAtmosServiceDesc: 'Mezcla de audio inmersivo para Apple Music, Tidal y otras plataformas de audio espacial.',
-    postProductionServiceDesc: 'Servicios de audio para cine, TV, podcasts y otros proyectos de medios.',
+    recordingServiceDesc: 'Capture your sound with precision and clarity in our acoustically optimized studios.',
+    mixingServiceDesc: 'Transform your raw tracks into a polished, cohesive production with our expert mixing services.',
+    masteringServiceDesc: 'The final touch that ensures your music sounds its best on any platform or format.',
+    productionServiceDesc: 'Full-service music production from concept to final master.',
+    vocalProductionServiceDesc: 'Specialized vocal recording and production to make your voices shine.',
+    dolbyAtmosServiceDesc: 'Immersive audio mixing for Apple Music, Tidal, and other spatial audio platforms.',
+    postProductionServiceDesc: 'Audio services for film, TV, podcasts, and other media projects.',
     
     // Service details - Recording
-    recordingDetail1: 'Grabación multipista en espacios acústicamente diseñados',
-    recordingDetail2: 'Grabación de banda completa o instrumentos individuales',
-    recordingDetail3: 'Micrófonos premium, preamplificadores y equipo externo',
-    recordingDetail4: 'Configuraciones flexibles de cabina para aislamiento y grabación en vivo',
-    recordingDetail5: 'Músicos de sesión disponibles bajo solicitud',
+    recordingDetail1: 'Multi-track recording in acoustically designed spaces',
+    recordingDetail2: 'Full band or individual instrument recording',
+    recordingDetail3: 'Premium microphones, preamps, and outboard gear',
+    recordingDetail4: 'Flexible booth setups for isolation and live recording',
+    recordingDetail5: 'Session musicians available upon request',
     
     // Service details - Mixing
-    mixingDetail1: 'Mezcla profesional en salas de control acústicamente tratadas',
-    mixingDetail2: 'Enfoque híbrido de mezcla analógica y digital',
-    mixingDetail3: 'Balanceado detallado, paneo y EQ',
-    mixingDetail4: 'Procesamiento creativo de efectos y automatización',
-    mixingDetail5: 'Opciones de mezcla de stems disponibles',
+    mixingDetail1: 'Professional mixing in acoustically treated control rooms',
+    mixingDetail2: 'Hybrid analog and digital mixing approach',
+    mixingDetail3: 'Detailed balancing, panning, and EQ',
+    mixingDetail4: 'Creative effects processing and automation',
+    mixingDetail5: 'Stem mixing options available',
     
     // Service details - Mastering
-    masteringDetail1: 'Masterización de precisión en ambiente acústicamente optimizado',
-    masteringDetail2: 'Procesamiento analógico y digital para profundidad y claridad',
-    masteringDetail3: 'Optimización específica por formato (streaming, vinilo, CD)',
-    masteringDetail4: 'Masterización de stems disponible para proyectos complejos',
-    masteringDetail5: 'Masterización de referencia y revisiones incluidas',
+    masteringDetail1: 'Precision mastering in acoustically optimized environment',
+    masteringDetail2: 'Analog and digital processing for depth and clarity',
+    masteringDetail3: 'Format-specific optimization (streaming, vinyl, CD)',
+    masteringDetail4: 'Stem mastering available for complex projects',
+    masteringDetail5: 'Reference mastering and revisions included',
     
     // Service details - Production
-    productionDetail1: 'Servicios completos de arreglo y producción',
-    productionDetail2: 'Productores experimentados en múltiples géneros',
-    productionDetail3: 'Producción de beats y composición instrumental',
-    productionDetail4: 'Músicos de sesión de primer nivel disponibles',
-    productionDetail5: 'Paquetes completos desde pre-producción hasta master final',
+    productionDetail1: 'Complete arrangement and production services',
+    productionDetail2: 'Experienced producers across multiple genres',
+    productionDetail3: 'Beat production and instrumental composition',
+    productionDetail4: 'Top-tier session musicians available',
+    productionDetail5: 'Complete packages from pre-production to final master',
     
     // Service details - Vocal Production
-    vocalDetail1: 'Micrófonos vocales premium y cadena de señal',
-    vocalDetail2: 'Cabinas vocales cómodas y acústicamente tratadas',
-    vocalDetail3: 'Coaching experto para rendimiento óptimo',
-    vocalDetail4: 'Corrección de tono y edición vocal',
-    vocalDetail5: 'Efectos vocales creativos y procesamiento',
+    vocalDetail1: 'Premium vocal microphones and signal chain',
+    vocalDetail2: 'Comfortable, acoustically treated vocal booths',
+    vocalDetail3: 'Expert coaching for optimal performance',
+    vocalDetail4: 'Pitch correction and vocal editing',
+    vocalDetail5: 'Creative vocal effects and processing',
     
     // Service details - Dolby Atmos
-    dolbyDetail1: 'Ambiente de mezcla certificado Dolby Atmos especializado',
-    dolbyDetail2: 'Mezcla de audio espacial para mayor compromiso del oyente',
-    dolbyDetail3: 'Convierte grabaciones estéreo a audio 3D inmersivo',
-    dolbyDetail4: 'Optimizado para formato de audio espacial de Apple Music',
-    dolbyDetail5: 'Compatibilidad completa con todas las principales plataformas de streaming',
+    dolbyDetail1: 'Specialized Dolby Atmos certified mixing environment',
+    dolbyDetail2: 'Spatial audio mixing for enhanced listener engagement',
+    dolbyDetail3: 'Convert stereo recordings to immersive 3D audio',
+    dolbyDetail4: 'Optimized for Apple Music spatial audio format',
+    dolbyDetail5: 'Full compatibility with all major streaming platforms',
     
     // Service details - Post-Production
-    postDetail1: 'Edición de diálogo y ADR (Reemplazo Automático de Diálogo)',
-    postDetail2: 'Diseño de sonido y grabación Foley',
-    postDetail3: 'Composición musical y scoring',
-    postDetail4: 'Mezcla de sonido envolvente (5.1, 7.1, Atmos)',
-    postDetail5: 'Entrega final de audio en todos los formatos requeridos',
+    postDetail1: 'Dialogue editing and ADR (Automated Dialogue Replacement)',
+    postDetail2: 'Sound design and Foley recording',
+    postDetail3: 'Music composition and scoring',
+    postDetail4: 'Surround sound mixing (5.1, 7.1, Atmos)',
+    postDetail5: 'Final audio delivery in all required formats',
     
     // Buttons
     requestQuote: 'Request Quote',
@@ -260,16 +260,32 @@ const translations = {
     
     // Session Drums content
     sessionDrums: 'Session Drums',
-    sessionDrumsSubtitle: 'Servicios profesionales de batería para tus proyectos musicales',
-    sessionDrumsAboutTitle: 'Dando Vida a Tu Música',
-    sessionDrumsAboutDesc: 'Con años de experiencia en grabación en estudio y presentaciones en vivo, proporciono servicios profesionales de batería que elevan tu música al siguiente nivel.',
-    sessionDrumsServicesTitle: 'Servicios de Batería',
-    sessionDrumsServicesDesc: 'Soluciones integrales de batería para todas tus necesidades musicales',
-    sessionDrumsGenresTitle: 'Géneros y Especialidades',
-    sessionDrumsGenresDesc: 'Experiencia en una amplia gama de estilos y géneros musicales',
-    sessionDrumsCTATitle: '¿Listo para Agregar Batería Profesional a Tu Proyecto?',
-    sessionDrumsCTADesc: 'Hablemos de tu visión musical y creemos las pistas de batería perfectas para tus canciones.',
-    professionalDrummer: 'Baterista Profesional',
+    sessionDrumsSubtitle: 'Professional drum services for your musical projects',
+    sessionDrumsAboutTitle: 'Bringing Your Music to Life',
+    sessionDrumsAboutDesc: 'With years of experience in studio recording and live performances, I provide professional drum services that elevate your music to the next level.',
+    sessionDrumsServicesTitle: 'Drum Services',
+    sessionDrumsServicesDesc: 'Comprehensive drum solutions for all your musical needs',
+    sessionDrumsGenresTitle: 'Genres & Specialties',
+    sessionDrumsGenresDesc: 'Experience across a wide range of musical styles and genres',
+    sessionDrumsCTATitle: 'Ready to Add Professional Drums to Your Project?',
+    sessionDrumsCTADesc: 'Let\'s discuss your musical vision and create the perfect drum tracks for your songs.',
+    professionalDrummer: 'Professional Drummer',
+    
+    // ServiceDetail page translations
+    professionalService: 'Professional Service',
+    professionalServiceSubtitle: 'Professional {service} Services',
+    contactUsToday: 'Contact us today to discuss your {service} project and get a custom quote.',
+    viewAllServices: 'View All Services',
+    
+    // Gallery image descriptions
+    professionalMicrophoneSetup: 'Professional microphone setup',
+    recordingSessionInProgress: 'Recording session in progress',
+    vocalRecordingSession: 'Vocal recording session',
+    professionalHeadphones: 'Professional headphones',
+    bandRecordingSession: 'Band recording session',
+    
+    // SessionDrummer page content
+    sessionDrummerDescription: 'I bring passion, precision, and professionalism to every project.',
   },
   es: {
     // Navigation
@@ -523,7 +539,7 @@ const translations = {
     galleryPageSubtitle: 'Echa un vistazo dentro de nuestro estudio',
     
     // Session Drums content
-    sessionDrums: 'Session Drums',
+    sessionDrums: 'Sesión de Batería',
     sessionDrumsSubtitle: 'Servicios profesionales de batería para tus proyectos musicales',
     sessionDrumsAboutTitle: 'Dando Vida a Tu Música',
     sessionDrumsAboutDesc: 'Con años de experiencia en grabación en estudio y presentaciones en vivo, proporciono servicios profesionales de batería que elevan tu música al siguiente nivel.',
@@ -534,6 +550,22 @@ const translations = {
     sessionDrumsCTATitle: '¿Listo para Agregar Batería Profesional a Tu Proyecto?',
     sessionDrumsCTADesc: 'Hablemos de tu visión musical y creemos las pistas de batería perfectas para tus canciones.',
     professionalDrummer: 'Baterista Profesional',
+    
+    // ServiceDetail page translations
+    professionalService: 'Servicio Profesional',
+    professionalServiceSubtitle: 'Servicios Profesionales de {service}',
+    contactUsToday: 'Contáctanos hoy para discutir tu proyecto de {service} y obtener una cotización personalizada.',
+    viewAllServices: 'Ver Todos los Servicios',
+    
+    // Gallery image descriptions
+    professionalMicrophoneSetup: 'Configuración profesional de micrófono',
+    recordingSessionInProgress: 'Sesión de grabación en progreso',
+    vocalRecordingSession: 'Sesión de grabación vocal',
+    professionalHeadphones: 'Audífonos profesionales',
+    bandRecordingSession: 'Sesión de grabación de banda',
+    
+    // SessionDrummer page content
+    sessionDrummerDescription: 'Aporto pasión, precisión y profesionalismo a cada proyecto.',
   }
 }
 

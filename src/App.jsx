@@ -10,8 +10,9 @@ import ServiceDetail from './pages/ServiceDetail'
 import SessionDrummer from './pages/SessionDrummer'
 import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
-import PrivacyPolicy from './pages/PrivacyPolicy'
-import TermsOfService from './pages/TermsOfService'
+// Temporarily hidden pages
+// import PrivacyPolicy from './pages/PrivacyPolicy'
+// import TermsOfService from './pages/TermsOfService'
 
 // Components
 import Navbar from './components/Navbar'
@@ -39,8 +40,9 @@ function AppContent() {
           <Route path="/session-drummer" element={<SessionDrummer />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
+          {/* Temporarily hidden routes */}
+          {/* <Route path="/privacy-policy" element={<PrivacyPolicy />} /> */}
+          {/* <Route path="/terms-of-service" element={<TermsOfService />} /> */}
         </Routes>
       </AnimatePresence>
       <Footer />

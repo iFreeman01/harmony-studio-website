@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import { useLocation } from 'react-router-dom'
 import Button from '../components/Button'
 import SectionHeader from '../components/SectionHeader'
 import ServiceCard from '../components/ServiceCard'
@@ -8,7 +10,24 @@ import homeBackgroundVideo from '../assets/home/home_background_2.mp4'
 
 const Home = () => {
   const { isDarkMode, t } = useTheme();
+  const location = useLocation();
   
+  // Handle section scrolling when coming from other pages
+  useEffect(() => {
+    const hash = location.hash
+    if (hash) {
+      const element = document.querySelector(hash)
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 100)
+      }
+    } else {
+      // If no hash, scroll to top
+      window.scrollTo(0, 0)
+    }
+  }, [location])
+
   // Placeholder data for services - updated to only include the 4 required services
   const services = [
     {
@@ -86,7 +105,7 @@ const Home = () => {
   return (
     <StyledHome>
       {/* Hero Section */}
-      <HeroSection $isDarkMode={isDarkMode}>
+      <HeroSection id="home" $isDarkMode={isDarkMode}>
         <video
           className="hero-video"
           autoPlay
@@ -134,7 +153,7 @@ const Home = () => {
       </HeroSection>
 
       {/* Services Section */}
-      <ServicesSection className="section" $isDarkMode={isDarkMode}>
+      <ServicesSection id="services" className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
             subtitle={t('servicesSubtitle')}
@@ -167,7 +186,7 @@ const Home = () => {
       </ServicesSection>
 
       {/* Testimonials Section */}
-      <TestimonialsSection className="section" $isDarkMode={isDarkMode}>
+      <TestimonialsSection id="testimonials" className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <SectionHeader 
             subtitle={t('testimonialsSubtitle')}
@@ -198,7 +217,7 @@ const Home = () => {
       </TestimonialsSection>
 
       {/* CTA Section */}
-      <CTASection className="section" $isDarkMode={isDarkMode}>
+      <CTASection id="contact-cta" className="section" $isDarkMode={isDarkMode}>
         <div className="container">
           <motion.div 
             className="cta-content"
