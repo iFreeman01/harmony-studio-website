@@ -38,4 +38,6 @@ dist-ssr
 .env.local
 .env.development.local
 .env.test.local
-.env.production.local 
+.env.production.local IMPLEMENTATION_CHECKLIST.md
+ECOMMERCE_ARCHITECTURE_PLAN.md
+ARCHITECTURE_DIAGRAM.md
