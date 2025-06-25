@@ -46,4 +46,132 @@ The website serves as both a portfolio showcasing Freeman Studio's capabilities 
 
 ---
 
-*Built with modern web technologies to provide a premium experience that reflects the quality of our audio services.* 
+*Built with modern web technologies to provide a premium experience that reflects the quality of our audio services.*
+
+## Instagram Reels Integration
+
+The website now includes an Instagram Reels section that displays reels where the studio has been tagged with `@freemanstudio`. This feature uses:
+
+- **Vercel Serverless Functions**: API endpoints for Instagram data fetching
+- **Instagram Basic Display API**: To retrieve user media and tagged content
+- **Real-time Updates**: Automatic fetching of new reels
+- **Responsive Design**: Mobile-optimized reel display with modal previews
+
+### Instagram API Setup
+
+1. Create an Instagram Developer Account
+2. Set up an Instagram Basic Display App
+3. Configure environment variables:
+   ```
+   INSTAGRAM_ACCESS_TOKEN=your_access_token
+   INSTAGRAM_USER_ID=your_user_id
+   ```
+4. Deploy to Vercel with environment variables configured
+
+## Tech Stack
+
+- **Frontend**: React 18, Vite, Styled Components
+- **Animation**: Framer Motion
+- **Backend**: Vercel Serverless Functions
+- **APIs**: Instagram Basic Display API, Spotify Embed
+- **Deployment**: Vercel
+- **Styling**: CSS-in-JS with styled-components
+- **Icons**: Custom SVG icons
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 16+ 
+- npm or yarn
+- Instagram Developer Account (for reels integration)
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone [repository-url]
+cd cursorProyect
+```
+
+2. Install dependencies
+```bash
+npm install
+```
+
+3. Set up environment variables
+```bash
+cp .env.example .env.local
+# Edit .env.local with your Instagram API credentials
+```
+
+4. Start development server
+```bash
+npm run dev
+```
+
+5. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+### Deployment
+
+This project is configured for Vercel deployment:
+
+1. Connect your repository to Vercel
+2. Add environment variables in Vercel dashboard
+3. Deploy automatically on push to main branch
+
+## API Endpoints
+
+### Instagram Reels
+- `GET /api/instagram/reels` - Fetch reels with @freemanstudio mentions
+- `GET /api/instagram/config` - Check API configuration status
+- `POST /api/instagram/config` - Validate Instagram credentials
+
+## Project Structure
+
+```
+cursorProyect/
+├── api/                    # Vercel serverless functions
+│   └── instagram/         # Instagram API endpoints
+├── src/
+│   ├── components/        # Reusable components
+│   │   ├── InstagramReels.jsx  # Instagram reels component
+│   │   └── ...
+│   ├── pages/            # Page components
+│   ├── context/          # React context providers
+│   ├── styles/           # Global styles and theme
+│   └── utils/            # Utility functions
+├── public/               # Static assets
+└── vercel.json          # Vercel configuration
+```
+
+## Environment Variables
+
+Create a `.env.local` file with the following variables:
+
+```env
+INSTAGRAM_ACCESS_TOKEN=your_instagram_access_token
+INSTAGRAM_USER_ID=your_instagram_user_id
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the ISC License.
+
+## Support
+
+For support or questions, contact the development team or open an issue in the repository. 

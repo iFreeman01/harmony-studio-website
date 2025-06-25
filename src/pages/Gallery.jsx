@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import PageHeader from '../components/PageHeader';
+import InstagramReels from '../components/InstagramReels';
 // Import studio images
 import Studio1Img from '../assets/about/Studio_1.webp';
 import Studio2Img from '../assets/about/Studio_2.webp';
@@ -186,6 +187,9 @@ const Gallery = () => {
 
       <GallerySection $isDarkMode={isDarkMode}>
         <div className="container">
+          {/* Instagram Reels Section */}
+          <InstagramReels />
+
           {/* Audio Samples Section */}
           <AudioSamplesContainer>
             <motion.h2
